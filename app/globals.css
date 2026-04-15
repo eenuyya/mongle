@@ -2,14 +2,38 @@
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
 
+/* 코스 카드 이미지 정사각형 컨테이너 */
+.course-card-img {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  aspect-ratio: 1 / 1;
+}
+
+@font-face {
+  font-family: "YPairing";
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2601-4@1.1/YPairingFont-Bd.woff2') format('woff2');
+  font-weight: 700;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "SeoulNotice";
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2505-1@1.0/SeoulAlrimTTF-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-display: swap;
+}
+
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-sans);
-  --font-mono: var(--font-geist-mono);
-  --font-heading: var(--font-sans);
+  --font-sans: "SUIT", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  --font-mono: ui-monospace, "Cascadia Code", "Source Code Pro", Menlo, monospace;
+  --font-heading: "SUIT", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  --font-jua: "YPairing", "SUIT", sans-serif;
+  --font-seoul: "SeoulNotice", "SUIT", sans-serif;
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -46,75 +70,283 @@
   --radius-2xl: calc(var(--radius) * 1.8);
   --radius-3xl: calc(var(--radius) * 2.2);
   --radius-4xl: calc(var(--radius) * 2.6);
+
+  /* 몽글 커스텀 색상 토큰 */
+  --color-mongle-peach: var(--mongle-peach);
+  --color-mongle-peach-light: var(--mongle-peach-light);
+  --color-mongle-peach-dark: var(--mongle-peach-dark);
+  --color-mongle-cream: var(--mongle-cream);
+  --color-mongle-warm: var(--mongle-warm);
+  --color-mongle-brown: var(--mongle-brown);
+  --color-mongle-gold: var(--mongle-gold);
 }
 
 :root {
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
+  /* 몽글 색상 팔레트 — 따뜻한 피치/크림 톤 */
+  --mongle-peach: #FF8C69;        /* 메인 액션 버튼, CTA */
+  --mongle-peach-light: #FFCDB8;  /* 태그 배경, hover 상태 */
+  --mongle-peach-dark: #E0613A;   /* 버튼 hover/active */
+  --mongle-cream: #FFF8F3;        /* 페이지 배경 */
+  --mongle-warm: #FFF0E6;         /* 카드 배경, 섹션 배경 */
+  --mongle-brown: #5C3D2E;        /* 주요 텍스트 */
+  --mongle-gold: #FFD166;         /* 강조 배지, 별점 */
+
+  /* shadcn/ui 색상 — 몽글 톤 적용 */
+  --background: oklch(0.992 0.005 60);        /* #FFF8F3 크림 */
+  --foreground: oklch(0.28 0.04 40);          /* #5C3D2E 따뜻한 갈색 */
+  --card: oklch(0.972 0.008 55);              /* #FFF0E6 따뜻한 카드 */
+  --card-foreground: oklch(0.28 0.04 40);
+  --popover: oklch(0.992 0.005 60);
+  --popover-foreground: oklch(0.28 0.04 40);
+  --primary: oklch(0.66 0.16 35);             /* #FF8C69 피치 */
+  --primary-foreground: oklch(1 0 0);
+  --secondary: oklch(0.93 0.025 55);          /* #FFCDB8 연한 피치 */
+  --secondary-foreground: oklch(0.28 0.04 40);
+  --muted: oklch(0.955 0.012 55);
+  --muted-foreground: oklch(0.52 0.03 45);
+  --accent: oklch(0.87 0.10 80);              /* #FFD166 골드 */
+  --accent-foreground: oklch(0.28 0.04 40);
   --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
-  --chart-1: oklch(0.87 0 0);
-  --chart-2: oklch(0.556 0 0);
-  --chart-3: oklch(0.439 0 0);
-  --chart-4: oklch(0.371 0 0);
-  --chart-5: oklch(0.269 0 0);
-  --radius: 0.625rem;
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.205 0 0);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.97 0 0);
-  --sidebar-accent-foreground: oklch(0.205 0 0);
-  --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: oklch(0.708 0 0);
+  --border: oklch(0.92 0.015 55);
+  --input: oklch(0.95 0.01 55);
+  --ring: oklch(0.66 0.16 35);
+  --chart-1: oklch(0.66 0.16 35);
+  --chart-2: oklch(0.87 0.10 80);
+  --chart-3: oklch(0.75 0.12 50);
+  --chart-4: oklch(0.72 0.08 60);
+  --chart-5: oklch(0.55 0.06 45);
+  --radius: 0.875rem;                         /* 둥글게 — 말랑한 느낌 */
+  --sidebar: oklch(0.972 0.008 55);
+  --sidebar-foreground: oklch(0.28 0.04 40);
+  --sidebar-primary: oklch(0.66 0.16 35);
+  --sidebar-primary-foreground: oklch(1 0 0);
+  --sidebar-accent: oklch(0.93 0.025 55);
+  --sidebar-accent-foreground: oklch(0.28 0.04 40);
+  --sidebar-border: oklch(0.92 0.015 55);
+  --sidebar-ring: oklch(0.66 0.16 35);
 }
 
 .dark {
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.205 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.205 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.922 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
+  --background: oklch(0.18 0.02 40);
+  --foreground: oklch(0.95 0.005 60);
+  --card: oklch(0.22 0.02 40);
+  --card-foreground: oklch(0.95 0.005 60);
+  --popover: oklch(0.22 0.02 40);
+  --popover-foreground: oklch(0.95 0.005 60);
+  --primary: oklch(0.72 0.14 35);
+  --primary-foreground: oklch(0.18 0.02 40);
+  --secondary: oklch(0.28 0.03 45);
+  --secondary-foreground: oklch(0.95 0.005 60);
+  --muted: oklch(0.28 0.03 45);
+  --muted-foreground: oklch(0.65 0.02 50);
+  --accent: oklch(0.82 0.10 80);
+  --accent-foreground: oklch(0.18 0.02 40);
   --destructive: oklch(0.704 0.191 22.216);
   --border: oklch(1 0 0 / 10%);
   --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.556 0 0);
-  --chart-1: oklch(0.87 0 0);
-  --chart-2: oklch(0.556 0 0);
-  --chart-3: oklch(0.439 0 0);
-  --chart-4: oklch(0.371 0 0);
-  --chart-5: oklch(0.269 0 0);
-  --sidebar: oklch(0.205 0 0);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.269 0 0);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
+  --ring: oklch(0.72 0.14 35);
+  --chart-1: oklch(0.72 0.14 35);
+  --chart-2: oklch(0.82 0.10 80);
+  --chart-3: oklch(0.68 0.10 50);
+  --chart-4: oklch(0.60 0.08 60);
+  --chart-5: oklch(0.50 0.05 45);
+  --sidebar: oklch(0.22 0.02 40);
+  --sidebar-foreground: oklch(0.95 0.005 60);
+  --sidebar-primary: oklch(0.72 0.14 35);
+  --sidebar-primary-foreground: oklch(1 0 0);
+  --sidebar-accent: oklch(0.28 0.03 45);
+  --sidebar-accent-foreground: oklch(0.95 0.005 60);
   --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.556 0 0);
+  --sidebar-ring: oklch(0.72 0.14 35);
+}
+
+/* ===== 몽글 커스텀 애니메이션 keyframes ===== */
+
+/* 아래에서 위로 페이드인 — 섹션 진입 시 공통 사용 */
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 왼쪽에서 오른쪽으로 슬라이드인 — 테마 카드 stagger 용 */
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* 하트 저장 버튼 클릭 bounce — scale 튀는 애니메이션 */
+@keyframes heartBounce {
+  0%   { transform: scale(1); }
+  30%  { transform: scale(1.4); }
+  60%  { transform: scale(0.88); }
+  80%  { transform: scale(1.15); }
+  100% { transform: scale(1); }
+}
+
+/* 태그 선택 시 미세한 bounce */
+@keyframes tagPop {
+  0%   { transform: scale(1); }
+  40%  { transform: scale(0.93); }
+  70%  { transform: scale(1.06); }
+  100% { transform: scale(1); }
+}
+
+/* 히어로 섹션 배경 패럴렉스용 느린 float */
+@keyframes heroFloat {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-8px); }
+}
+
+/* ===== 애니메이션 유틸리티 클래스 ===== */
+
+/* 기본 숨김 상태 — Intersection Observer가 이 클래스를 제거해 진입 애니메이션 트리거 */
+.animate-on-scroll {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.animate-on-scroll.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* stagger 딜레이 — 카드들이 순서대로 진입하도록 */
+.stagger-1 { transition-delay: 0.05s; }
+.stagger-2 { transition-delay: 0.10s; }
+.stagger-3 { transition-delay: 0.15s; }
+.stagger-4 { transition-delay: 0.20s; }
+.stagger-5 { transition-delay: 0.25s; }
+.stagger-6 { transition-delay: 0.30s; }
+.stagger-7 { transition-delay: 0.35s; }
+.stagger-8 { transition-delay: 0.40s; }
+
+/* 저장 페이지 전용 — Observer 없이 즉시 재생되는 enter animation */
+.saved-card-enter {
+  animation: fadeUp 0.45s ease both;
+}
+.saved-card-enter.stagger-1 { animation-delay: 0.03s; }
+.saved-card-enter.stagger-2 { animation-delay: 0.07s; }
+.saved-card-enter.stagger-3 { animation-delay: 0.11s; }
+.saved-card-enter.stagger-4 { animation-delay: 0.15s; }
+.saved-card-enter.stagger-5 { animation-delay: 0.19s; }
+.saved-card-enter.stagger-6 { animation-delay: 0.23s; }
+.saved-card-enter.stagger-7 { animation-delay: 0.27s; }
+.saved-card-enter.stagger-8 { animation-delay: 0.31s; }
+
+/* 로더 회전 */
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+/* 로더 텍스트 맥박 */
+@keyframes pulse {
+  0%, 100% { opacity: 0.45; }
+  50%       { opacity: 0.2; }
+}
+
+/* 로고 shimmer sweep — 밝은 하이라이트가 왼→오로 쓸려감 */
+@keyframes shimmerSweep {
+  0%   { background-position: 150% 0; }
+  100% { background-position: -50% 0; }
+}
+
+/* 로고 부드러운 스케일 맥박 */
+@keyframes logoPulse {
+  0%, 100% { transform: scale(1);    opacity: 1; }
+  50%       { transform: scale(0.93); opacity: 0.8; }
+}
+
+/* 이미지 skeleton shimmer */
+@keyframes skeletonShimmer {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+.animate-shimmer {
+  animation: skeletonShimmer 1.4s ease-in-out infinite;
+}
+
+/* 접근성 — 애니메이션 줄이기 설정 시 즉시 표시 */
+@media (prefers-reduced-motion: reduce) {
+  .saved-card-enter,
+  .animate-on-scroll {
+    animation: none;
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+/* 히어로 텍스트 순차 애니메이션 */
+.hero-animate {
+  animation: fadeUp 0.7s ease both;
+}
+.hero-animate-1 { animation-delay: 0.1s; }
+.hero-animate-2 { animation-delay: 0.3s; }
+.hero-animate-3 { animation-delay: 0.5s; }
+.hero-animate-4 { animation-delay: 0.7s; }
+
+/* 하트 bounce 애니메이션 트리거 클래스 */
+.heart-bounce {
+  animation: heartBounce 0.4s ease;
+}
+
+/* 드래그 스크롤 커서 */
+.drag-scroll {
+  cursor: grab;
+  user-select: none;
+}
+.drag-scroll:active {
+  cursor: grabbing;
+}
+
+/* 스크롤바 숨기기 — 가로 스크롤 영역 */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* 피커/필터 가로 스크롤 영역 스크롤바 숨기기 */
+.scrollbar-none {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}
+
+/* 삽입 핸들 페이드인 — 편집 모드 진입 시 */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+.animate-fadeIn {
+  animation: fadeIn 0.25s ease both;
+}
+
+@keyframes slideUp {
+  from { transform: translateY(100%); }
+  to   { transform: translateY(0); }
+}
+.animate-slideUp {
+  animation: slideUp 0.3s cubic-bezier(0.32, 0.72, 0, 1) both;
 }
 
 @layer base {
@@ -126,5 +358,15 @@
   }
   html {
     @apply font-sans;
+  }
+}
+
+/* 헤더 고정에 맞게 상단 여백 확보 */
+main {
+  padding-top: 3rem; /* 모바일 헤더 높이(h-12 = 48px) */
+}
+@media (min-width: 768px) {
+  main {
+    padding-top: 4rem; /* 데스크탑 헤더 높이(h-16 = 64px) */
   }
 }
