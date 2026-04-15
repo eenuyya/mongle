@@ -2,25 +2,7 @@
 
 import { useEffect, useRef } from "react";
 
-declare global {
-  interface Window {
-    naver: {
-      maps: {
-        Map: new (el: HTMLElement, opts: object) => NaverMapInstance;
-        LatLng: new (lat: number, lng: number) => object;
-        Marker: new (opts: object) => object;
-        Polyline: new (opts: object) => object;
-        Size: new (w: number, h: number) => object;
-        Point: new (x: number, y: number) => object;
-        MapTypeId: { NORMAL: string };
-      };
-    };
-  }
-}
-
-interface NaverMapInstance {
-  setCenter: (latlng: object) => void;
-}
+// window.naver 타입은 types/naver.d.ts 전역 선언 사용
 
 interface NaverMapProps {
   lat: number;

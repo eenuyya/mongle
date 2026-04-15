@@ -2,38 +2,12 @@
 
 import { useEffect, useRef, useState } from "react";
 
-declare global {
-  interface Window {
-    naver: {
-      maps: {
-        Map: new (el: HTMLElement, opts: object) => NaverMapInst;
-        LatLng: new (lat: number, lng: number) => NaverLatLng;
-        Marker: new (opts: object) => NaverMarker;
-        Polygon: new (opts: object) => NaverPolygon;
-        Size: new (w: number, h: number) => object;
-        Point: new (x: number, y: number) => object;
-        MapTypeId: { NORMAL: string };
-        Event: { addListener: (t: object, type: string, fn: () => void) => object };
-      };
-    };
-  }
-}
-
-interface NaverLatLng { lat: () => number; lng: () => number }
-interface NaverBounds { getSW: () => NaverLatLng; getNE: () => NaverLatLng }
-interface NaverMapInst {
-  getBounds: () => NaverBounds;
-  getZoom: () => number;
-  setCenter: (l: NaverLatLng) => void;
-  setZoom: (z: number, effect?: boolean) => void;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  setOptions: (opts: Record<string, any>) => void;
-}
-interface NaverMarker { setMap: (m: NaverMapInst | null) => void }
-interface NaverPolygon {
-  setMap: (m: NaverMapInst | null) => void;
-  setOptions: (opts: object) => void;
-}
+// window.naver 타입은 types/naver.d.ts 전역 선언 사용
+type NaverLatLng = { lat: () => number; lng: () => number };
+type NaverBounds = { getSW: () => NaverLatLng; getNE: () => NaverLatLng };
+type NaverMapInst = NaverMapInstance;
+type NaverMarker = { setMap: (m: NaverMapInstance | null) => void };
+type NaverPolygon = { setMap: (m: NaverMapInstance | null) => void; setOptions: (opts: object) => void };
 
 export interface MapPlace {
   id: string;
