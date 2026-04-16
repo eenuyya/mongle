@@ -32,13 +32,13 @@ interface ThemeCard {
 
 /** 테마 카드 시각 데이터 — id는 THEME_METAS와 일치해야 함 */
 const THEME_VISUALS: Record<string, Omit<ThemeCard, "id" | "label" | "count">> = {
-  혼놀코스:  { icon: User,           gradient: "linear-gradient(145deg, #FFD166 0%, #FF8C69 100%)",  textColor: "#5C3D2E", image: "https://images.unsplash.com/photo-1554118811-1e0d58224f24?w=320&q=80&auto=format&fit=crop" },
-  데이트코스: { icon: Heart,          gradient: "linear-gradient(145deg, #FFCDB8 0%, #FF8C69 100%)",  textColor: "#5C3D2E", image: "https://images.unsplash.com/photo-1529543544282-ea669407fca3?w=320&q=80&auto=format&fit=crop" },
-  브런치코스: { icon: UtensilsCrossed, gradient: "linear-gradient(145deg, #FFECD2 0%, #FCB69F 100%)",  textColor: "#5C3D2E", image: "https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?w=320&q=80&auto=format&fit=crop" },
-  카공투어:  { icon: Coffee,          gradient: "linear-gradient(145deg, #E8C9A0 0%, #C49A6C 100%)",  textColor: "#3D2408", image: "https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?w=320&q=80&auto=format&fit=crop" },
-  전시탐방:  { icon: Palette,         gradient: "linear-gradient(145deg, #F8E4CF 0%, #E8A87C 100%)",  textColor: "#5C3D2E", image: "https://images.unsplash.com/photo-1518998053901-5348d3961a04?w=320&q=80&auto=format&fit=crop" },
-  소품샵투어: { icon: ShoppingBag,     gradient: "linear-gradient(145deg, #FFF0C8 0%, #FFD166 100%)",  textColor: "#5C3D2E", image: "https://images.unsplash.com/photo-1555212697-194d092e3b8f?w=320&q=80&auto=format&fit=crop" },
-  팝업탐방:  { icon: Tent,            gradient: "linear-gradient(145deg, #FFB347 0%, #E07030 100%)",  textColor: "#fff",    image: "https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=320&q=80&auto=format&fit=crop" },
+  혼놀코스:  { icon: User,           gradient: "linear-gradient(145deg, #B0BFCC 0%, #7B8FA6 100%)",  textColor: "#fff",    image: "https://images.unsplash.com/photo-1554118811-1e0d58224f24?w=320&q=80&auto=format&fit=crop" },
+  데이트코스: { icon: Heart,          gradient: "linear-gradient(145deg, #C9D4DE 0%, #8FA3B8 100%)",  textColor: "#fff",    image: "https://images.unsplash.com/photo-1529543544282-ea669407fca3?w=320&q=80&auto=format&fit=crop" },
+  브런치코스: { icon: UtensilsCrossed, gradient: "linear-gradient(145deg, #E8EDF2 0%, #A0B2C4 100%)",  textColor: "#506070", image: "https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?w=320&q=80&auto=format&fit=crop" },
+  카공투어:  { icon: Coffee,          gradient: "linear-gradient(145deg, #E8C9A0 0%, #C49A6C 100%)",  textColor: "#2A3A4A", image: "https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?w=320&q=80&auto=format&fit=crop" },
+  전시탐방:  { icon: Palette,         gradient: "linear-gradient(145deg, #D4DCE6 0%, #7B8FA6 100%)",  textColor: "#fff",    image: "https://images.unsplash.com/photo-1518998053901-5348d3961a04?w=320&q=80&auto=format&fit=crop" },
+  소품샵투어: { icon: ShoppingBag,     gradient: "linear-gradient(145deg, #E8EDF2 0%, #FFD166 100%)",  textColor: "#364554", image: "https://images.unsplash.com/photo-1555212697-194d092e3b8f?w=320&q=80&auto=format&fit=crop" },
+  팝업탐방:  { icon: Tent,            gradient: "linear-gradient(145deg, #7B8FA6 0%, #506070 100%)",  textColor: "#fff",    image: "https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=320&q=80&auto=format&fit=crop" },
 };
 
 const THEME_CARDS: ThemeCard[] = THEME_METAS.map((t) => ({
@@ -179,14 +179,14 @@ function ThemeCard({ card, index, wasDragged, image }: { card: ThemeCard; index:
         width: "160px",
         height: "210px",
         background: "white",
-        boxShadow: "0 4px 20px rgba(220,100,40,0.13)",
+        boxShadow: "0 4px 20px rgba(100,120,140,0.13)",
         position: "relative",
       }}
       onMouseEnter={(e) => {
-        (e.currentTarget as HTMLAnchorElement).style.boxShadow = "0 10px 30px rgba(220,100,40,0.30)";
+        (e.currentTarget as HTMLAnchorElement).style.boxShadow = "0 10px 30px rgba(100,120,140,0.30)";
       }}
       onMouseLeave={(e) => {
-        (e.currentTarget as HTMLAnchorElement).style.boxShadow = "0 4px 20px rgba(220,100,40,0.15)";
+        (e.currentTarget as HTMLAnchorElement).style.boxShadow = "0 4px 20px rgba(100,120,140,0.15)";
       }}
       role="listitem"
       aria-label={`${card.label} — ${card.count}곳`}
@@ -221,7 +221,7 @@ function ThemeCard({ card, index, wasDragged, image }: { card: ThemeCard; index:
           top: "81px",
           width: "48px",
           height: "48px",
-          boxShadow: "0 2px 10px rgba(92,61,46,0.15)",
+          boxShadow: "0 2px 10px rgba(54,69,84,0.15)",
           border: "2px solid var(--mongle-warm)",
           zIndex: 10,
         }}

@@ -22,13 +22,13 @@ const SECTION_ID = "monthly-courses-section";
 
 /** 코스 커버 이미지 없을 때 theme_tag별 fallback gradient */
 const COVER_GRADIENTS: Record<string, string> = {
-  혼놀: "linear-gradient(135deg, #FF8C69 0%, #FFD166 50%, #FFCDB8 100%)",
-  데이트: "linear-gradient(135deg, #FFCDB8 0%, #FF8C69 100%)",
-  카공: "linear-gradient(135deg, #C9A86C 0%, #E8C9A0 50%, #FFF0C8 100%)",
+  혼놀: "linear-gradient(135deg, #7B8FA6 0%, #FFD166 50%, #B0BFCC 100%)",
+  데이트: "linear-gradient(135deg, #B0BFCC 0%, #7B8FA6 100%)",
+  카공: "linear-gradient(135deg, #C9A86C 0%, #E8C9A0 50%, #E8EDF2 100%)",
   전시: "linear-gradient(135deg, #8B6842 0%, #C49A6C 50%, #E8C9A0 100%)",
-  산책: "linear-gradient(135deg, #C9A86C 0%, #E8C9A0 50%, #FFF0C8 100%)",
-  팝업: "linear-gradient(135deg, #FFB347 0%, #E07030 100%)",
-  default: "linear-gradient(135deg, #FF8C69 0%, #FFD166 50%, #FFCDB8 100%)",
+  산책: "linear-gradient(135deg, #C9A86C 0%, #E8C9A0 50%, #E8EDF2 100%)",
+  팝업: "linear-gradient(135deg, #7B8FA6 0%, #506070 100%)",
+  default: "linear-gradient(135deg, #7B8FA6 0%, #FFD166 50%, #B0BFCC 100%)",
 };
 
 /** theme_tag 또는 district 기반으로 fallback gradient 선택 */
@@ -146,12 +146,12 @@ export async function MonthlyCoursesSection() {
                 className={cn(
                   "animate-on-scroll rounded overflow-hidden block",
                   "transition-all duration-200 hover:-translate-y-1",
-                  "hover:shadow-[0_12px_36px_rgba(92,61,46,0.16)]",
+                  "hover:shadow-[0_12px_36px_rgba(54,69,84,0.16)]",
                   `stagger-${Math.min(index + 1, 8)}`
                 )}
                 style={{
                   background: "white",
-                  boxShadow: "0 4px 20px rgba(92,61,46,0.08)",
+                  boxShadow: "0 4px 20px rgba(54,69,84,0.08)",
                 }}
                 aria-label={course.title}
               >

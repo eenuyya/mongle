@@ -216,7 +216,7 @@ export function SavedClient({
         {/* 탭 */}
         <div
           className="flex gap-1 rounded-full p-1 mb-5"
-          style={{ background: "rgba(92,61,46,0.07)", width: "fit-content" }}
+          style={{ background: "rgba(54,69,84,0.07)", width: "fit-content" }}
         >
           {(["courses", "places"] as const).map((tab) => (
             <button
@@ -247,7 +247,7 @@ export function SavedClient({
                   style={
                     courseFilter === f.value
                       ? { background: "var(--mongle-brown)", color: "white" }
-                      : { background: "white", color: "var(--mongle-brown)", border: "1px solid rgba(92,61,46,0.15)" }
+                      : { background: "white", color: "var(--mongle-brown)", border: "1px solid rgba(54,69,84,0.15)" }
                   }
                 >
                   {f.label}
@@ -371,7 +371,7 @@ export function SavedClient({
           >
           <div
             className="w-full max-w-xl rounded-t-3xl"
-            style={{ background: "white", boxShadow: "0 -4px 24px rgba(92,61,46,0.12)", paddingBottom: "max(2rem, env(safe-area-inset-bottom))" }}
+            style={{ background: "white", boxShadow: "0 -4px 24px rgba(54,69,84,0.12)", paddingBottom: "max(2rem, env(safe-area-inset-bottom))" }}
           >
             <div className="flex items-center justify-between px-5 pt-5 pb-4">
               <span className="text-base font-bold" style={{ color: "var(--mongle-brown)" }}>동네 선택</span>
@@ -389,7 +389,7 @@ export function SavedClient({
                 className="flex items-center justify-between w-full px-4 py-3 rounded-2xl text-sm font-semibold transition-all"
                 style={
                   districtFilter === null
-                    ? { background: "rgba(255,140,105,0.12)", color: "var(--mongle-peach-dark)" }
+                    ? { background: "rgba(123,143,166,0.12)", color: "var(--mongle-peach-dark)" }
                     : { color: "var(--mongle-brown)" }
                 }
               >
@@ -403,7 +403,7 @@ export function SavedClient({
                   className="flex items-center justify-between w-full px-4 py-3 rounded-2xl text-sm transition-all"
                   style={
                     districtFilter === d
-                      ? { background: "rgba(255,140,105,0.12)", color: "var(--mongle-peach-dark)", fontWeight: 600 }
+                      ? { background: "rgba(123,143,166,0.12)", color: "var(--mongle-peach-dark)", fontWeight: 600 }
                       : { color: "var(--mongle-brown)" }
                   }
                 >
@@ -469,7 +469,7 @@ function DistrictFilterButton({
       style={
         selected
           ? { background: "var(--mongle-peach)", color: "white" }
-          : { background: "white", color: "var(--mongle-brown)", border: "1px solid rgba(92,61,46,0.2)" }
+          : { background: "white", color: "var(--mongle-brown)", border: "1px solid rgba(54,69,84,0.2)" }
       }
     >
       <MapPin size={10} />
@@ -513,7 +513,7 @@ function UserCourseCard({
   return (
     <div
       className="flex items-center gap-3 rounded-2xl p-4"
-      style={{ background: "white", boxShadow: "0 2px 12px rgba(92,61,46,0.07)" }}
+      style={{ background: "white", boxShadow: "0 2px 12px rgba(54,69,84,0.07)" }}
     >
       <Link href={`/courses/${course.id}`} className="flex-1 min-w-0">
         <div className="flex items-center gap-1.5 mb-1">
@@ -539,10 +539,10 @@ function UserCourseCard({
       <button
         onClick={onDelete}
         className="flex-shrink-0 p-2 rounded-full transition-opacity hover:opacity-70 active:scale-95"
-        style={{ background: "rgba(92,61,46,0.06)" }}
+        style={{ background: "rgba(54,69,84,0.06)" }}
         aria-label="코스 삭제"
       >
-        <Trash2 size={14} style={{ color: "rgba(92,61,46,0.45)" }} />
+        <Trash2 size={14} style={{ color: "rgba(54,69,84,0.45)" }} />
       </button>
     </div>
   );
@@ -562,7 +562,7 @@ function EmptyState({ filter }: { filter: CourseFilter }) {
     <div className="flex flex-col items-center justify-center py-20 gap-5 text-center">
       <div
         className="w-20 h-20 rounded-full flex items-center justify-center"
-        style={{ background: "linear-gradient(135deg, rgba(255,140,105,0.15) 0%, rgba(255,200,170,0.25) 100%)" }}
+        style={{ background: "linear-gradient(135deg, rgba(123,143,166,0.15) 0%, rgba(123,143,166,0.12) 100%)" }}
       >
         <RouteIcon size={32} style={{ color: "var(--mongle-peach)" }} />
       </div>
@@ -583,7 +583,7 @@ function EmptyState({ filter }: { filter: CourseFilter }) {
         <Link
           href="/courses"
           className="flex items-center justify-center px-6 py-3 rounded-2xl text-sm font-semibold transition-all hover:opacity-80"
-          style={{ background: "rgba(92,61,46,0.07)", color: "var(--mongle-brown)" }}
+          style={{ background: "rgba(54,69,84,0.07)", color: "var(--mongle-brown)" }}
         >
           전체 코스 보기
         </Link>
@@ -597,7 +597,7 @@ function EmptyStatePlaces() {
     <div className="flex flex-col items-center justify-center py-20 gap-5 text-center">
       <div
         className="w-20 h-20 rounded-full flex items-center justify-center"
-        style={{ background: "linear-gradient(135deg, rgba(255,140,105,0.15) 0%, rgba(255,200,170,0.25) 100%)" }}
+        style={{ background: "linear-gradient(135deg, rgba(123,143,166,0.15) 0%, rgba(123,143,166,0.12) 100%)" }}
       >
         <MapPin size={32} style={{ color: "var(--mongle-peach)" }} />
       </div>
@@ -608,7 +608,7 @@ function EmptyStatePlaces() {
       <Link
         href="/places"
         className="flex items-center justify-center px-6 py-3 rounded-2xl text-sm font-semibold transition-all hover:opacity-80"
-        style={{ background: "rgba(92,61,46,0.07)", color: "var(--mongle-brown)" }}
+        style={{ background: "rgba(54,69,84,0.07)", color: "var(--mongle-brown)" }}
       >
         장소 둘러보기
       </Link>

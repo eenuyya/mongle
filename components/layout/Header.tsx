@@ -150,7 +150,7 @@ function RegionPickerModal({
                       background: isSelected ? "var(--mongle-warm)" : "transparent",
                       color: "var(--mongle-brown)",
                       fontWeight: isSelected ? 600 : 400,
-                      borderBottom: "1px solid rgba(92,61,46,0.06)",
+                      borderBottom: "1px solid rgba(54,69,84,0.06)",
                     }}
                   >
                     <span>
@@ -183,7 +183,7 @@ function RegionPickerModal({
                     );
                     if (popular.length === 0) return null;
                     return (
-                      <div className="px-4 pt-4 pb-3" style={{ borderBottom: "1px solid rgba(92,61,46,0.08)" }}>
+                      <div className="px-4 pt-4 pb-3" style={{ borderBottom: "1px solid rgba(54,69,84,0.08)" }}>
                         <p className="text-[11px] font-semibold mb-2.5" style={{ color: "var(--mongle-brown)", opacity: 0.4 }}>
                           인기 동네
                         </p>
@@ -229,7 +229,7 @@ function RegionPickerModal({
                             background: isSelected ? "var(--mongle-peach-light)" : "transparent",
                             color: isSelected ? "var(--mongle-peach-dark)" : "var(--mongle-brown)",
                             fontWeight: isSelected ? 600 : 400,
-                            borderBottom: "1px solid rgba(92,61,46,0.06)",
+                            borderBottom: "1px solid rgba(54,69,84,0.06)",
                           }}
                         >
                           {district.name}
@@ -343,15 +343,15 @@ export function Header() {
         className={cn(
           "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
           scrolled
-            ? "backdrop-blur-md shadow-[0_2px_16px_rgba(255,140,105,0.10)]"
+            ? "backdrop-blur-md shadow-[0_2px_16px_rgba(123,143,166,0.10)]"
             : "backdrop-blur-sm"
         )}
         style={{
           background: scrolled
             ? "rgba(255,255,255,0.95)"
             : "rgba(255,255,255,0.80)",
-          borderBottom: "1px solid rgba(255,140,105,0.13)",
-          boxShadow: scrolled ? "0 2px 16px rgba(255,140,105,0.08)" : "none",
+          borderBottom: "1px solid rgba(123,143,166,0.13)",
+          boxShadow: scrolled ? "0 2px 16px rgba(123,143,166,0.08)" : "none",
         }}
       >
         <div className="mx-auto max-w-7xl px-4 sm:px-6 h-12 md:h-16 flex items-center">
@@ -368,7 +368,7 @@ export function Header() {
                 alt="몽글 로고"
                 width={32}
                 height={40}
-                className="w-5 h-[26px] md:w-7 md:h-9 object-contain"
+                className="w-7 h-9 md:w-9 md:h-12 object-contain"
                 priority
                 loading="eager"
               />

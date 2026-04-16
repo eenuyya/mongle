@@ -54,7 +54,7 @@ export function SituationCheckPage({
         className="pt-16 px-5 pb-8"
         style={{
           background:
-            "linear-gradient(160deg, rgba(255,200,170,0.35) 0%, transparent 100%)",
+            "linear-gradient(160deg, rgba(123,143,166,0.15) 0%, transparent 100%)",
         }}
       >
         <div className="mx-auto max-w-md">
@@ -109,7 +109,7 @@ export function SituationCheckPage({
                     : {
                         background: "white",
                         color: "var(--mongle-brown)",
-                        borderColor: "rgba(92,61,46,0.08)",
+                        borderColor: "rgba(54,69,84,0.08)",
                       }
                 }
               >
@@ -150,7 +150,7 @@ export function SituationCheckPage({
                     : {
                         background: "white",
                         color: "var(--mongle-brown)",
-                        borderColor: "rgba(92,61,46,0.08)",
+                        borderColor: "rgba(54,69,84,0.08)",
                       }
                 }
               >
@@ -172,9 +172,9 @@ export function SituationCheckPage({
       <div
         className="sticky bottom-0 px-5 pb-safe"
         style={{
-          background: "rgba(255,248,243,0.95)",
+          background: "rgba(244,246,248,0.95)",
           backdropFilter: "blur(12px)",
-          borderTop: "1px solid rgba(92,61,46,0.08)",
+          borderTop: "1px solid rgba(54,69,84,0.08)",
         }}
       >
         <div className="mx-auto max-w-md py-3">

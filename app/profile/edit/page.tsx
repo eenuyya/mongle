@@ -28,7 +28,7 @@ export default async function ProfileEditPage() {
       <div className="mx-auto max-w-lg px-6">
 
         {/* 헤더 */}
-        <div className="flex items-center justify-between py-4 border-b" style={{ borderColor: "rgba(255,185,155,0.25)" }}>
+        <div className="flex items-center justify-between py-4 border-b" style={{ borderColor: "rgba(123,143,166,0.15)" }}>
           <Link
             href="/profile"
             className="flex items-center gap-1.5 text-sm transition-opacity hover:opacity-70"
@@ -83,10 +83,10 @@ export default async function ProfileEditPage() {
               defaultValue={displayName}
               maxLength={20}
               placeholder="닉네임을 입력하세요"
-              className="w-full px-4 py-3 rounded-xl text-sm outline-none transition-all focus:ring-2 focus:ring-[#FF8C69]/40"
+              className="w-full px-4 py-3 rounded-xl text-sm outline-none transition-all focus:ring-2 focus:ring-[#7B8FA6]/40"
               style={{
                 background: "var(--mongle-warm)",
-                border: "1.5px solid rgba(255,185,155,0.4)",
+                border: "1.5px solid rgba(123,143,166,0.35)",
                 color: "var(--mongle-brown)",
               }}
             />
@@ -107,10 +107,10 @@ export default async function ProfileEditPage() {
               defaultValue={profile?.bio ?? ""}
               maxLength={40}
               placeholder="나를 한 문장으로 표현해보세요 ✨"
-              className="w-full px-4 py-3 rounded-xl text-sm outline-none transition-all focus:ring-2 focus:ring-[#FF8C69]/40"
+              className="w-full px-4 py-3 rounded-xl text-sm outline-none transition-all focus:ring-2 focus:ring-[#7B8FA6]/40"
               style={{
                 background: "var(--mongle-warm)",
-                border: "1.5px solid rgba(255,185,155,0.4)",
+                border: "1.5px solid rgba(123,143,166,0.35)",
                 color: "var(--mongle-brown)",
               }}
             />

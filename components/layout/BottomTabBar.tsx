@@ -21,7 +21,7 @@ export function BottomTabBar() {
       style={{
         background: "rgba(255,255,255,0.95)",
         backdropFilter: "blur(12px)",
-        borderTop: "1px solid rgba(255,140,105,0.13)",
+        borderTop: "1px solid rgba(123,143,166,0.13)",
       }}
       aria-label="하단 탭 네비게이션"
     >

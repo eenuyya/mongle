@@ -306,9 +306,10 @@ export function PlacesMapView({
     const place = places.find(p => p.id === selectedPlaceId);
     if (!place?.lat || !place?.lng) return;
 
-    const bottomPad = bottomPaddingRef.current;
+    const isDesktop = window.innerWidth >= 768;
+    const bottomPad = isDesktop ? 0 : bottomPaddingRef.current;
 
-    // padding을 바텀시트 높이로 설정하면 NAVER가 가시 영역 중앙에 자동 배치
+    // 데스크탑: 패딩 0 → 지도 중앙에 배치 / 모바일: 바텀시트 높이만큼 위로 오프셋
     map.setOptions({ padding: { top: 0, right: 0, bottom: bottomPad, left: 0 } });
     map.setCenter(new window.naver.maps.LatLng(place.lat, place.lng));
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -331,27 +332,25 @@ export function PlacesMapView({
       const isAvailable = availableDistricts.length === 0
         ? true  // DB 데이터 없으면 일단 모두 활성화
         : availableDistricts.some(d => d === id || d.startsWith(id) || id.startsWith(d.replace(/[동로길]$/, "")));
-      const fillColor   = isAvailable ? "#FFCDB8" : "#DDD5C5";
-      const strokeColor = isAvailable ? "#C8703C" : "#B0A08A";
+      const fillColor = isAvailable ? "#7B8FA6" : "#C8D0D8";
 
       /* 폴리곤 (복수 ring 지원) */
       const polygon = new nm.Polygon({
         map:           map as unknown as object,
         paths:         paths.map(ring => ring.map(([lat, lng]) => new nm.LatLng(lat, lng))),
         fillColor,
-        fillOpacity:   isAvailable ? 0.72 : 0.45,
-        strokeColor,
-        strokeWeight:  isAvailable ? 2 : 1,
-        strokeOpacity: isAvailable ? 0.9 : 0.5,
+        fillOpacity:   isAvailable ? 0.28 : 0.18,
+        strokeWeight:  0,
+        strokeOpacity: 0,
         clickable:     isAvailable,
       });
 
       if (isAvailable) {
         nm.Event.addListener(polygon as unknown as object, "mouseover", () => {
-          polygon.setOptions({ fillColor: "#FF8C69", fillOpacity: 0.88 });
+          polygon.setOptions({ fillColor: "#506070", fillOpacity: 0.42 });
         });
         nm.Event.addListener(polygon as unknown as object, "mouseout", () => {
-          polygon.setOptions({ fillColor, fillOpacity: 0.72 });
+          polygon.setOptions({ fillColor, fillOpacity: 0.28 });
         });
         nm.Event.addListener(polygon as unknown as object, "click", () => {
           onNeighborhoodClick?.(id);
@@ -368,7 +367,7 @@ export function PlacesMapView({
       Object.assign(labelEl.style, isAvailable ? {
         fontSize:      "13px",
         fontWeight:    "800",
-        color:         "#5C3D2E",
+        color:         "#364554",
         fontFamily:    "SUIT, 'Noto Sans KR', sans-serif",
         letterSpacing: "-0.3px",
         textShadow:    [
@@ -449,15 +448,15 @@ export function PlacesMapView({
       document.head.appendChild(s);
     }
 
-    // 카테고리별 hue-rotate (이미지 원색 기준)
+    // 카테고리별 hue-rotate (슬레이트 블루 ~210° 기준)
     const HUE: Record<string, string> = {
-      cafe:       "hue-rotate(0deg)",
-      restaurant: "hue-rotate(15deg) saturate(140%)",
-      bookstore:  "hue-rotate(30deg) saturate(65%) brightness(88%)",
-      gallery:    "hue-rotate(-20deg) saturate(130%)",
-      park:       "hue-rotate(110deg) saturate(60%) brightness(105%)",
-      popup:      "hue-rotate(50deg) saturate(135%)",
-      shop:       "hue-rotate(-40deg) saturate(120%) brightness(112%)",
+      cafe:       "hue-rotate(0deg)",                                    // 슬레이트 블루 (원색)
+      restaurant: "hue-rotate(170deg) saturate(130%)",                  // 웜 오렌지
+      bookstore:  "hue-rotate(185deg) saturate(60%) brightness(88%)",   // 웜 브라운
+      gallery:    "hue-rotate(90deg) saturate(70%)",                    // 뮤트 퍼플
+      park:       "hue-rotate(-80deg) saturate(90%) brightness(105%)",  // 그린
+      popup:      "hue-rotate(-150deg) saturate(130%)",                 // 올리브/옐로우
+      shop:       "hue-rotate(-165deg) saturate(110%) brightness(108%)", // 웜 골드
     };
 
     const labelTextShadow = [
@@ -476,11 +475,23 @@ export function PlacesMapView({
 
       const hue = HUE[place.category ?? ""] ?? "hue-rotate(0deg)";
 
+      // 카테고리별 선택 글로우 색상
+      const GLOW: Record<string, string> = {
+        cafe:       "123,143,166",   // slate blue
+        restaurant: "140,110,80",    // warm amber
+        bookstore:  "140,120,80",    // warm brown
+        gallery:    "150,100,130",   // muted rose
+        park:       "80,140,100",    // green
+        popup:      "140,140,60",    // olive
+        shop:       "160,130,60",    // warm gold
+      };
+      const glow = GLOW[place.category ?? ""] ?? "123,143,166";
+
       // 일반: brown drop-shadow로 투명PNG 윤곽 명확화
-      // 선택: 피치 글로우 3겹 drop-shadow
+      // 선택: 카테고리 색상 글로우 3겹 drop-shadow
       const shadow = isSelected
-        ? `${hue} drop-shadow(0 0 8px rgba(255,140,105,0.75)) drop-shadow(0 4px 10px rgba(255,140,105,0.5)) drop-shadow(0 2px 4px rgba(92,61,46,0.4))`
-        : `${hue} drop-shadow(0 2px 5px rgba(92,61,46,0.5)) drop-shadow(0 1px 2px rgba(92,61,46,0.3))`;
+        ? `${hue} drop-shadow(0 0 8px rgba(${glow},0.75)) drop-shadow(0 4px 10px rgba(${glow},0.5)) drop-shadow(0 2px 4px rgba(54,69,84,0.35))`
+        : `${hue} drop-shadow(0 2px 5px rgba(54,69,84,0.5)) drop-shadow(0 1px 2px rgba(54,69,84,0.3))`;
 
       // XSS 방지: place.name을 HTML 문자열 템플릿에 직접 삽입하지 않고
       // DOM API로 요소를 생성하여 textContent에 할당합니다

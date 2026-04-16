@@ -27,7 +27,7 @@ export default async function CoursesPage({
         className="py-14 px-4 text-center"
         style={{
           background:
-            "linear-gradient(180deg, rgba(255,200,170,0.25) 0%, transparent 100%)",
+            "linear-gradient(180deg, rgba(123,143,166,0.12) 0%, transparent 100%)",
         }}
       >
         <p className="text-sm font-medium mb-2" style={{ color: "var(--mongle-peach)" }}>
@@ -51,10 +51,10 @@ export default async function CoursesPage({
         {/* 맞춤 코스 추천 진입점 배너 */}
         <Link
           href="/courses/new"
-          className="group relative flex items-center justify-between gap-4 px-5 py-5 rounded-2xl mb-6 overflow-hidden transition-all duration-200 hover:shadow-[0_8px_32px_rgba(255,140,105,0.45)] hover:-translate-y-0.5 active:scale-[0.99]"
+          className="group relative flex items-center justify-between gap-4 px-5 py-5 rounded-2xl mb-6 overflow-hidden transition-all duration-200 hover:shadow-[0_8px_32px_rgba(123,143,166,0.45)] hover:-translate-y-0.5 active:scale-[0.99]"
           style={{
-            background: "linear-gradient(120deg, #E85D30 0%, #FF7A50 55%, #FFB08A 100%)",
-            boxShadow: "0 4px 20px rgba(232,93,48,0.35)",
+            background: "linear-gradient(120deg, #506070 0%, #7B8FA6 55%, #B0BFCC 100%)",
+            boxShadow: "0 4px 20px rgba(80,96,112,0.35)",
           }}
         >
           {/* 배경 장식 원 */}

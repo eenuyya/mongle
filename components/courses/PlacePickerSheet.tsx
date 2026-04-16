@@ -218,7 +218,7 @@ export function PlacePickerSheet({
             style={{
               width: 32,
               height: 4,
-              background: "rgba(92,61,46,0.2)",
+              background: "rgba(54,69,84,0.2)",
             }}
           />
         </div>
@@ -228,7 +228,7 @@ export function PlacePickerSheet({
           {/* 삽입 위치 미니맵 */}
           <div
             className="flex items-center justify-between gap-2 rounded-xl px-4 py-2.5"
-            style={{ background: "rgba(255,140,105,0.08)" }}
+            style={{ background: "rgba(123,143,166,0.08)" }}
           >
             <span
               className="text-xs truncate max-w-[35%]"
@@ -261,7 +261,7 @@ export function PlacePickerSheet({
             <Search
               size={15}
               className="absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none"
-              style={{ color: "rgba(92,61,46,0.4)" }}
+              style={{ color: "rgba(54,69,84,0.4)" }}
             />
             <input
               type="text"
@@ -276,8 +276,8 @@ export function PlacePickerSheet({
                 borderRadius: 12,
                 background: "white",
                 border: isSearchFocused
-                  ? "1.5px solid #FF8C69"
-                  : "1.5px solid rgba(255,140,105,0.3)",
+                  ? "1.5px solid #7B8FA6"
+                  : "1.5px solid rgba(123,143,166,0.3)",
                 color: "var(--mongle-brown)",
               }}
             />
@@ -292,11 +292,11 @@ export function PlacePickerSheet({
                 className="flex-shrink-0 px-3 py-1 rounded-full text-xs font-medium transition-all"
                 style={
                   activeCategory === cat.value
-                    ? { background: "#FF8C69", color: "white" }
+                    ? { background: "#7B8FA6", color: "white" }
                     : {
                         background: "white",
-                        color: "rgba(92,61,46,0.6)",
-                        border: "1px solid rgba(92,61,46,0.2)",
+                        color: "rgba(54,69,84,0.6)",
+                        border: "1px solid rgba(54,69,84,0.2)",
                       }
                 }
               >
@@ -319,13 +319,13 @@ export function PlacePickerSheet({
             <div className="flex flex-col items-center justify-center py-12 gap-2">
               <div
                 className="w-6 h-6 rounded-full border-2 animate-spin"
-                style={{ borderColor: "rgba(255,140,105,0.2)", borderTopColor: "#FF8C69" }}
+                style={{ borderColor: "rgba(123,143,166,0.2)", borderTopColor: "#7B8FA6" }}
               />
-              <p className="text-xs" style={{ color: "rgba(92,61,46,0.4)" }}>장소 찾는 중…</p>
+              <p className="text-xs" style={{ color: "rgba(54,69,84,0.4)" }}>장소 찾는 중…</p>
             </div>
           ) : filteredPlaces.length === 0 ? (
             <div className="flex flex-col items-center justify-center py-12 gap-2">
-              <p className="text-sm" style={{ color: "rgba(92,61,46,0.4)" }}>
+              <p className="text-sm" style={{ color: "rgba(54,69,84,0.4)" }}>
                 {searchQuery ? "검색 결과가 없어요" : `${district}에 등록된 장소가 없어요`}
               </p>
             </div>
@@ -361,7 +361,7 @@ export function PlacePickerSheet({
           style={{
             width: 28,
             height: 28,
-            background: "rgba(92,61,46,0.08)",
+            background: "rgba(54,69,84,0.08)",
           }}
           aria-label="닫기"
         >
@@ -400,7 +400,7 @@ function PickerPlaceCard({
   return (
     <div
       className="flex flex-col rounded-xl overflow-hidden"
-      style={{ boxShadow: "0 2px 8px rgba(92,61,46,0.06)" }}
+      style={{ boxShadow: "0 2px 8px rgba(54,69,84,0.06)" }}
     >
       {/* 이미지 */}
       <div
@@ -410,7 +410,7 @@ function PickerPlaceCard({
         {imgSrc ? (
           <>
             {!imgLoaded && (
-              <div className="absolute inset-0 bg-gradient-to-r from-[#f0e8e0] via-[#fdf6f0] to-[#f0e8e0] bg-[length:200%_100%] animate-shimmer" />
+              <div className="absolute inset-0 bg-gradient-to-r from-[#dce3ea] via-[#edf1f5] to-[#dce3ea] bg-[length:200%_100%] animate-shimmer" />
             )}
             <Image
               src={imgSrc}
@@ -459,7 +459,7 @@ function PickerPlaceCard({
         </p>
         <p
           className="truncate"
-          style={{ fontSize: 12, color: "rgba(92,61,46,0.5)" }}
+          style={{ fontSize: 12, color: "rgba(54,69,84,0.5)" }}
         >
           {distanceText}
         </p>
@@ -475,13 +475,13 @@ function PickerPlaceCard({
             marginTop: 4,
             ...(alreadyAdded
               ? {
-                  background: "rgba(92,61,46,0.06)",
-                  color: "rgba(92,61,46,0.35)",
+                  background: "rgba(54,69,84,0.06)",
+                  color: "rgba(54,69,84,0.35)",
                   cursor: "not-allowed",
                 }
               : {
-                  background: "rgba(255,140,105,0.12)",
-                  color: "#FF8C69",
+                  background: "rgba(123,143,166,0.12)",
+                  color: "#7B8FA6",
                   cursor: "pointer",
                 }),
           }}

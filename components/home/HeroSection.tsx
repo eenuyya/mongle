@@ -151,7 +151,7 @@ function RegionPickerModal({
                         ? "var(--mongle-warm)"
                         : "transparent",
                       color: "var(--mongle-brown)",
-                      borderBottom: "1px solid rgba(92,61,46,0.06)",
+                      borderBottom: "1px solid rgba(54,69,84,0.06)",
                     }}
                   >
                     <span>
@@ -208,7 +208,7 @@ function RegionPickerModal({
                         color: isSelected
                           ? "var(--mongle-peach-dark)"
                           : "var(--mongle-brown)",
-                        borderBottom: "1px solid rgba(92,61,46,0.06)",
+                        borderBottom: "1px solid rgba(54,69,84,0.06)",
                       }}
                     >
                       {district.name}
@@ -297,7 +297,7 @@ export function HeroSection() {
               style={{
                 background: "rgba(255,255,255,0.92)",
                 backdropFilter: "blur(12px)",
-                boxShadow: "0 4px 24px rgba(255,140,105,0.15)",
+                boxShadow: "0 4px 24px rgba(123,143,166,0.15)",
               }}
               aria-label="지역 선택하기"
             >

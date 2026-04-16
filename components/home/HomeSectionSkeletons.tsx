@@ -8,7 +8,7 @@ function ShimmerBox({ className, style }: { className?: string; style?: React.CS
     <div
       className={className}
       style={{
-        background: "linear-gradient(90deg, rgba(92,61,46,0.06) 25%, rgba(92,61,46,0.1) 50%, rgba(92,61,46,0.06) 75%)",
+        background: "linear-gradient(90deg, rgba(54,69,84,0.06) 25%, rgba(54,69,84,0.1) 50%, rgba(54,69,84,0.06) 75%)",
         backgroundSize: "200% 100%",
         animation: "skeletonShimmer 1.4s ease infinite",
         borderRadius: 12,
@@ -39,7 +39,7 @@ export function MonthlyCoursesSkeletonSection() {
             <div
               key={i}
               className="rounded-2xl overflow-hidden"
-              style={{ background: "white", boxShadow: "0 4px 20px rgba(92,61,46,0.06)" }}
+              style={{ background: "white", boxShadow: "0 4px 20px rgba(54,69,84,0.06)" }}
             >
               {/* 커버 이미지 */}
               <ShimmerBox style={{ height: 200, borderRadius: 0 }} />
@@ -78,7 +78,7 @@ export function PlacesGridSkeletonSection() {
             <div
               key={i}
               className="rounded-2xl overflow-hidden"
-              style={{ background: "white", boxShadow: "0 2px 12px rgba(92,61,46,0.06)" }}
+              style={{ background: "white", boxShadow: "0 2px 12px rgba(54,69,84,0.06)" }}
             >
               {/* 이미지 */}
               <ShimmerBox style={{ height: 140, borderRadius: 0 }} />

@@ -5,6 +5,7 @@ import { createClient } from "@/lib/supabase/server";
 import { NaverMap } from "@/components/place/NaverMap";
 import { PlacePhotoGallery } from "@/components/place/PlacePhotoGallery";
 import { BackButton } from "@/components/place/BackButton";
+import { PlaceSaveButton } from "@/components/place/PlaceSaveButton";
 
 const CATEGORY_LABELS: Record<string, string> = {
   cafe: "카페",
@@ -29,7 +30,9 @@ export default async function PlaceDetailPage({
 
   const supabase = await createClient();
 
-  const [{ data: place }, { data: keywords }] = await Promise.all([
+  const { data: { user } } = await supabase.auth.getUser();
+
+  const [{ data: place }, { data: keywords }, { data: savedRow }] = await Promise.all([
     supabase
       .from("places")
       .select(
@@ -43,6 +46,14 @@ export default async function PlaceDetailPage({
       .eq("place_id", id)
       .order("frequency", { ascending: false })
       .limit(20),
+    user
+      ? supabase
+          .from("saved_places")
+          .select("id")
+          .eq("user_id", user.id)
+          .eq("place_id", id)
+          .maybeSingle()
+      : Promise.resolve({ data: null }),
   ]);
 
   if (!place) notFound();
@@ -73,22 +84,27 @@ export default async function PlaceDetailPage({
         {/* 장소 기본 정보 */}
         <div
           className="rounded-2xl p-5 space-y-3"
-          style={{ background: "white", boxShadow: "0 2px 12px rgba(92,61,46,0.07)" }}
+          style={{ background: "white", boxShadow: "0 2px 12px rgba(54,69,84,0.07)" }}
         >
-          {/* 카테고리 배지 + 이름 */}
-          <div>
-            <span
-              className="text-xs font-medium px-2 py-0.5 rounded-full"
-              style={{ background: "var(--mongle-warm)", color: "var(--mongle-brown)" }}
-            >
-              {categoryLabel}
-            </span>
-            <h1
-              className="mt-2 text-2xl font-bold leading-tight"
-              style={{ color: "var(--mongle-brown)" }}
-            >
-              {place.name}
-            </h1>
+          {/* 카테고리 배지 + 이름 + 저장 버튼 */}
+          <div className="flex items-start justify-between gap-3">
+            <div className="flex-1 min-w-0">
+              <span
+                className="text-xs font-medium px-2 py-0.5 rounded-full"
+                style={{ background: "var(--mongle-warm)", color: "var(--mongle-brown)" }}
+              >
+                {categoryLabel}
+              </span>
+              <h1
+                className="mt-2 text-2xl font-bold leading-tight"
+                style={{ color: "var(--mongle-brown)" }}
+              >
+                {place.name}
+              </h1>
+            </div>
+            <div className="flex-shrink-0 mt-1">
+              <PlaceSaveButton placeId={place.id} initialSaved={!!savedRow} />
+            </div>
           </div>
 
           {/* 위치 */}
@@ -128,9 +144,9 @@ export default async function PlaceDetailPage({
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-1.5 text-sm font-medium transition-opacity hover:opacity-70"
-                style={{ color: "var(--mongle-peach-dark)" }}
+                style={{ color: "var(--mongle-brown)", opacity: 0.6 }}
               >
-                <ExternalLink size={14} />
+                <ExternalLink size={13} />
                 네이버 지도
               </a>
             )}
@@ -139,7 +155,7 @@ export default async function PlaceDetailPage({
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-1.5 text-sm font-medium transition-opacity hover:opacity-70"
-              style={{ color: "#E1306C" }}
+              style={{ color: "var(--mongle-brown)", opacity: 0.6 }}
             >
               <ExternalLink size={14} />
               인스타그램 검색
@@ -170,7 +186,7 @@ export default async function PlaceDetailPage({
         {positiveKeywords.length > 0 && (
           <div
             className="rounded-2xl p-5"
-            style={{ background: "white", boxShadow: "0 2px 12px rgba(92,61,46,0.07)" }}
+            style={{ background: "white", boxShadow: "0 2px 12px rgba(54,69,84,0.07)" }}
           >
             <h2
               className="text-base font-semibold mb-3"
@@ -199,7 +215,7 @@ export default async function PlaceDetailPage({
         {place.lat && place.lng && (
           <div
             className="rounded-2xl overflow-hidden p-4"
-            style={{ background: "white", boxShadow: "0 2px 12px rgba(92,61,46,0.07)" }}
+            style={{ background: "white", boxShadow: "0 2px 12px rgba(54,69,84,0.07)" }}
           >
             <h2
               className="text-base font-semibold mb-3"

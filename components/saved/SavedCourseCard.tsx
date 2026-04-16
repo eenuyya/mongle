@@ -5,14 +5,14 @@ import Link from "next/link";
 import { Clock, MapPin, Bookmark, RouteIcon } from "lucide-react";
 
 const COVER_GRADIENTS: Record<string, string> = {
-  혼자:   "linear-gradient(135deg, #FF8C69 0%, #FFD166 100%)",
-  데이트: "linear-gradient(135deg, #FFCDB8 0%, #FF8C69 100%)",
-  친구랑: "linear-gradient(135deg, #FFB347 0%, #FF8C69 100%)",
+  혼자:   "linear-gradient(135deg, #7B8FA6 0%, #FFD166 100%)",
+  데이트: "linear-gradient(135deg, #B0BFCC 0%, #7B8FA6 100%)",
+  친구랑: "linear-gradient(135deg, #7B8FA6 0%, #7B8FA6 100%)",
   카공:   "linear-gradient(135deg, #C9A86C 0%, #E8C9A0 100%)",
   전시:   "linear-gradient(135deg, #8B6842 0%, #C49A6C 100%)",
   산책:   "linear-gradient(135deg, #A8C5A0 0%, #E8C9A0 100%)",
-  팝업:   "linear-gradient(135deg, #FFB347 0%, #E07030 100%)",
-  default:"linear-gradient(135deg, #FF8C69 0%, #FFD166 100%)",
+  팝업:   "linear-gradient(135deg, #7B8FA6 0%, #506070 100%)",
+  default:"linear-gradient(135deg, #7B8FA6 0%, #FFD166 100%)",
 };
 
 function getCoverGradient(themeTag?: string | null): string {
@@ -53,8 +53,8 @@ export function SavedCourseCard({
       className="flex rounded-lg overflow-hidden"
       style={{
         background: "white",
-        boxShadow: "0 2px 12px rgba(92,61,46,0.08)",
-        border: "1px solid rgba(92,61,46,0.06)",
+        boxShadow: "0 2px 12px rgba(54,69,84,0.08)",
+        border: "1px solid rgba(54,69,84,0.06)",
         minHeight: 112,
         ...style,
       }}
@@ -139,7 +139,7 @@ export function SavedCourseCard({
       <button
         onClick={() => onUnsave(id)}
         className="flex-shrink-0 flex items-center justify-center self-center mr-3.5 rounded-full transition-all active:scale-90 hover:opacity-70"
-        style={{ width: 34, height: 34, background: "rgba(255,140,105,0.1)" }}
+        style={{ width: 34, height: 34, background: "rgba(123,143,166,0.1)" }}
         aria-label="저장 해제"
       >
         <Bookmark

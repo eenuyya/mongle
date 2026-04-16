@@ -122,7 +122,7 @@ export function PlacesGridClient({
               style={{
                 background: "var(--mongle-peach)",
                 color: "white",
-                boxShadow: "0 4px 16px rgba(255,140,105,0.3)",
+                boxShadow: "0 4px 16px rgba(123,143,166,0.3)",
               }}
             >
               {loading ? (

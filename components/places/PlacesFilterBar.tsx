@@ -91,7 +91,7 @@ export function PlacesFilterBar({ districts }: { districts: string[] }) {
             })}
 
             {/* 구분선 */}
-            <div className="shrink-0 w-px self-stretch my-1" style={{ background: "rgba(92,61,46,0.12)" }} />
+            <div className="shrink-0 w-px self-stretch my-1" style={{ background: "rgba(54,69,84,0.12)" }} />
 
             {/* 동네 필터 버튼 */}
             <div className="relative shrink-0">
@@ -129,8 +129,8 @@ export function PlacesFilterBar({ districts }: { districts: string[] }) {
                   className="hidden md:block absolute top-full left-0 mt-2 rounded-2xl p-5 z-50 min-w-[260px]"
                   style={{
                     background: "white",
-                    boxShadow: "0 8px 32px rgba(92,61,46,0.14)",
-                    border: "1px solid rgba(92,61,46,0.08)",
+                    boxShadow: "0 8px 32px rgba(54,69,84,0.14)",
+                    border: "1px solid rgba(54,69,84,0.08)",
                   }}
                 >
                   <DistrictContent
@@ -154,7 +154,7 @@ export function PlacesFilterBar({ districts }: { districts: string[] }) {
           <button
             onClick={() => updateParam("district", "all")}
             className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-medium w-fit transition-opacity hover:opacity-70"
-            style={{ background: "rgba(92,61,46,0.08)", color: "var(--mongle-brown)" }}
+            style={{ background: "rgba(54,69,84,0.08)", color: "var(--mongle-brown)" }}
           >
             <MapPin size={10} />
             {activeDistrictLabel}
@@ -172,9 +172,9 @@ export function PlacesFilterBar({ districts }: { districts: string[] }) {
           />
           <div
             className="md:hidden fixed inset-x-0 bottom-0 z-50 rounded-t-3xl p-6 pb-safe"
-            style={{ background: "white", boxShadow: "0 -4px 32px rgba(92,61,46,0.12)" }}
+            style={{ background: "white", boxShadow: "0 -4px 32px rgba(54,69,84,0.12)" }}
           >
-            <div className="mx-auto mb-5 rounded-full" style={{ width: 36, height: 4, background: "rgba(92,61,46,0.15)" }} />
+            <div className="mx-auto mb-5 rounded-full" style={{ width: 36, height: 4, background: "rgba(54,69,84,0.15)" }} />
             <DistrictContent
               districts={districts}
               popular={popular}
@@ -212,7 +212,7 @@ function DistrictContent({
         onClick={() => { updateParam("district", d); onClose(); }}
         aria-pressed={isActive}
         className={cn("px-3 py-1.5 rounded-full text-sm font-medium transition-all duration-200", isActive ? "text-white" : "hover:opacity-80")}
-        style={{ background: isActive ? "var(--mongle-peach)" : "rgba(92,61,46,0.06)", color: isActive ? "white" : "var(--mongle-brown)" }}
+        style={{ background: isActive ? "var(--mongle-peach)" : "rgba(54,69,84,0.06)", color: isActive ? "white" : "var(--mongle-brown)" }}
       >
         {label}
       </button>
@@ -248,7 +248,7 @@ function DistrictContent({
           onClose();
         }}
         className="mt-1 py-2.5 rounded-full text-sm font-medium transition-opacity hover:opacity-70"
-        style={{ background: "rgba(92,61,46,0.06)", color: "var(--mongle-brown)" }}
+        style={{ background: "rgba(54,69,84,0.06)", color: "var(--mongle-brown)" }}
       >
         초기화
       </button>

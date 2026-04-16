@@ -1,15 +1,16 @@
 /**
- * MongleLoader — 몽글 로고 그라데이션 로딩 인디케이터
- * CSS mask로 로고 실루엣 안에 그라데이션 애니메이션 적용
+ * MongleLoader — 몽글 로고 바운스 로딩 인디케이터
+ * squash & stretch 물리 바운스 + 착지 그림자
  */
-export function MongleLoader({ fullPage = true }: { fullPage?: boolean }) {
+export function MongleLoader({ fullPage = true, text = "모아오는 중…" }: { fullPage?: boolean; text?: string }) {
   const content = (
-    <div className="flex flex-col items-center gap-5">
-      {/* 로고 실루엣 안에서 그라데이션이 흐름 */}
+    <div className="flex flex-col items-center" style={{ gap: 0 }}>
+      {/* 로고 바운스 */}
       <div
+        className="animate-logo-bounce"
         style={{
-          width: 72,
-          height: 72,
+          width: 68,
+          height: 68,
           maskImage: "url('/logo.png')",
           WebkitMaskImage: "url('/logo.png')",
           maskSize: "contain",
@@ -18,22 +19,31 @@ export function MongleLoader({ fullPage = true }: { fullPage?: boolean }) {
           WebkitMaskRepeat: "no-repeat",
           maskPosition: "center",
           WebkitMaskPosition: "center",
-          background: "linear-gradient(90deg, #E0613A 0%, #FF8C69 30%, #FFE0A0 50%, #FF8C69 70%, #E0613A 100%)",
-          backgroundSize: "250% 100%",
-          animation: "shimmerSweep 1.6s linear infinite, logoPulse 2s ease-in-out infinite",
+          background: "linear-gradient(160deg, #7B8FA6 0%, #506070 60%, #364554 100%)",
+          marginBottom: 6,
         }}
       />
-
-      {/* 로딩 텍스트 */}
+      {/* 착지 그림자 */}
+      <div
+        className="animate-shadow-squash"
+        style={{
+          width: 40,
+          height: 6,
+          borderRadius: "50%",
+          background: "#7B8FA6",
+          marginBottom: 18,
+        }}
+      />
+      {/* 텍스트 */}
       <p
-        className="text-sm"
+        className="animate-text-bounce"
         style={{
           color: "var(--mongle-brown)",
-          opacity: 0.4,
-          animation: "pulse 2s ease-in-out infinite",
+          fontSize: 13,
+          letterSpacing: "0.05em",
         }}
       >
-        모아오는 중…
+        {text}
       </p>
     </div>
   );

@@ -138,16 +138,16 @@ function SortablePlaceCard({
           className="flex items-center justify-center rounded-full text-xs font-bold text-white z-10 transition-all duration-200"
           style={{
             width: 28, height: 28,
-            background: isPendingDelete ? "#E0613A" : "var(--mongle-peach)",
+            background: isPendingDelete ? "#506070" : "var(--mongle-peach)",
             boxShadow: isPendingDelete
               ? "0 2px 8px rgba(224,97,58,0.4)"
-              : "0 2px 8px rgba(255,140,105,0.4)",
+              : "0 2px 8px rgba(123,143,166,0.4)",
           }}
         >
           {displayOrder}
         </div>
         {!isLast && (
-          <div style={{ width: 2, flex: 1, minHeight: 56, borderLeft: "2px dashed rgba(255,140,105,0.3)", marginTop: 4 }} />
+          <div style={{ width: 2, flex: 1, minHeight: 56, borderLeft: "2px dashed rgba(123,143,166,0.3)", marginTop: 4 }} />
         )}
       </div>
 
@@ -164,10 +164,10 @@ function SortablePlaceCard({
             }}
           >
             <div className="flex-1 min-w-0">
-              <p className="text-sm font-bold truncate" style={{ color: "#E0613A" }}>
+              <p className="text-sm font-bold truncate" style={{ color: "#506070" }}>
                 {cp.places.name}
               </p>
-              <p className="text-xs mt-0.5" style={{ color: "#E0613A", opacity: 0.7 }}>
+              <p className="text-xs mt-0.5" style={{ color: "#506070", opacity: 0.7 }}>
                 코스에서 뺄까요?
               </p>
             </div>
@@ -175,14 +175,14 @@ function SortablePlaceCard({
               <button
                 onClick={() => onDeleteCancel(cp.places.id)}
                 className="px-3 py-1.5 rounded-xl text-xs font-semibold transition-colors hover:bg-black/5"
-                style={{ color: "var(--mongle-brown)", background: "white", border: "1px solid rgba(92,61,46,0.12)" }}
+                style={{ color: "var(--mongle-brown)", background: "white", border: "1px solid rgba(54,69,84,0.12)" }}
               >
                 아니요
               </button>
               <button
                 onClick={() => onDeleteConfirm(cp.places.id)}
                 className="px-3 py-1.5 rounded-xl text-xs font-bold text-white transition-all hover:opacity-90 active:scale-95"
-                style={{ background: "#E0613A" }}
+                style={{ background: "#506070" }}
               >
                 빼기
               </button>
@@ -194,7 +194,7 @@ function SortablePlaceCard({
               "flex gap-3 rounded-2xl p-3.5 ml-2 transition-all",
               isDragging ? "shadow-xl scale-[1.02]" : ""
             )}
-            style={{ background: "white", border: "1px solid rgba(92,61,46,0.07)" }}
+            style={{ background: "white", border: "1px solid rgba(54,69,84,0.07)" }}
           >
             {/* 편집 모드: 삭제 버튼 (왼쪽) */}
             {isEditMode && (
@@ -204,7 +204,7 @@ function SortablePlaceCard({
                   "flex-shrink-0 flex items-center self-center w-6 h-6 rounded-full transition-all duration-150",
                   canDelete ? "hover:scale-110 active:scale-95" : "opacity-40"
                 )}
-                style={{ background: canDelete ? "#E0613A" : "rgba(92,61,46,0.15)" }}
+                style={{ background: canDelete ? "#506070" : "rgba(54,69,84,0.15)" }}
                 aria-label="장소 빼기"
               >
                 <Minus size={13} className="m-auto" style={{ color: "white" }} />
@@ -312,7 +312,7 @@ function InsertHandle({
         className="flex-1"
         style={{
           height: 1,
-          borderTop: "1.5px dashed rgba(255,140,105,0.4)",
+          borderTop: "1.5px dashed rgba(123,143,166,0.4)",
         }}
       />
       {/* 중앙 버튼 */}
@@ -321,18 +321,18 @@ function InsertHandle({
         style={{
           width: 28,
           height: 28,
-          background: pressed ? "#FF8C69" : "#FFF8F3",
-          border: "1.5px solid #FF8C69",
+          background: pressed ? "#7B8FA6" : "#F4F6F8",
+          border: "1.5px solid #7B8FA6",
           marginLeft: 6,
           marginRight: 4,
         }}
       >
-        <Plus size={14} color={pressed ? "white" : "#FF8C69"} />
+        <Plus size={14} color={pressed ? "white" : "#7B8FA6"} />
       </div>
       {/* 레이블 */}
       <span
         className="flex-shrink-0 text-[11px] font-medium mr-2"
-        style={{ color: "#FF8C69" }}
+        style={{ color: "#7B8FA6" }}
       >
         {isLast ? "코스 끝에 추가하기" : "여기에 추가하기"}
       </span>
@@ -341,7 +341,7 @@ function InsertHandle({
         className="flex-1"
         style={{
           height: 1,
-          borderTop: "1.5px dashed rgba(255,140,105,0.4)",
+          borderTop: "1.5px dashed rgba(123,143,166,0.4)",
         }}
       />
     </button>
@@ -361,8 +361,8 @@ function PlaceThumbnail({
 
   if (!src) {
     const bg: Record<string, string> = {
-      cafe: "#FFF0E6", bookstore: "#E8F4F0", gallery: "#F0EBF8",
-      park: "#E8F4E8", popup: "#FFF0E6", shop: "#FBF0E6", restaurant: "#FFF0E0",
+      cafe: "#F0F3F6", bookstore: "#E8F4F0", gallery: "#F0EBF8",
+      park: "#E8F4E8", popup: "#F0F3F6", shop: "#FBF0E6", restaurant: "#FFF0E0",
     };
     return (
       <div
@@ -375,7 +375,7 @@ function PlaceThumbnail({
   return (
     <div className="flex-shrink-0 rounded-xl overflow-hidden relative" style={{ width: 68, height: 68 }}>
       {!loaded && (
-        <div className="absolute inset-0 bg-gradient-to-r from-[#f0e8e0] via-[#fdf6f0] to-[#f0e8e0] bg-[length:200%_100%] animate-shimmer" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#dce3ea] via-[#edf1f5] to-[#dce3ea] bg-[length:200%_100%] animate-shimmer" />
       )}
       <Image
         src={src}
@@ -764,10 +764,9 @@ export function CourseDetailClient({
     // 액션바 높이(≈68px) + BottomTabBar 높이(≈62px) + safe-area
     // md 이상에서는 BottomTabBar가 숨겨지므로 액션바 높이만 적용
     <main
-      className="min-h-screen md:pb-0"
+      className="min-h-screen pb-[140px] md:pb-4"
       style={{
         background: "var(--mongle-cream)",
-        paddingBottom: "140px",
       }}
     >
 
@@ -789,7 +788,7 @@ export function CourseDetailClient({
             <Link
               href="/courses"
               className="pointer-events-auto inline-flex items-center gap-1 text-sm font-semibold px-3 py-1.5 rounded-full"
-              style={{ background: "rgba(255,248,243,0.92)", color: "var(--mongle-brown)", backdropFilter: "blur(8px)" }}
+              style={{ background: "rgba(244,246,248,0.92)", color: "var(--mongle-brown)", backdropFilter: "blur(8px)" }}
             >
               <ChevronLeft size={15} />
               코스 목록
@@ -798,7 +797,7 @@ export function CourseDetailClient({
           {(party || stay) && (
             <div
               className="pointer-events-auto flex items-center gap-1 px-3 py-1.5 rounded-full text-xs font-semibold"
-              style={{ background: "rgba(255,140,105,0.15)", color: "var(--mongle-peach-dark)", backdropFilter: "blur(8px)" }}
+              style={{ background: "rgba(123,143,166,0.15)", color: "var(--mongle-peach-dark)", backdropFilter: "blur(8px)" }}
             >
               <Zap size={11} />
               {party ? PARTY_LABEL[party] : ""}
@@ -820,7 +819,7 @@ export function CourseDetailClient({
         {aiReason && (
           <div
             className="flex items-start gap-2.5 px-4 py-3 rounded-2xl text-sm"
-            style={{ background: "rgba(255,140,105,0.1)", color: "var(--mongle-brown)" }}
+            style={{ background: "rgba(123,143,166,0.1)", color: "var(--mongle-brown)" }}
           >
             <Sparkles size={15} className="flex-shrink-0 mt-0.5" style={{ color: "var(--mongle-peach)" }} />
             <div>
@@ -831,7 +830,7 @@ export function CourseDetailClient({
         )}
 
         {/* ── 코스 정보 카드 ── */}
-        <div className="rounded-2xl px-5 py-4 space-y-3" style={{ background: "white", boxShadow: "0 2px 12px rgba(92,61,46,0.07)" }}>
+        <div className="rounded-2xl px-5 py-4 space-y-3" style={{ background: "white", boxShadow: "0 2px 12px rgba(54,69,84,0.07)" }}>
           <div className="flex flex-wrap gap-1.5">
             {course.theme_tag && (
               <span className="px-2.5 py-1 rounded-full text-xs font-medium" style={{ background: "var(--mongle-warm)", color: "var(--mongle-brown)" }}>
@@ -839,7 +838,7 @@ export function CourseDetailClient({
               </span>
             )}
             {course.has_popup && expiresInDays != null && expiresInDays <= 7 && (
-              <span className="px-2.5 py-1 rounded-full text-xs font-bold text-white" style={{ background: "#E0613A" }}>
+              <span className="px-2.5 py-1 rounded-full text-xs font-bold text-white" style={{ background: "#506070" }}>
                 D-{expiresInDays}
               </span>
             )}
@@ -896,7 +895,7 @@ export function CourseDetailClient({
         </div>
 
         {stay === "short" && (
-          <div className="flex items-center gap-2 px-4 py-3 rounded-2xl text-sm" style={{ background: "rgba(255,140,105,0.1)", color: "var(--mongle-peach-dark)" }}>
+          <div className="flex items-center gap-2 px-4 py-3 rounded-2xl text-sm" style={{ background: "rgba(123,143,166,0.1)", color: "var(--mongle-peach-dark)" }}>
             <Zap size={14} />
             <span className="font-medium">핵심 2곳만 골랐어요 — 2시간 이내 버전</span>
           </div>
@@ -916,12 +915,12 @@ export function CourseDetailClient({
               {Array.from({ length: places.length || 3 }).map((_, i) => (
                 <div key={i} className="flex gap-0">
                   <div className="flex flex-col items-center" style={{ width: 44, flexShrink: 0 }}>
-                    <div className="rounded-full animate-pulse" style={{ width: 28, height: 28, background: "rgba(255,140,105,0.25)", animationDelay: `${i * 80}ms` }} />
+                    <div className="rounded-full animate-pulse" style={{ width: 28, height: 28, background: "rgba(123,143,166,0.25)", animationDelay: `${i * 80}ms` }} />
                     {i < (places.length || 3) - 1 && (
-                      <div style={{ width: 2, flex: 1, minHeight: 56, borderLeft: "2px dashed rgba(255,140,105,0.15)", marginTop: 4 }} />
+                      <div style={{ width: 2, flex: 1, minHeight: 56, borderLeft: "2px dashed rgba(123,143,166,0.15)", marginTop: 4 }} />
                     )}
                   </div>
-                  <div className="flex-1 ml-2 rounded-2xl animate-pulse" style={{ height: 80, background: "rgba(255,140,105,0.08)", animationDelay: `${i * 80}ms` }} />
+                  <div className="flex-1 ml-2 rounded-2xl animate-pulse" style={{ height: 80, background: "rgba(123,143,166,0.08)", animationDelay: `${i * 80}ms` }} />
                 </div>
               ))}
             </div>
@@ -996,7 +995,7 @@ export function CourseDetailClient({
           <Link
             href={`/courses/${course.id}?party=${party ?? ""}&stay=half`}
             className="flex items-center justify-center gap-2 py-3.5 rounded-2xl text-sm font-medium hover:opacity-80"
-            style={{ background: "white", color: "var(--mongle-brown)", border: "1px dashed rgba(92,61,46,0.2)" }}
+            style={{ background: "white", color: "var(--mongle-brown)", border: "1px dashed rgba(54,69,84,0.2)" }}
           >
             + {coursePlaces.length - 2}곳 더 보기 (반나절 버전)
           </Link>
@@ -1021,7 +1020,7 @@ export function CourseDetailClient({
             bottom: 150,
             height: 44,
             borderRadius: 12,
-            background: "rgba(92,61,46,0.9)",
+            background: "rgba(54,69,84,0.9)",
           }}
         >
           <span className="text-sm text-white">코스에는 최소 2곳이 필요해요</span>
@@ -1036,7 +1035,7 @@ export function CourseDetailClient({
             bottom: 150,
             height: 48,
             borderRadius: 12,
-            background: "rgba(92,61,46,0.9)",
+            background: "rgba(54,69,84,0.9)",
           }}
         >
           <span className="text-sm text-white truncate">
@@ -1084,13 +1083,11 @@ export function CourseDetailClient({
         md:hidden인 BottomTabBar가 없는 데스크탑은 pb-4 그대로 유지
       */}
       <div
-        className="fixed inset-x-0 bottom-0 z-[45] px-4 pt-2 md:static md:pb-4"
+        className="fixed inset-x-0 bottom-0 z-[45] px-4 pt-2 pb-[70px] md:static md:pb-4"
         style={{
-          background: "rgba(255,248,243,0.96)",
+          background: "rgba(244,246,248,0.96)",
           backdropFilter: "blur(14px)",
-          borderTop: "1px solid rgba(92,61,46,0.08)",
-          // BottomTabBar(62px) + 버튼 아래 여백(8px) = 70px
-          paddingBottom: "70px",
+          borderTop: "1px solid rgba(54,69,84,0.08)",
         }}
       >
         {isEditMode ? (
@@ -1099,7 +1096,7 @@ export function CourseDetailClient({
             <button
               onClick={cancelEditMode}
               className="flex items-center justify-center gap-1.5 px-5 py-3.5 rounded-2xl text-sm font-bold transition-all hover:bg-black/5 active:scale-95"
-              style={{ background: "white", color: "var(--mongle-brown)", border: "1.5px solid rgba(92,61,46,0.12)" }}
+              style={{ background: "white", color: "var(--mongle-brown)", border: "1.5px solid rgba(54,69,84,0.12)" }}
             >
               <X size={15} />
               취소
@@ -1124,7 +1121,7 @@ export function CourseDetailClient({
                   className={cn("flex-1 flex items-center justify-center gap-2 py-3.5 rounded-2xl text-sm font-bold transition-all duration-200", isBouncing && "scale-95")}
                   style={isSaved
                     ? { background: "var(--mongle-peach)", color: "white" }
-                    : { background: "white", color: "var(--mongle-brown)", border: "1.5px solid rgba(92,61,46,0.12)" }
+                    : { background: "white", color: "var(--mongle-brown)", border: "1.5px solid rgba(54,69,84,0.12)" }
                   }
                 >
                   <Heart size={16} style={{ fill: isSaved ? "white" : "transparent", color: isSaved ? "white" : "var(--mongle-peach)" }} />
@@ -1134,14 +1131,14 @@ export function CourseDetailClient({
               <button
                 onClick={handleShare}
                 className="flex items-center justify-center gap-2 px-4 py-3.5 rounded-2xl text-sm font-bold transition-all hover:opacity-80 active:scale-95"
-                style={{ background: "white", color: "var(--mongle-brown)", border: "1.5px solid rgba(92,61,46,0.12)" }}
+                style={{ background: "white", color: "var(--mongle-brown)", border: "1.5px solid rgba(54,69,84,0.12)" }}
               >
                 {copied ? <><Check size={15} style={{ color: "var(--mongle-peach)" }} />복사됨</> : <><Share2 size={15} />공유</>}
               </button>
               <button
                 onClick={enterEditMode}
                 className="flex items-center justify-center gap-1.5 px-4 py-3.5 rounded-2xl text-sm font-bold transition-all hover:opacity-80 active:scale-95"
-                style={{ background: "white", color: "var(--mongle-brown)", border: "1.5px solid rgba(92,61,46,0.12)" }}
+                style={{ background: "white", color: "var(--mongle-brown)", border: "1.5px solid rgba(54,69,84,0.12)" }}
               >
                 <Pencil size={15} />
                 편집

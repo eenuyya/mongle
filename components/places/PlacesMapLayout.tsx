@@ -92,7 +92,6 @@ export function PlacesMapLayout({ initialPlaces, savedIds, availableDistricts }:
   const handlePlaceClick = useCallback((id: string) => {
     const scrollTop = desktopListRef.current?.scrollTop ?? mobileListRef.current?.scrollTop ?? 0;
     sessionStorage.setItem("mongle-places-scroll", String(scrollTop));
-    sessionStorage.setItem("mongle-places-back-url", window.location.pathname + window.location.search);
     sessionStorage.setItem("mongle-places-selected", id);
     sessionStorage.setItem("mongle-places-sheet-h", String(sheetH));
     setSelectedId(id);
@@ -205,7 +204,7 @@ export function PlacesMapLayout({ initialPlaces, savedIds, availableDistricts }:
         <div className="flex flex-col items-center py-16 gap-3">
           <div
             className="w-14 h-14 rounded-full flex items-center justify-center"
-            style={{ background: "rgba(255,140,105,0.08)" }}
+            style={{ background: "rgba(123,143,166,0.08)" }}
           >
             <MapPin size={24} style={{ color: "var(--mongle-peach)", opacity: 0.5 }} />
           </div>
@@ -234,7 +233,7 @@ export function PlacesMapLayout({ initialPlaces, savedIds, availableDistricts }:
     </div>
   );
 
-  const listContent        = makeListContent(false); // 데스크탑 목록 패널
+  const listContent        = makeListContent(true);  // 데스크탑 목록 패널
   const mobileListContent  = makeListContent(true);  // 모바일 목록 탭 (split 모드)
   const sheetListContent   = makeListContent(true);  // 모바일 바텀시트 (split 모드)
 
@@ -268,14 +267,14 @@ export function PlacesMapLayout({ initialPlaces, savedIds, availableDistricts }:
         {/* 좌측 — 리스트 패널 */}
         <div
           className="w-[400px] flex-shrink-0 flex flex-col"
-          style={{ borderRight: "1px solid rgba(255,140,105,0.1)" }}
+          style={{ borderRight: "1px solid rgba(123,143,166,0.1)" }}
         >
           {/* 패널 헤더 */}
           <div
             className="flex-shrink-0"
             style={{
-              background: "linear-gradient(160deg, #FFF8F3 0%, #FFF0E6 100%)",
-              borderBottom: "1px solid rgba(255,140,105,0.12)",
+              background: "linear-gradient(160deg, #F4F6F8 0%, #F0F3F6 100%)",
+              borderBottom: "1px solid rgba(123,143,166,0.12)",
             }}
           >
             {selectedDistrict ? (
@@ -283,7 +282,7 @@ export function PlacesMapLayout({ initialPlaces, savedIds, availableDistricts }:
                 <button
                   onClick={handleBack}
                   className="w-8 h-8 flex items-center justify-center rounded-full transition-all hover:scale-110"
-                  style={{ background: "rgba(255,140,105,0.1)", color: "var(--mongle-brown)" }}
+                  style={{ background: "rgba(123,143,166,0.1)", color: "var(--mongle-brown)" }}
                 >
                   <ArrowLeft size={15} strokeWidth={2.5} />
                 </button>
@@ -323,12 +322,12 @@ export function PlacesMapLayout({ initialPlaces, savedIds, availableDistricts }:
           </div>
 
           {/* 리스트 */}
-          <div ref={desktopListRef} className="flex-1 overflow-y-auto" style={{ background: "#FDFAF8" }}>
+          <div ref={desktopListRef} className="flex-1 overflow-y-auto" style={{ background: "#F4F6F8" }}>
             {!selectedDistrict ? (
               <div className="flex flex-col items-center justify-center h-full gap-4 pb-12">
                 <div
                   className="w-20 h-20 rounded-3xl flex items-center justify-center"
-                  style={{ background: "rgba(255,140,105,0.08)" }}
+                  style={{ background: "rgba(123,143,166,0.08)" }}
                 >
                   <MapPin size={32} style={{ color: "var(--mongle-peach)", opacity: 0.45 }} />
                 </div>
@@ -354,7 +353,7 @@ export function PlacesMapLayout({ initialPlaces, savedIds, availableDistricts }:
           className="flex-shrink-0 flex items-center gap-2 px-3 py-2.5"
           style={{
             background: "rgba(255,255,255,0.96)",
-            borderBottom: "1px solid rgba(255,140,105,0.1)",
+            borderBottom: "1px solid rgba(123,143,166,0.1)",
             backdropFilter: "blur(12px)",
           }}
         >
@@ -362,7 +361,7 @@ export function PlacesMapLayout({ initialPlaces, savedIds, availableDistricts }:
             <button
               onClick={handleBack}
               className="w-8 h-8 flex items-center justify-center rounded-full flex-shrink-0"
-              style={{ background: "rgba(255,140,105,0.1)" }}
+              style={{ background: "rgba(123,143,166,0.1)" }}
             >
               <ArrowLeft size={15} strokeWidth={2.5} style={{ color: "var(--mongle-brown)" }} />
             </button>
@@ -378,7 +377,7 @@ export function PlacesMapLayout({ initialPlaces, savedIds, availableDistricts }:
           {/* 지도/목록 탭 — 오른쪽 */}
           <div
             className="ml-auto flex gap-1 p-1 rounded-2xl"
-            style={{ background: "rgba(255,140,105,0.08)" }}
+            style={{ background: "rgba(123,143,166,0.08)" }}
           >
             {(["map", "list"] as const).map(v => (
               <button
@@ -387,7 +386,7 @@ export function PlacesMapLayout({ initialPlaces, savedIds, availableDistricts }:
                 className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold transition-all duration-200"
                 style={
                   mobileView === v
-                    ? { background: "var(--mongle-peach)", color: "white", boxShadow: "0 2px 8px rgba(255,140,105,0.35)" }
+                    ? { background: "var(--mongle-peach)", color: "white", boxShadow: "0 2px 8px rgba(123,143,166,0.35)" }
                     : { background: "transparent", color: "var(--mongle-brown)", opacity: 0.55 }
                 }
               >
@@ -399,12 +398,12 @@ export function PlacesMapLayout({ initialPlaces, savedIds, availableDistricts }:
         </div>
 
         {mobileView === "list" ? (
-          <div ref={mobileListRef} className="flex-1 overflow-y-auto" style={{ background: "#FDFAF8" }}>
+          <div ref={mobileListRef} className="flex-1 overflow-y-auto" style={{ background: "#F4F6F8" }}>
             {!selectedDistrict ? (
               <div className="flex flex-col items-center justify-center h-full gap-4">
                 <div
                   className="w-16 h-16 rounded-3xl flex items-center justify-center"
-                  style={{ background: "rgba(255,140,105,0.08)" }}
+                  style={{ background: "rgba(123,143,166,0.08)" }}
                 >
                   <MapPin size={26} style={{ color: "var(--mongle-peach)", opacity: 0.45 }} />
                 </div>
@@ -426,7 +425,7 @@ export function PlacesMapLayout({ initialPlaces, savedIds, availableDistricts }:
                 style={{
                   height: `${sheetPx}px`,
                   background: "rgba(255,252,249,0.98)",
-                  boxShadow: "0 -8px 32px rgba(92,61,46,0.12), 0 -1px 0 rgba(255,140,105,0.12)",
+                  boxShadow: "0 -8px 32px rgba(54,69,84,0.12), 0 -1px 0 rgba(123,143,166,0.12)",
                   transition: dragStart.current ? "none" : "height 0.32s cubic-bezier(0.32,0.72,0,1)",
                   backdropFilter: "blur(16px)",
                 }}
@@ -437,7 +436,7 @@ export function PlacesMapLayout({ initialPlaces, savedIds, availableDistricts }:
                   onTouchMove={onTouchMove}
                   onTouchEnd={onTouchEnd}
                 >
-                  <div className="rounded-full" style={{ width: 36, height: 4, background: "rgba(255,140,105,0.28)" }} />
+                  <div className="rounded-full" style={{ width: 36, height: 4, background: "rgba(123,143,166,0.28)" }} />
                   <div className="flex items-center gap-1.5 mt-2">
                     <span className="text-xs font-bold" style={{ color: "var(--mongle-brown)", opacity: 0.7 }}>
                       {selectedDistrict}

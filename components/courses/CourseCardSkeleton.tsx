@@ -6,7 +6,7 @@ export function CourseCardSkeleton() {
       <svg viewBox="0 0 1 1" className="block w-full" aria-hidden="true" />
 
       {/* 전체 shimmer 배경 */}
-      <div className="absolute inset-0 bg-gradient-to-r from-[#f0e8e0] via-[#fdf6f0] to-[#f0e8e0] bg-[length:200%_100%] animate-shimmer" />
+      <div className="absolute inset-0 bg-gradient-to-r from-[#dce3ea] via-[#edf1f5] to-[#dce3ea] bg-[length:200%_100%] animate-shimmer" />
 
       {/* 하단 텍스트 오버레이 */}
       <div

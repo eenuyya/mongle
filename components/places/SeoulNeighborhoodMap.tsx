@@ -120,7 +120,7 @@ export function SeoulNeighborhoodMap({ availableDistricts, onSelect }: SeoulNeig
         <svg
           viewBox="50 10 450 420"
           className="w-full h-auto"
-          style={{ filter: "drop-shadow(0 4px 20px rgba(92,61,46,0.09))" }}
+          style={{ filter: "drop-shadow(0 4px 20px rgba(54,69,84,0.09))" }}
         >
           {/* 서울 윤곽 배경 */}
           <path
@@ -190,15 +190,15 @@ export function SeoulNeighborhoodMap({ availableDistricts, onSelect }: SeoulNeig
                   d={blobPath(n.cx, n.cy, n.rx, n.ry)}
                   fill={
                     !active ? "#DDD3C2" :
-                    isHover  ? "#FF8C69" :
-                               "#FFCDB8"
+                    isHover  ? "#7B8FA6" :
+                               "#B0BFCC"
                   }
                   stroke={active ? "#C8703C" : "#B8A488"}
                   strokeWidth={isHover ? "2" : "1.4"}
                   style={{
                     transition: "fill 0.15s, stroke-width 0.12s",
                     filter: isHover
-                      ? "drop-shadow(0 2px 8px rgba(255,140,105,0.50))"
+                      ? "drop-shadow(0 2px 8px rgba(123,143,166,0.50))"
                       : "none",
                   }}
                 />
@@ -208,7 +208,7 @@ export function SeoulNeighborhoodMap({ availableDistricts, onSelect }: SeoulNeig
                   dominantBaseline="middle"
                   fontSize={active ? "9.5" : "8"}
                   fontWeight={active ? "700" : "400"}
-                  fill={active ? (isHover ? "white" : "#5C3D2E") : "#9A8070"}
+                  fill={active ? (isHover ? "white" : "#364554") : "#9A8070"}
                   style={{ userSelect: "none", pointerEvents: "none", fontFamily: "SUIT, sans-serif" }}
                 >
                   {n.name}
@@ -225,7 +225,7 @@ export function SeoulNeighborhoodMap({ availableDistricts, onSelect }: SeoulNeig
             style={{
               background: "var(--mongle-peach)",
               color: "white",
-              boxShadow: "0 4px 12px rgba(255,140,105,0.4)",
+              boxShadow: "0 4px 12px rgba(123,143,166,0.4)",
             }}
           >
             {hovered} 장소 보기 →
@@ -241,7 +241,7 @@ export function SeoulNeighborhoodMap({ availableDistricts, onSelect }: SeoulNeig
         <div className="flex items-center gap-1.5">
           <div
             className="w-3 h-3 rounded-full"
-            style={{ background: "#FFCDB8", border: "1px solid #C8703C" }}
+            style={{ background: "#B0BFCC", border: "1px solid #C8703C" }}
           />
           <span>장소 있음</span>
         </div>

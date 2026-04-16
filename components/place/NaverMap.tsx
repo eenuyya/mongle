@@ -34,9 +34,9 @@ export function NaverMap({ lat, lng, name }: NaverMapProps) {
         map: mapInstRef.current,
         title: name,
         icon: {
-          content: '<img src="/logo.png" style="width:36px;height:44px;object-fit:contain;" />',
-          size: new window.naver.maps.Size(36, 44),
-          anchor: new window.naver.maps.Point(18, 44),
+          content: '<img src="/marker-pin.png" style="width:44px;height:53px;object-fit:contain;filter:drop-shadow(0 2px 6px rgba(54,69,84,0.45));" />',
+          size: new window.naver.maps.Size(44, 53),
+          anchor: new window.naver.maps.Point(22, 53),
         },
       });
     };

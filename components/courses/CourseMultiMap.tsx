@@ -53,8 +53,8 @@ export function CourseMultiMap({ places, height = 280 }: CourseMultiMapProps) {
             content: `
               <div style="
                 width:30px;height:30px;border-radius:50%;
-                background:#FF8C69;border:2.5px solid white;
-                box-shadow:0 2px 8px rgba(255,140,105,0.45);
+                background:#7B8FA6;border:2.5px solid white;
+                box-shadow:0 2px 8px rgba(123,143,166,0.45);
                 display:flex;align-items:center;justify-content:center;
                 font-size:13px;font-weight:700;color:white;
                 font-family:'Gowun Dodum',sans-serif;
@@ -89,7 +89,7 @@ export function CourseMultiMap({ places, height = 280 }: CourseMultiMapProps) {
           new (window.naver.maps as any).Polyline({
             map,
             path: polylinePath,
-            strokeColor: "#FF8C69",
+            strokeColor: "#7B8FA6",
             strokeOpacity: 0.85,
             strokeWeight: 4,
             strokeStyle: "shortdash",

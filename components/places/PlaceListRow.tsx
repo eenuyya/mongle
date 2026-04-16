@@ -15,25 +15,25 @@ const CATEGORY_LABELS: Record<string, string> = {
 type IconComponent = React.ComponentType<{ size?: number; strokeWidth?: number; style?: React.CSSProperties }>;
 
 const CATEGORY_BADGE: Record<string, { bg: string; color: string; icon: IconComponent }> = {
-  cafe:       { bg: "#FFF0E6", color: "#C25E30", icon: Coffee },
-  restaurant: { bg: "#FDE8D8", color: "#A83E1A", icon: UtensilsCrossed },
-  bookstore:  { bg: "#F3EBE0", color: "#7A5533", icon: BookOpen },
-  gallery:    { bg: "#F8F0E8", color: "#8B6842", icon: Frame },
+  cafe:       { bg: "#E8EDF2", color: "#506070", icon: Coffee },
+  restaurant: { bg: "#E8EDF2", color: "#506070", icon: UtensilsCrossed },
+  bookstore:  { bg: "#E8EDF2", color: "#506070", icon: BookOpen },
+  gallery:    { bg: "#E8EDF2", color: "#506070", icon: Frame },
   park:       { bg: "#EDF5EC", color: "#3D7A4E", icon: TreePine },
-  popup:      { bg: "#FFF3E0", color: "#C25E30", icon: Sparkles },
-  shop:       { bg: "#FFF9E6", color: "#8B6E2A", icon: ShoppingBag },
-  default:    { bg: "#FFEDE4", color: "#C25E30", icon: MapPin },
+  popup:      { bg: "#E8EDF2", color: "#506070", icon: Sparkles },
+  shop:       { bg: "#E8EDF2", color: "#506070", icon: ShoppingBag },
+  default:    { bg: "#E8EDF2", color: "#506070", icon: MapPin },
 };
 
 const CATEGORY_GRADIENTS: Record<string, string> = {
-  cafe:       "linear-gradient(145deg, #FFDBC6 0%, #FFAA80 50%, #FF8C69 100%)",
-  restaurant: "linear-gradient(145deg, #FFCBA4 0%, #E07030 100%)",
-  bookstore:  "linear-gradient(145deg, #E8D5BC 0%, #C49A6C 100%)",
-  gallery:    "linear-gradient(145deg, #F5EAD8 0%, #D4A978 100%)",
+  cafe:       "linear-gradient(145deg, #B0BFCC 0%, #7B8FA6 100%)",
+  restaurant: "linear-gradient(145deg, #8FA5BA 0%, #506070 100%)",
+  bookstore:  "linear-gradient(145deg, #C8D0D8 0%, #7B8FA6 100%)",
+  gallery:    "linear-gradient(145deg, #D4DBE3 0%, #8FA5BA 100%)",
   park:       "linear-gradient(145deg, #D9EDD4 0%, #8FBF82 100%)",
-  popup:      "linear-gradient(145deg, #FFD6A0 0%, #E07030 100%)",
-  shop:       "linear-gradient(145deg, #FFF1C2 0%, #C9A86C 100%)",
-  default:    "linear-gradient(145deg, #FFCDB8 0%, #FF8C69 100%)",
+  popup:      "linear-gradient(145deg, #FFD166 0%, #7B8FA6 100%)",
+  shop:       "linear-gradient(145deg, #FFD166 0%, #B0BFCC 100%)",
+  default:    "linear-gradient(145deg, #B0BFCC 0%, #7B8FA6 100%)",
 };
 
 interface PlaceListRowProps {
@@ -76,17 +76,17 @@ export function PlaceListRow({
 
   const cardStyle = {
     background: isHighlighted
-      ? "linear-gradient(135deg,#FFF6F1 0%,#FFF0E6 100%)"
+      ? "linear-gradient(135deg,#EEF2F6 0%,#F4F6F8 100%)"
       : "white",
-    border: isHighlighted ? "none" : "1px solid rgba(92,61,46,0.07)",
+    border: isHighlighted ? "none" : "1px solid rgba(54,69,84,0.07)",
     padding: "12px",
   };
 
   const cardClass = cn(
     "flex gap-3.5 rounded-md transition-all duration-200 group overflow-hidden",
     isHighlighted
-      ? "shadow-[0_0_0_2px_#FF8C69,0_4px_16px_rgba(255,140,105,0.18)]"
-      : "shadow-[0_1px_6px_rgba(92,61,46,0.08)] hover:shadow-[0_3px_14px_rgba(92,61,46,0.13)]"
+      ? "shadow-[0_0_0_2px_#7B8FA6,0_4px_16px_rgba(123,143,166,0.18)]"
+      : "shadow-[0_1px_6px_rgba(54,69,84,0.08)] hover:shadow-[0_3px_14px_rgba(54,69,84,0.13)]"
   );
 
   /* ── 썸네일 ── */
@@ -98,7 +98,7 @@ export function PlaceListRow({
       {imageUrl ? (
         <>
           {!imgLoaded && (
-            <div className="absolute inset-0 bg-gradient-to-r from-[#f0e8e0] via-[#fdf6f0] to-[#f0e8e0] bg-[length:200%_100%] animate-shimmer" />
+            <div className="absolute inset-0 bg-gradient-to-r from-[#dce3ea] via-[#edf1f5] to-[#dce3ea] bg-[length:200%_100%] animate-shimmer" />
           )}
           <Image
             src={imageUrl}
@@ -154,7 +154,7 @@ export function PlaceListRow({
           <span
             key={k.keyword}
             className="whitespace-nowrap text-[10.5px] leading-[1.5]"
-            style={{ color: "rgba(92,61,46,0.6)", letterSpacing: "0.01em" }}
+            style={{ color: "rgba(54,69,84,0.6)", letterSpacing: "0.01em" }}
           >
             #{k.keyword}
           </span>
@@ -169,14 +169,14 @@ export function PlaceListRow({
       <button
         onClick={handleSave}
         className="w-8 h-8 flex items-center justify-center rounded-full transition-all duration-200"
-        style={{ background: saved ? "rgba(255,140,105,0.12)" : "transparent" }}
+        style={{ background: saved ? "rgba(123,143,166,0.12)" : "transparent" }}
         aria-label={saved ? "저장 취소" : "저장"}
       >
         <Heart
           size={16}
           strokeWidth={2}
           fill={saved ? "var(--mongle-peach)" : "none"}
-          style={{ color: saved ? "var(--mongle-peach)" : "rgba(92,61,46,0.3)" }}
+          style={{ color: saved ? "var(--mongle-peach)" : "rgba(54,69,84,0.3)" }}
         />
       </button>
     </div>

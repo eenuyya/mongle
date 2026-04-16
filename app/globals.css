@@ -82,82 +82,82 @@
 }
 
 :root {
-  /* 몽글 색상 팔레트 — 따뜻한 피치/크림 톤 */
-  --mongle-peach: #FF8C69;        /* 메인 액션 버튼, CTA */
-  --mongle-peach-light: #FFCDB8;  /* 태그 배경, hover 상태 */
-  --mongle-peach-dark: #E0613A;   /* 버튼 hover/active */
-  --mongle-cream: #FFF8F3;        /* 페이지 배경 */
-  --mongle-warm: #FFF0E6;         /* 카드 배경, 섹션 배경 */
-  --mongle-brown: #5C3D2E;        /* 주요 텍스트 */
-  --mongle-gold: #FFD166;         /* 강조 배지, 별점 */
+  /* 몽글 색상 팔레트 — Warm Slate 톤 */
+  --mongle-peach: #7B8FA6;              /* 메인 액션 버튼, CTA */
+  --mongle-peach-light: #B0BFCC;        /* 태그 배경, hover 상태 */
+  --mongle-peach-dark: #506070;         /* 버튼 hover/active */
+  --mongle-cream: #F4F6F8;              /* 페이지 배경 */
+  --mongle-warm: #E8EDF2;              /* 카드 배경, 섹션 배경 */
+  --mongle-brown: #364554;              /* 주요 텍스트 — 다크 슬레이트 */
+  --mongle-gold: #FFD166;               /* 강조 배지, 별점 */
 
-  /* shadcn/ui 색상 — 몽글 톤 적용 */
-  --background: oklch(0.992 0.005 60);        /* #FFF8F3 크림 */
-  --foreground: oklch(0.28 0.04 40);          /* #5C3D2E 따뜻한 갈색 */
-  --card: oklch(0.972 0.008 55);              /* #FFF0E6 따뜻한 카드 */
-  --card-foreground: oklch(0.28 0.04 40);
+  /* shadcn/ui 색상 — Warm Slate 적용 */
+  --background: oklch(0.965 0.010 220);        /* #F4F6F8 슬레이트 크림 */
+  --foreground: oklch(0.32 0.04 220);         /* #364554 다크 슬레이트 */
+  --card: oklch(0.965 0.008 220);             /* #F0F3F6 슬레이트 카드 */
+  --card-foreground: oklch(0.32 0.04 220);
   --popover: oklch(0.992 0.005 60);
-  --popover-foreground: oklch(0.28 0.04 40);
-  --primary: oklch(0.66 0.16 35);             /* #FF8C69 피치 */
+  --popover-foreground: oklch(0.32 0.04 220);
+  --primary: oklch(0.60 0.045 220);           /* #7B8FA6 웜 슬레이트 */
   --primary-foreground: oklch(1 0 0);
-  --secondary: oklch(0.93 0.025 55);          /* #FFCDB8 연한 피치 */
-  --secondary-foreground: oklch(0.28 0.04 40);
-  --muted: oklch(0.955 0.012 55);
-  --muted-foreground: oklch(0.52 0.03 45);
+  --secondary: oklch(0.78 0.025 220);         /* #B0BFCC 연한 슬레이트 */
+  --secondary-foreground: oklch(0.32 0.04 220);
+  --muted: oklch(0.945 0.015 220);
+  --muted-foreground: oklch(0.50 0.03 220);
   --accent: oklch(0.87 0.10 80);              /* #FFD166 골드 */
-  --accent-foreground: oklch(0.28 0.04 40);
+  --accent-foreground: oklch(0.32 0.04 220);
   --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.92 0.015 55);
-  --input: oklch(0.95 0.01 55);
-  --ring: oklch(0.66 0.16 35);
-  --chart-1: oklch(0.66 0.16 35);
+  --border: oklch(0.90 0.018 220);
+  --input: oklch(0.94 0.012 220);
+  --ring: oklch(0.60 0.045 220);
+  --chart-1: oklch(0.60 0.045 220);
   --chart-2: oklch(0.87 0.10 80);
-  --chart-3: oklch(0.75 0.12 50);
-  --chart-4: oklch(0.72 0.08 60);
-  --chart-5: oklch(0.55 0.06 45);
+  --chart-3: oklch(0.72 0.035 220);
+  --chart-4: oklch(0.50 0.04 225);
+  --chart-5: oklch(0.40 0.03 230);
   --radius: 0.875rem;                         /* 둥글게 — 말랑한 느낌 */
-  --sidebar: oklch(0.972 0.008 55);
-  --sidebar-foreground: oklch(0.28 0.04 40);
-  --sidebar-primary: oklch(0.66 0.16 35);
+  --sidebar: oklch(0.965 0.008 220);
+  --sidebar-foreground: oklch(0.32 0.04 220);
+  --sidebar-primary: oklch(0.60 0.045 220);
   --sidebar-primary-foreground: oklch(1 0 0);
-  --sidebar-accent: oklch(0.93 0.025 55);
-  --sidebar-accent-foreground: oklch(0.28 0.04 40);
-  --sidebar-border: oklch(0.92 0.015 55);
-  --sidebar-ring: oklch(0.66 0.16 35);
+  --sidebar-accent: oklch(0.78 0.025 220);
+  --sidebar-accent-foreground: oklch(0.32 0.04 220);
+  --sidebar-border: oklch(0.90 0.018 220);
+  --sidebar-ring: oklch(0.60 0.045 220);
 }
 
 .dark {
-  --background: oklch(0.18 0.02 40);
+  --background: oklch(0.18 0.015 225);
   --foreground: oklch(0.95 0.005 60);
-  --card: oklch(0.22 0.02 40);
+  --card: oklch(0.22 0.018 225);
   --card-foreground: oklch(0.95 0.005 60);
-  --popover: oklch(0.22 0.02 40);
+  --popover: oklch(0.22 0.018 225);
   --popover-foreground: oklch(0.95 0.005 60);
-  --primary: oklch(0.72 0.14 35);
-  --primary-foreground: oklch(0.18 0.02 40);
-  --secondary: oklch(0.28 0.03 45);
+  --primary: oklch(0.68 0.045 220);
+  --primary-foreground: oklch(0.18 0.015 225);
+  --secondary: oklch(0.30 0.025 225);
   --secondary-foreground: oklch(0.95 0.005 60);
-  --muted: oklch(0.28 0.03 45);
-  --muted-foreground: oklch(0.65 0.02 50);
+  --muted: oklch(0.30 0.025 225);
+  --muted-foreground: oklch(0.65 0.02 220);
   --accent: oklch(0.82 0.10 80);
-  --accent-foreground: oklch(0.18 0.02 40);
+  --accent-foreground: oklch(0.18 0.015 225);
   --destructive: oklch(0.704 0.191 22.216);
   --border: oklch(1 0 0 / 10%);
   --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.72 0.14 35);
-  --chart-1: oklch(0.72 0.14 35);
+  --ring: oklch(0.68 0.045 220);
+  --chart-1: oklch(0.68 0.045 220);
   --chart-2: oklch(0.82 0.10 80);
-  --chart-3: oklch(0.68 0.10 50);
-  --chart-4: oklch(0.60 0.08 60);
-  --chart-5: oklch(0.50 0.05 45);
-  --sidebar: oklch(0.22 0.02 40);
+  --chart-3: oklch(0.60 0.035 220);
+  --chart-4: oklch(0.50 0.03 225);
+  --chart-5: oklch(0.40 0.025 230);
+  --sidebar: oklch(0.22 0.018 225);
   --sidebar-foreground: oklch(0.95 0.005 60);
-  --sidebar-primary: oklch(0.72 0.14 35);
+  --sidebar-primary: oklch(0.68 0.045 220);
   --sidebar-primary-foreground: oklch(1 0 0);
-  --sidebar-accent: oklch(0.28 0.03 45);
+  --sidebar-accent: oklch(0.30 0.025 225);
   --sidebar-accent-foreground: oklch(0.95 0.005 60);
   --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.72 0.14 35);
+  --sidebar-ring: oklch(0.68 0.045 220);
 }
 
 /* ===== 몽글 커스텀 애니메이션 keyframes ===== */
@@ -270,6 +270,32 @@
   50%       { transform: scale(0.93); opacity: 0.8; }
 }
 
+/* 로딩 바운스 — squash & stretch */
+@keyframes logoBounce {
+  0%   { transform: translateY(0)    scaleX(1)    scaleY(1); }
+  35%  { transform: translateY(-10px) scaleX(0.96) scaleY(1.05); }
+  55%  { transform: translateY(0)    scaleX(1.05) scaleY(0.94); }
+  72%  { transform: translateY(-4px) scaleX(0.99) scaleY(1.02); }
+  85%  { transform: translateY(0)    scaleX(1.02) scaleY(0.98); }
+  100% { transform: translateY(0)    scaleX(1)    scaleY(1); }
+}
+
+/* 착지 그림자 */
+@keyframes shadowSquash {
+  0%   { transform: scaleX(1);    opacity: 0.18; }
+  35%  { transform: scaleX(0.75); opacity: 0.08; }
+  55%  { transform: scaleX(1.15); opacity: 0.25; }
+  72%  { transform: scaleX(0.9);  opacity: 0.13; }
+  85%  { transform: scaleX(1.05); opacity: 0.2; }
+  100% { transform: scaleX(1);    opacity: 0.18; }
+}
+
+/* 텍스트 위상 지연 연동 */
+@keyframes textBounceSync {
+  0%, 100% { transform: translateY(0px);  opacity: 0.45; }
+  50%       { transform: translateY(-3px); opacity: 0.65; }
+}
+
 /* 이미지 skeleton shimmer */
 @keyframes skeletonShimmer {
   0%   { background-position: 200% 0; }
@@ -278,6 +304,19 @@
 
 .animate-shimmer {
   animation: skeletonShimmer 1.4s ease-in-out infinite;
+}
+
+.animate-logo-bounce {
+  animation: logoBounce 2s cubic-bezier(0.36, 0.07, 0.19, 0.97) infinite;
+  transform-origin: center bottom;
+}
+
+.animate-shadow-squash {
+  animation: shadowSquash 2s cubic-bezier(0.36, 0.07, 0.19, 0.97) infinite;
+}
+
+.animate-text-bounce {
+  animation: textBounceSync 2s ease-in-out 0.15s infinite;
 }
 
 /* 접근성 — 애니메이션 줄이기 설정 시 즉시 표시 */

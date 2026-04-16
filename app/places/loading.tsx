@@ -10,8 +10,8 @@ function _PlacesLoadingSkeleton() {
       <div className="mx-auto max-w-7xl px-4 pt-6">
         {/* 헤더 스켈레톤 */}
         <div className="mb-6 space-y-2">
-          <div className="h-8 w-28 rounded-xl animate-pulse" style={{ background: "rgba(92,61,46,0.08)" }} />
-          <div className="h-4 w-44 rounded-lg animate-pulse" style={{ background: "rgba(92,61,46,0.06)" }} />
+          <div className="h-8 w-28 rounded-xl animate-pulse" style={{ background: "rgba(54,69,84,0.08)" }} />
+          <div className="h-4 w-44 rounded-lg animate-pulse" style={{ background: "rgba(54,69,84,0.06)" }} />
         </div>
 
         {/* 필터 바 스켈레톤 */}
@@ -20,7 +20,7 @@ function _PlacesLoadingSkeleton() {
             <div
               key={i}
               className="h-9 rounded-full animate-pulse shrink-0"
-              style={{ width: w, background: "rgba(92,61,46,0.07)", animationDelay: `${i * 60}ms` }}
+              style={{ width: w, background: "rgba(54,69,84,0.07)", animationDelay: `${i * 60}ms` }}
             />
           ))}
         </div>
@@ -33,10 +33,10 @@ function _PlacesLoadingSkeleton() {
               className="rounded-2xl overflow-hidden animate-pulse"
               style={{ background: "white", animationDelay: `${i * 40}ms` }}
             >
-              <div className="h-48" style={{ background: "rgba(92,61,46,0.06)" }} />
+              <div className="h-48" style={{ background: "rgba(54,69,84,0.06)" }} />
               <div className="p-3 space-y-2">
-                <div className="h-4 w-3/4 rounded-lg" style={{ background: "rgba(92,61,46,0.06)" }} />
-                <div className="h-3 w-1/2 rounded-lg" style={{ background: "rgba(92,61,46,0.04)" }} />
+                <div className="h-4 w-3/4 rounded-lg" style={{ background: "rgba(54,69,84,0.06)" }} />
+                <div className="h-3 w-1/2 rounded-lg" style={{ background: "rgba(54,69,84,0.04)" }} />
               </div>
             </div>
           ))}

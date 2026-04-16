@@ -195,8 +195,8 @@ export function CourseFilterBar() {
                 className="hidden md:block absolute top-full right-0 mt-2 rounded-2xl p-5 z-50 min-w-[280px]"
                 style={{
                   background: "white",
-                  boxShadow: "0 8px 32px rgba(92,61,46,0.14)",
-                  border: "1px solid rgba(92,61,46,0.08)",
+                  boxShadow: "0 8px 32px rgba(54,69,84,0.14)",
+                  border: "1px solid rgba(54,69,84,0.08)",
                 }}
               >
                 <FilterContent
@@ -220,7 +220,7 @@ export function CourseFilterBar() {
                 onClick={() => updateParam("district", "all")}
                 className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-medium transition-opacity hover:opacity-70"
                 style={{
-                  background: "rgba(92,61,46,0.08)",
+                  background: "rgba(54,69,84,0.08)",
                   color: "var(--mongle-brown)",
                 }}
                 aria-label={`${activeDistrictLabel} 필터 제거`}
@@ -235,7 +235,7 @@ export function CourseFilterBar() {
                 onClick={() => updateParam("duration", "all")}
                 className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-medium transition-opacity hover:opacity-70"
                 style={{
-                  background: "rgba(92,61,46,0.08)",
+                  background: "rgba(54,69,84,0.08)",
                   color: "var(--mongle-brown)",
                 }}
                 aria-label={`${activeDurationLabel} 필터 제거`}
@@ -263,7 +263,7 @@ export function CourseFilterBar() {
             className="md:hidden fixed inset-x-0 bottom-0 z-50 rounded-t-3xl overflow-y-auto"
             style={{
               background: "white",
-              boxShadow: "0 -4px 32px rgba(92,61,46,0.12)",
+              boxShadow: "0 -4px 32px rgba(54,69,84,0.12)",
               maxHeight: "80dvh",
               padding: "24px 24px max(24px, env(safe-area-inset-bottom))",
             }}
@@ -274,7 +274,7 @@ export function CourseFilterBar() {
               style={{
                 width: 36,
                 height: 4,
-                background: "rgba(92,61,46,0.15)",
+                background: "rgba(54,69,84,0.15)",
               }}
               aria-hidden="true"
             />
@@ -332,7 +332,7 @@ function FilterContent({
                 onClick={() => updateParam("district", district.id)}
                 aria-pressed={isActive}
                 className={cn("px-3 py-1.5 rounded-full text-sm font-medium transition-all duration-200", isActive ? "text-white" : "hover:opacity-80")}
-                style={{ background: isActive ? "var(--mongle-peach)" : "rgba(92,61,46,0.06)", color: isActive ? "white" : "var(--mongle-brown)" }}
+                style={{ background: isActive ? "var(--mongle-peach)" : "rgba(54,69,84,0.06)", color: isActive ? "white" : "var(--mongle-brown)" }}
               >
                 {district.label}
               </button>
@@ -351,7 +351,7 @@ function FilterContent({
                 onClick={() => updateParam("district", district.id)}
                 aria-pressed={isActive}
                 className={cn("px-3 py-1.5 rounded-full text-sm font-medium transition-all duration-200", isActive ? "text-white" : "hover:opacity-80")}
-                style={{ background: isActive ? "var(--mongle-peach)" : "rgba(92,61,46,0.06)", color: isActive ? "white" : "var(--mongle-brown)" }}
+                style={{ background: isActive ? "var(--mongle-peach)" : "rgba(54,69,84,0.06)", color: isActive ? "white" : "var(--mongle-brown)" }}
               >
                 {district.label}
               </button>
@@ -384,7 +384,7 @@ function FilterContent({
                 style={{
                   background: isActive
                     ? "var(--mongle-peach)"
-                    : "rgba(92,61,46,0.06)",
+                    : "rgba(54,69,84,0.06)",
                   color: isActive ? "white" : "var(--mongle-brown)",
                 }}
               >
@@ -407,7 +407,7 @@ function FilterContent({
           }}
           className="flex-1 py-2.5 rounded-full text-sm font-medium transition-opacity hover:opacity-70"
           style={{
-            background: "rgba(92,61,46,0.06)",
+            background: "rgba(54,69,84,0.06)",
             color: "var(--mongle-brown)",
           }}
         >

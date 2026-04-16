@@ -92,7 +92,7 @@ export function CourseRecommendSetup({ districts }: { districts: string[] }) {
       {/* 헤더 */}
       <div
         className="pt-20 px-5 pb-8"
-        style={{ background: "linear-gradient(160deg, rgba(255,200,170,0.35) 0%, transparent 100%)" }}
+        style={{ background: "linear-gradient(160deg, rgba(123,143,166,0.15) 0%, transparent 100%)" }}
       >
         <div className="mx-auto max-w-md">
           <div
@@ -143,7 +143,7 @@ export function CourseRecommendSetup({ districts }: { districts: string[] }) {
                 style={
                   party === value
                     ? { background: "var(--mongle-peach)", color: "white", borderColor: "var(--mongle-peach)" }
-                    : { background: "white", color: "var(--mongle-brown)", borderColor: "rgba(92,61,46,0.08)" }
+                    : { background: "white", color: "var(--mongle-brown)", borderColor: "rgba(54,69,84,0.08)" }
                 }
               >
                 <Icon size={26} style={{ color: party === value ? "white" : "var(--mongle-peach)" }} />
@@ -171,7 +171,7 @@ export function CourseRecommendSetup({ districts }: { districts: string[] }) {
                 style={
                   duration === value
                     ? { background: "var(--mongle-peach)", color: "white", borderColor: "var(--mongle-peach)" }
-                    : { background: "white", color: "var(--mongle-brown)", borderColor: "rgba(92,61,46,0.08)" }
+                    : { background: "white", color: "var(--mongle-brown)", borderColor: "rgba(54,69,84,0.08)" }
                 }
               >
                 <Icon size={26} style={{ color: duration === value ? "white" : "var(--mongle-peach)" }} />
@@ -189,9 +189,9 @@ export function CourseRecommendSetup({ districts }: { districts: string[] }) {
       <div
         className="sticky bottom-0 px-5"
         style={{
-          background: "rgba(255,248,243,0.95)",
+          background: "rgba(244,246,248,0.95)",
           backdropFilter: "blur(12px)",
-          borderTop: "1px solid rgba(92,61,46,0.08)",
+          borderTop: "1px solid rgba(54,69,84,0.08)",
           paddingBottom: "max(12px, env(safe-area-inset-bottom))",
         }}
       >
@@ -213,9 +213,9 @@ export function CourseRecommendSetup({ districts }: { districts: string[] }) {
               canProceed && !isLoading ? "active:scale-[0.98]" : "cursor-not-allowed"
             )}
             style={{
-              background: canProceed ? "var(--mongle-peach)" : "rgba(92,61,46,0.07)",
-              color: canProceed ? "white" : "rgba(92,61,46,0.3)",
-              border: canProceed ? "none" : "1.5px dashed rgba(92,61,46,0.18)",
+              background: canProceed ? "var(--mongle-peach)" : "rgba(54,69,84,0.07)",
+              color: canProceed ? "white" : "rgba(54,69,84,0.3)",
+              border: canProceed ? "none" : "1.5px dashed rgba(54,69,84,0.18)",
             }}
           >
             {isLoading ? (

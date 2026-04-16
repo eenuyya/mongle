@@ -67,7 +67,7 @@ export default async function ProfilePage() {
         {/* ── 프로필 헤더 ── */}
         <section
           className="px-6 pt-8 pb-6 relative"
-          style={{ background: "linear-gradient(160deg, #FFF0E6 0%, #FFF8F3 60%)" }}
+          style={{ background: "linear-gradient(160deg, #F0F3F6 0%, #F4F6F8 60%)" }}
           aria-label="프로필 정보"
         >
           {/* 편집 버튼 */}
@@ -153,8 +153,8 @@ export default async function ProfilePage() {
 
           <Link
             href="/saved"
-            className="flex items-center justify-between py-4 transition-colors hover:bg-[rgba(255,248,243,0.6)] -mx-2 px-2 rounded-xl"
-            style={{ borderBottom: "1px solid rgba(255,185,155,0.2)" }}
+            className="flex items-center justify-between py-4 transition-colors hover:bg-[rgba(240,243,246,0.8)] -mx-2 px-2 rounded-xl"
+            style={{ borderBottom: "1px solid rgba(123,143,166,0.15)" }}
           >
             <div className="flex items-center gap-3">
               <Route size={16} style={{ color: "var(--mongle-peach)" }} aria-hidden="true" />
@@ -172,7 +172,7 @@ export default async function ProfilePage() {
 
           <Link
             href="/saved"
-            className="flex items-center justify-between py-4 transition-colors hover:bg-[rgba(255,248,243,0.6)] -mx-2 px-2 rounded-xl"
+            className="flex items-center justify-between py-4 transition-colors hover:bg-[rgba(240,243,246,0.8)] -mx-2 px-2 rounded-xl"
           >
             <div className="flex items-center gap-3">
               <MapPin size={16} style={{ color: "var(--mongle-peach)" }} aria-hidden="true" />
@@ -203,16 +203,16 @@ export default async function ProfilePage() {
 
           <a
             href="#"
-            className="flex items-center justify-between py-3.5 -mx-2 px-2 rounded-xl transition-colors hover:bg-[rgba(255,248,243,0.6)]"
-            style={{ borderBottom: "1px solid rgba(255,185,155,0.2)" }}
+            className="flex items-center justify-between py-3.5 -mx-2 px-2 rounded-xl transition-colors hover:bg-[rgba(240,243,246,0.8)]"
+            style={{ borderBottom: "1px solid rgba(123,143,166,0.15)" }}
           >
             <span className="text-sm" style={{ color: "var(--mongle-brown)" }}>이용약관</span>
             <ChevronRight size={14} style={{ color: "var(--mongle-brown)", opacity: 0.3 }} />
           </a>
           <a
             href="#"
-            className="flex items-center justify-between py-3.5 -mx-2 px-2 rounded-xl transition-colors hover:bg-[rgba(255,248,243,0.6)]"
-            style={{ borderBottom: "1px solid rgba(255,185,155,0.2)" }}
+            className="flex items-center justify-between py-3.5 -mx-2 px-2 rounded-xl transition-colors hover:bg-[rgba(240,243,246,0.8)]"
+            style={{ borderBottom: "1px solid rgba(123,143,166,0.15)" }}
           >
             <span className="text-sm" style={{ color: "var(--mongle-brown)" }}>개인정보처리방침</span>
             <ChevronRight size={14} style={{ color: "var(--mongle-brown)", opacity: 0.3 }} />
@@ -221,7 +221,7 @@ export default async function ProfilePage() {
           <form action={signOut} className="mt-2">
             <button
               type="submit"
-              className="flex items-center gap-2 py-3.5 text-sm font-medium w-full -mx-2 px-2 rounded-xl transition-colors hover:bg-[rgba(255,248,243,0.6)]"
+              className="flex items-center gap-2 py-3.5 text-sm font-medium w-full -mx-2 px-2 rounded-xl transition-colors hover:bg-[rgba(240,243,246,0.8)]"
               style={{ color: "var(--mongle-peach)" }}
             >
               <LogOut size={14} aria-hidden="true" />

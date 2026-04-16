@@ -7,12 +7,10 @@ export function BackButton() {
   const router = useRouter();
 
   const handleBack = () => {
-    const savedUrl = sessionStorage.getItem("mongle-places-back-url");
-    if (savedUrl) {
-      sessionStorage.removeItem("mongle-places-back-url");
-      router.push(savedUrl, { scroll: false });
-    } else {
+    if (window.history.length > 1) {
       router.back();
+    } else {
+      router.push("/places");
     }
   };
 

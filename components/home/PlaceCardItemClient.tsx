@@ -18,14 +18,14 @@ import { toggleSavedPlace } from "@/app/actions/saved";
 
 /** 카테고리별 gradient fallback */
 const CATEGORY_GRADIENTS: Record<string, string> = {
-  cafe: "linear-gradient(135deg, #FF8C69 0%, #FFD166 100%)",
-  restaurant: "linear-gradient(135deg, #E07030 0%, #FF8C69 100%)",
+  cafe: "linear-gradient(135deg, #7B8FA6 0%, #FFD166 100%)",
+  restaurant: "linear-gradient(135deg, #506070 0%, #7B8FA6 100%)",
   bookstore: "linear-gradient(135deg, #C49A6C 0%, #8B6842 100%)",
   gallery: "linear-gradient(135deg, #F8E4CF 0%, #C9A86C 100%)",
   park: "linear-gradient(135deg, #C9A86C 0%, #E8C9A0 100%)",
-  popup: "linear-gradient(135deg, #FFB347 0%, #E07030 100%)",
+  popup: "linear-gradient(135deg, #7B8FA6 0%, #506070 100%)",
   shop: "linear-gradient(135deg, #FFD166 0%, #C9A86C 100%)",
-  default: "linear-gradient(135deg, #FFCDB8 0%, #FF8C69 100%)",
+  default: "linear-gradient(135deg, #B0BFCC 0%, #7B8FA6 100%)",
 };
 
 /** 카테고리 → 한국어 label */
@@ -146,15 +146,15 @@ export function PlaceCardItemClient({
       )}
       style={{
         background: "white",
-        boxShadow: "0 2px 12px rgba(92,61,46,0.08)",
+        boxShadow: "0 2px 12px rgba(54,69,84,0.08)",
       }}
       onMouseEnter={(e) => {
         (e.currentTarget as HTMLElement).style.boxShadow =
-          "0 8px 28px rgba(92,61,46,0.16)";
+          "0 8px 28px rgba(54,69,84,0.16)";
       }}
       onMouseLeave={(e) => {
         (e.currentTarget as HTMLElement).style.boxShadow =
-          "0 2px 12px rgba(92,61,46,0.08)";
+          "0 2px 12px rgba(54,69,84,0.08)";
       }}
       onClick={() => router.push(`/places/${id}`)}
       role="listitem"
@@ -177,7 +177,7 @@ export function PlaceCardItemClient({
             <div
               className="absolute inset-0"
               style={{
-                background: "linear-gradient(90deg, var(--mongle-warm) 25%, #FFCDB8 50%, var(--mongle-warm) 75%)",
+                background: "linear-gradient(90deg, var(--mongle-warm) 25%, #B0BFCC 50%, var(--mongle-warm) 75%)",
                 backgroundSize: "200% 100%",
                 animation: "skeletonShimmer 1.4s ease infinite",
               }}

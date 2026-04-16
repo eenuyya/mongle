@@ -100,7 +100,7 @@ export function DistrictPickerSheet({ districts, selected, onSelect }: DistrictP
         style={
           selected
             ? { background: "var(--mongle-peach)", color: "white", borderColor: "var(--mongle-peach)" }
-            : { background: "white", color: "var(--mongle-brown)", borderColor: "rgba(92,61,46,0.12)", borderStyle: "dashed" }
+            : { background: "white", color: "var(--mongle-brown)", borderColor: "rgba(54,69,84,0.12)", borderStyle: "dashed" }
         }
       >
         <span className="flex items-center gap-2 text-sm font-semibold">
@@ -141,7 +141,7 @@ export function DistrictPickerSheet({ districts, selected, onSelect }: DistrictP
       >
         {/* 드래그 핸들 */}
         <div className="flex justify-center pt-3 pb-1 flex-shrink-0">
-          <div className="w-9 h-1 rounded-full" style={{ background: "rgba(92,61,46,0.15)" }} />
+          <div className="w-9 h-1 rounded-full" style={{ background: "rgba(54,69,84,0.15)" }} />
         </div>
 
         {/* 헤더 */}
@@ -152,7 +152,7 @@ export function DistrictPickerSheet({ districts, selected, onSelect }: DistrictP
           <button
             onClick={close}
             className="w-8 h-8 flex items-center justify-center rounded-full transition-opacity hover:opacity-70"
-            style={{ background: "rgba(92,61,46,0.07)" }}
+            style={{ background: "rgba(54,69,84,0.07)" }}
           >
             <X size={15} style={{ color: "var(--mongle-brown)" }} />
           </button>
@@ -162,7 +162,7 @@ export function DistrictPickerSheet({ districts, selected, onSelect }: DistrictP
         <div className="px-5 pb-3 flex-shrink-0">
           <div
             className="flex items-center gap-2 px-3 py-2.5 rounded-xl"
-            style={{ background: "white", border: "1px solid rgba(92,61,46,0.1)" }}
+            style={{ background: "white", border: "1px solid rgba(54,69,84,0.1)" }}
           >
             <Search size={15} style={{ color: "var(--mongle-brown)", opacity: 0.4 }} />
             <input
@@ -217,7 +217,7 @@ export function DistrictPickerSheet({ districts, selected, onSelect }: DistrictP
                         style={
                           selected === d
                             ? { background: "var(--mongle-peach)", color: "white", borderColor: "var(--mongle-peach)" }
-                            : { background: "white", color: "var(--mongle-brown)", borderColor: "rgba(92,61,46,0.1)" }
+                            : { background: "white", color: "var(--mongle-brown)", borderColor: "rgba(54,69,84,0.1)" }
                         }
                       >
                         {d}
@@ -282,7 +282,7 @@ function DistrictItem({
             fontWeight: isSelected ? 600 : 400,
           }}
         >
-          <MapPin size={13} style={{ color: isSelected ? "var(--mongle-peach)" : "rgba(92,61,46,0.3)" }} />
+          <MapPin size={13} style={{ color: isSelected ? "var(--mongle-peach)" : "rgba(54,69,84,0.3)" }} />
           {district}
         </span>
         {isSelected && <Check size={15} style={{ color: "var(--mongle-peach)" }} />}

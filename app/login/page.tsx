@@ -21,7 +21,7 @@ export default function LoginPage() {
     >
       <div
         className="w-full max-w-sm rounded-3xl p-8 flex flex-col items-center gap-6"
-        style={{ background: "white", boxShadow: "0 4px 32px rgba(92,61,46,0.10)" }}
+        style={{ background: "white", boxShadow: "0 4px 32px rgba(54,69,84,0.10)" }}
       >
         {/* 로고 */}
         <div className="flex flex-col items-center gap-2">
