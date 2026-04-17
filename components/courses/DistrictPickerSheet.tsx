@@ -14,10 +14,12 @@ interface DistrictPickerSheetProps {
 }
 
 export function DistrictPickerSheet({ districts, selected, onSelect }: DistrictPickerSheetProps) {
-  const [isOpen, setIsOpen]         = useState(false);
+  const [isOpen, setIsOpen]           = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
+  const [pending, setPending]         = useState<string | null>(selected);
 
   const sheetRef    = useRef<HTMLDivElement>(null);
+  const scrollRef   = useRef<HTMLDivElement>(null);
   const searchRef   = useRef<HTMLInputElement>(null);
   const dragStartY  = useRef<number | null>(null);
   const isDragging  = useRef(false);
@@ -27,12 +29,17 @@ export function DistrictPickerSheet({ districts, selected, onSelect }: DistrictP
     setSearchQuery("");
   }, []);
 
-  const handleSelect = (d: string) => {
-    onSelect(d);
+  const handleConfirm = () => {
+    if (pending) onSelect(pending);
     close();
   };
 
-  // 드래그 다운으로 닫기
+  const open = () => {
+    setPending(selected);
+    setIsOpen(true);
+  };
+
+  // 드래그 다운으로 닫기 — 스크롤 영역이 최상단일 때만 동작
   const handleDragStart = useCallback((e: React.TouchEvent) => {
     dragStartY.current = e.touches[0].clientY;
     isDragging.current = false;
@@ -41,6 +48,9 @@ export function DistrictPickerSheet({ districts, selected, onSelect }: DistrictP
   const handleDragMove = useCallback((e: React.TouchEvent) => {
     if (dragStartY.current === null) return;
     const delta = e.touches[0].clientY - dragStartY.current;
+    // 스크롤 영역이 맨 위가 아니면 드래그 닫기 비활성화
+    const scrollTop = scrollRef.current?.scrollTop ?? 0;
+    if (scrollTop > 0) return;
     if (delta > 10) isDragging.current = true;
     if (sheetRef.current && delta > 0) {
       sheetRef.current.style.transform = `translateY(${delta}px)`;
@@ -92,7 +102,7 @@ export function DistrictPickerSheet({ districts, selected, onSelect }: DistrictP
     <>
       {/* 트리거 버튼 */}
       <button
-        onClick={() => setIsOpen(true)}
+        onClick={open}
         className={cn(
           "w-full flex items-center justify-between px-4 py-3.5 rounded-2xl border transition-all duration-150",
           selected ? "hover:opacity-80" : "hover:border-[var(--mongle-peach)]"
@@ -116,7 +126,7 @@ export function DistrictPickerSheet({ districts, selected, onSelect }: DistrictP
       {/* 딤 오버레이 */}
       {isOpen && (
         <div
-          className="fixed inset-0 z-40 transition-opacity duration-200"
+          className="fixed inset-0 z-[60] transition-opacity duration-200"
           style={{ background: "rgba(0,0,0,0.4)" }}
           onClick={close}
         />
@@ -126,14 +136,13 @@ export function DistrictPickerSheet({ districts, selected, onSelect }: DistrictP
       <div
         ref={sheetRef}
         className={cn(
-          "fixed bottom-0 left-0 right-0 mx-auto z-50 flex flex-col rounded-t-3xl transition-transform duration-300 ease-out",
+          "fixed bottom-0 left-0 right-0 mx-auto z-[70] flex flex-col rounded-t-3xl transition-transform duration-300 ease-out",
           isOpen ? "translate-y-0" : "translate-y-full"
         )}
         style={{
           background: "var(--mongle-cream)",
           maxHeight: "75vh",
           maxWidth: 480,
-          paddingBottom: "max(16px, env(safe-area-inset-bottom))",
         }}
         onTouchStart={handleDragStart}
         onTouchMove={handleDragMove}
@@ -183,13 +192,12 @@ export function DistrictPickerSheet({ districts, selected, onSelect }: DistrictP
         </div>
 
         {/* 목록 */}
-        <div className="flex-1 min-h-0 overflow-y-auto px-5 pb-2">
+        <div ref={scrollRef} className="flex-1 min-h-0 overflow-y-auto px-5 pb-2">
           {showSearch ? (
-            // 검색 결과
             filtered.length > 0 ? (
               <ul>
                 {filtered.map((d) => (
-                  <DistrictItem key={d} district={d} selected={selected} onSelect={handleSelect} />
+                  <DistrictItem key={d} district={d} selected={pending} onSelect={setPending} />
                 ))}
               </ul>
             ) : (
@@ -209,14 +217,14 @@ export function DistrictPickerSheet({ districts, selected, onSelect }: DistrictP
                     {popular.map((d) => (
                       <button
                         key={d}
-                        onClick={() => handleSelect(d)}
+                        onClick={() => setPending(d)}
                         className={cn(
                           "px-3.5 py-1.5 rounded-full text-sm font-semibold border transition-all duration-150",
-                          selected === d ? "scale-[1.03]" : "hover:opacity-80"
+                          pending === d ? "scale-[1.03]" : "hover:opacity-80"
                         )}
                         style={
-                          selected === d
-                            ? { background: "var(--mongle-peach)", color: "white", borderColor: "var(--mongle-peach)" }
+                          pending === d
+                            ? { background: "rgba(54,69,84,0.1)", color: "var(--mongle-brown)", borderColor: "rgba(54,69,84,0.2)", fontWeight: 700 }
                             : { background: "white", color: "var(--mongle-brown)", borderColor: "rgba(54,69,84,0.1)" }
                         }
                       >
@@ -235,7 +243,7 @@ export function DistrictPickerSheet({ districts, selected, onSelect }: DistrictP
                   </p>
                   <ul>
                     {others.map((d) => (
-                      <DistrictItem key={d} district={d} selected={selected} onSelect={handleSelect} />
+                      <DistrictItem key={d} district={d} selected={pending} onSelect={setPending} />
                     ))}
                   </ul>
                 </div>
@@ -248,6 +256,24 @@ export function DistrictPickerSheet({ districts, selected, onSelect }: DistrictP
               )}
             </>
           )}
+        </div>
+
+        {/* 확정 버튼 */}
+        <div
+          className="flex-shrink-0 px-5 pt-3"
+          style={{ paddingBottom: "max(16px, env(safe-area-inset-bottom))" }}
+        >
+          <button
+            onClick={handleConfirm}
+            disabled={!pending}
+            className="w-full py-3.5 rounded-2xl text-sm font-bold transition-all duration-150 active:scale-[0.98]"
+            style={{
+              background: pending ? "var(--mongle-peach)" : "rgba(54,69,84,0.07)",
+              color: pending ? "white" : "rgba(54,69,84,0.3)",
+            }}
+          >
+            {pending ? `${pending} 선택하기` : "동네를 선택해주세요"}
+          </button>
         </div>
       </div>
     </>
@@ -270,9 +296,9 @@ function DistrictItem({
         onClick={() => onSelect(district)}
         className="w-full flex items-center justify-between px-2.5 py-2.5 rounded-[10px] transition-colors duration-150"
         style={{
-          background: isSelected ? "#FFD6C2" : "transparent",
+          background: isSelected ? "rgba(54,69,84,0.08)" : "transparent",
         }}
-        onMouseEnter={(e) => { if (!isSelected) (e.currentTarget as HTMLButtonElement).style.background = "#FFEEE5"; }}
+        onMouseEnter={(e) => { if (!isSelected) (e.currentTarget as HTMLButtonElement).style.background = "rgba(54,69,84,0.05)"; }}
         onMouseLeave={(e) => { if (!isSelected) (e.currentTarget as HTMLButtonElement).style.background = "transparent"; }}
       >
         <span
@@ -282,10 +308,10 @@ function DistrictItem({
             fontWeight: isSelected ? 600 : 400,
           }}
         >
-          <MapPin size={13} style={{ color: isSelected ? "var(--mongle-peach)" : "rgba(54,69,84,0.3)" }} />
+          <MapPin size={13} style={{ color: isSelected ? "var(--mongle-brown)" : "rgba(54,69,84,0.3)" }} />
           {district}
         </span>
-        {isSelected && <Check size={15} style={{ color: "var(--mongle-peach)" }} />}
+        {isSelected && <Check size={15} style={{ color: "var(--mongle-brown)" }} />}
       </button>
     </li>
   );

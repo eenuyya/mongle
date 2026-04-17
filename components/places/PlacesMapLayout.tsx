@@ -2,9 +2,18 @@
 
 import { useState, useCallback, useRef, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { MapPin, List, Map as MapIcon, ArrowLeft, Sparkles } from "lucide-react";
+import { MapPin, List, Map as MapIcon, ArrowLeft, Sparkles, Coffee, Utensils, ShoppingBag, LayoutGrid } from "lucide-react";
+import { cn } from "@/lib/utils";
 import { PlacesMapView, type MapPlace } from "./PlacesMapView";
 import { PlaceListRow } from "./PlaceListRow";
+
+const CATEGORIES = [
+  { id: "all",        label: "전체",   icon: LayoutGrid },
+  { id: "cafe",       label: "카페",   icon: Coffee },
+  { id: "restaurant", label: "음식점", icon: Utensils },
+  { id: "shop",       label: "소품샵", icon: ShoppingBag },
+  { id: "popup",      label: "팝업",   icon: Sparkles },
+];
 
 interface Place extends MapPlace {
   district: string | null;
@@ -32,8 +41,18 @@ export function PlacesMapLayout({ initialPlaces, savedIds, availableDistricts }:
   const router       = useRouter();
   const searchParams = useSearchParams();
   const urlDistrict  = searchParams.get("district");
+  const urlCategory  = searchParams.get("category") ?? "all";
 
   const [places, setPlaces]               = useState<Place[]>(initialPlaces);
+  const filteredPlaces = urlCategory === "all"
+    ? places
+    : places.filter(p => p.category === urlCategory);
+
+  const updateCategory = useCallback((cat: string) => {
+    const params = new URLSearchParams(searchParams.toString());
+    cat === "all" ? params.delete("category") : params.set("category", cat);
+    router.replace(`/places?${params.toString()}`, { scroll: false });
+  }, [router, searchParams]);
   const [loading, setLoading]             = useState(!!urlDistrict);
   const [selectedId, setSelectedId]       = useState<string | null>(null);
   const [selectedDistrict, setSelectedDistrict] = useState<string | null>(urlDistrict);
@@ -124,6 +143,8 @@ export function PlacesMapLayout({ initialPlaces, savedIds, availableDistricts }:
     if (savedSheetH) {
       setSheetH(Number(savedSheetH));
       sessionStorage.removeItem("mongle-places-sheet-h");
+    } else {
+      setSheetH(window.innerHeight * SNAP_HALF);
     }
   }, [loading, urlDistrict]);
 
@@ -200,7 +221,7 @@ export function PlacesMapLayout({ initialPlaces, savedIds, availableDistricts }:
           </p>
         </div>
       )}
-      {!loading && (places?.length ?? 0) === 0 && (
+      {!loading && (filteredPlaces?.length ?? 0) === 0 && (
         <div className="flex flex-col items-center py-16 gap-3">
           <div
             className="w-14 h-14 rounded-full flex items-center justify-center"
@@ -213,7 +234,7 @@ export function PlacesMapLayout({ initialPlaces, savedIds, availableDistricts }:
           </p>
         </div>
       )}
-      {places.map(place => (
+      {filteredPlaces.map(place => (
         <div key={place.id} data-place-id={place.id}>
           <PlaceListRow
             id={place.id}
@@ -241,7 +262,7 @@ export function PlacesMapLayout({ initialPlaces, savedIds, availableDistricts }:
   const sharedMap = (
     <PlacesMapView
       key="places-map"
-      places={selectedDistrict ? places : []}
+      places={selectedDistrict ? filteredPlaces : []}
       selectedPlaceId={selectedId}
       onPlaceClick={handleMapPlaceClick}
       showNeighborhoods={!selectedDistrict}
@@ -321,6 +342,34 @@ export function PlacesMapLayout({ initialPlaces, savedIds, availableDistricts }:
             )}
           </div>
 
+          {/* 카테고리 필터 — 데스크탑 */}
+          <div
+            className="flex-shrink-0 flex gap-1.5 px-4 py-2.5 overflow-x-auto scrollbar-hide"
+            style={{ borderBottom: "1px solid rgba(123,143,166,0.1)", background: "#F4F6F8" }}
+          >
+            {CATEGORIES.map(({ id, label, icon: Icon }) => {
+              const active = urlCategory === id;
+              return (
+                <button
+                  key={id}
+                  onClick={() => updateCategory(id)}
+                  className={cn(
+                    "shrink-0 flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold transition-all duration-200",
+                    active ? "shadow-sm" : "hover:opacity-80"
+                  )}
+                  style={{
+                    background: active ? "var(--mongle-peach)" : "white",
+                    color: active ? "white" : "var(--mongle-brown)",
+                    border: active ? "none" : "1px solid rgba(54,69,84,0.1)",
+                  }}
+                >
+                  <Icon size={12} />
+                  {label}
+                </button>
+              );
+            })}
+          </div>
+
           {/* 리스트 */}
           <div ref={desktopListRef} className="flex-1 overflow-y-auto" style={{ background: "#F4F6F8" }}>
             {!selectedDistrict ? (
@@ -397,6 +446,35 @@ export function PlacesMapLayout({ initialPlaces, savedIds, availableDistricts }:
           </div>
         </div>
 
+        {/* 카테고리 필터 — 모바일 리스트뷰 전용 (지도뷰는 floating) */}
+        {mobileView === "list" && (
+          <div
+            className="flex-shrink-0 flex gap-2 px-3 py-2 overflow-x-auto scrollbar-hide"
+            style={{ background: "rgba(255,255,255,0.96)", borderBottom: "1px solid rgba(123,143,166,0.08)" }}
+          >
+            {CATEGORIES.map(({ id, label, icon: Icon }) => {
+              const active = urlCategory === id;
+              return (
+                <button
+                  key={id}
+                  onClick={() => updateCategory(id)}
+                  className={cn(
+                    "shrink-0 flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold transition-all duration-200",
+                    active ? "shadow-sm" : "hover:opacity-80"
+                  )}
+                  style={{
+                    background: active ? "var(--mongle-peach)" : "rgba(54,69,84,0.05)",
+                    color: active ? "white" : "var(--mongle-brown)",
+                  }}
+                >
+                  <Icon size={12} />
+                  {label}
+                </button>
+              );
+            })}
+          </div>
+        )}
+
         {mobileView === "list" ? (
           <div ref={mobileListRef} className="flex-1 overflow-y-auto" style={{ background: "#F4F6F8" }}>
             {!selectedDistrict ? (
@@ -418,18 +496,63 @@ export function PlacesMapLayout({ initialPlaces, savedIds, availableDistricts }:
           <div className="flex-1 relative overflow-hidden">
             {sharedMap}
 
+            {/* 카테고리 필터 — 동네 미선택: 우하단 FAB 세로 스택 */}
+            {!selectedDistrict && (
+              <div className="absolute bottom-6 right-4 z-10 flex flex-col-reverse gap-2">
+                {CATEGORIES.map(({ id, label, icon: Icon }) => {
+                  const active = urlCategory === id;
+                  return (
+                    <button
+                      key={id}
+                      onClick={() => updateCategory(id)}
+                      aria-label={label}
+                      className="flex items-center justify-end gap-2 transition-all duration-200 active:scale-95"
+                    >
+                      {active && (
+                        <span
+                          className="text-xs font-bold px-2.5 py-1 rounded-full"
+                          style={{
+                            background: "rgba(255,252,249,0.95)",
+                            color: "var(--mongle-brown)",
+                            backdropFilter: "blur(8px)",
+                            boxShadow: "0 1px 6px rgba(54,69,84,0.12)",
+                          }}
+                        >
+                          {label}
+                        </span>
+                      )}
+                      <div
+                        className="w-10 h-10 rounded-full flex items-center justify-center"
+                        style={{
+                          background: active ? "var(--mongle-peach)" : "rgba(255,252,249,0.92)",
+                          backdropFilter: "blur(12px)",
+                          boxShadow: active
+                            ? "0 4px 16px rgba(214,135,107,0.38)"
+                            : "0 2px 10px rgba(54,69,84,0.14)",
+                          color: active ? "white" : "var(--mongle-brown)",
+                        }}
+                      >
+                        <Icon size={16} strokeWidth={active ? 2.5 : 2} />
+                      </div>
+                    </button>
+                  );
+                })}
+              </div>
+            )}
+
             {selectedDistrict && (
               <div
                 ref={sheetRef}
                 className="absolute bottom-0 left-0 right-0 rounded-t-[28px] overflow-hidden"
                 style={{
                   height: `${sheetPx}px`,
-                  background: "rgba(255,252,249,0.98)",
+                  background: "rgba(244,246,248,0.99)",
                   boxShadow: "0 -8px 32px rgba(54,69,84,0.12), 0 -1px 0 rgba(123,143,166,0.12)",
                   transition: dragStart.current ? "none" : "height 0.32s cubic-bezier(0.32,0.72,0,1)",
-                  backdropFilter: "blur(16px)",
+                  backdropFilter: "blur(20px)",
                 }}
               >
+                {/* 드래그 핸들 */}
                 <div
                   className="flex flex-col items-center pt-3 pb-2 cursor-grab active:cursor-grabbing"
                   onTouchStart={onTouchStart}
@@ -437,19 +560,46 @@ export function PlacesMapLayout({ initialPlaces, savedIds, availableDistricts }:
                   onTouchEnd={onTouchEnd}
                 >
                   <div className="rounded-full" style={{ width: 36, height: 4, background: "rgba(123,143,166,0.28)" }} />
-                  <div className="flex items-center gap-1.5 mt-2">
-                    <span className="text-xs font-bold" style={{ color: "var(--mongle-brown)", opacity: 0.7 }}>
-                      {selectedDistrict}
-                    </span>
-                    {loading && (
-                      <div
-                        className="w-3.5 h-3.5 rounded-full border-2 animate-spin"
-                        style={{ borderColor: "var(--mongle-peach)", borderTopColor: "transparent" }}
-                      />
-                    )}
-                  </div>
+                  {loading && (
+                    <div
+                      className="w-3.5 h-3.5 rounded-full border-2 animate-spin mt-2"
+                      style={{ borderColor: "var(--mongle-peach)", borderTopColor: "transparent" }}
+                    />
+                  )}
                 </div>
-                <div ref={mobileListRef} className="overflow-y-auto" style={{ height: `${sheetPx - 64}px` }}>
+
+                {/* 카테고리 필터 — 바텀시트 상단 고정 */}
+                <div
+                  className="flex items-center gap-1.5 px-4 py-2 overflow-x-auto scrollbar-hide flex-shrink-0"
+                  style={{ borderBottom: "1px solid rgba(123,143,166,0.10)" }}
+                >
+                  {CATEGORIES.map(({ id, label, icon: Icon }) => {
+                    const active = urlCategory === id;
+                    return (
+                      <button
+                        key={id}
+                        onClick={() => updateCategory(id)}
+                        aria-pressed={active}
+                        className="shrink-0 flex items-center gap-1.5 rounded-full transition-all duration-200 active:scale-95"
+                        style={{
+                          minHeight: 32,
+                          padding: "5px 12px",
+                          background: active ? "var(--mongle-peach)" : "rgba(123,143,166,0.09)",
+                          color: active ? "white" : "var(--mongle-brown)",
+                          fontWeight: active ? 700 : 500,
+                          fontSize: 12,
+                          boxShadow: active ? "0 2px 10px rgba(123,143,166,0.25)" : "none",
+                        }}
+                      >
+                        <Icon size={13} strokeWidth={active ? 2.5 : 2} />
+                        <span className="whitespace-nowrap">{label}</span>
+                      </button>
+                    );
+                  })}
+                </div>
+
+                {/* 장소 목록 — 핸들(56px) + 필터바(52px) */}
+                <div ref={mobileListRef} className="overflow-y-auto" style={{ height: `${sheetPx - 108}px` }}>
                   {sheetListContent}
                 </div>
               </div>
