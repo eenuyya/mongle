@@ -5,7 +5,7 @@
  */
 
 import Link from "next/link";
-import { Pencil, Route, MapPin, ChevronRight, LogOut, Bookmark } from "lucide-react";
+import { Pencil, Route, MapPin, ChevronRight, LogOut, Bookmark, FileText, Shield } from "lucide-react";
 import { createClient } from "@/lib/supabase/server";
 import { signOut } from "@/app/actions/profile";
 
@@ -221,22 +221,28 @@ export default async function ProfilePage() {
             계정
           </p>
 
-          <a
-            href="#"
+          <Link
+            href="/terms"
             className="flex items-center justify-between py-3.5 -mx-2 px-2 rounded-xl transition-colors hover:bg-[rgba(240,243,246,0.8)]"
             style={{ borderBottom: "1px solid rgba(123,143,166,0.15)" }}
           >
-            <span className="text-sm" style={{ color: "var(--mongle-brown)" }}>이용약관</span>
+            <div className="flex items-center gap-3">
+              <FileText size={16} style={{ color: "var(--mongle-peach)" }} aria-hidden="true" />
+              <span className="text-sm" style={{ color: "var(--mongle-brown)" }}>이용약관</span>
+            </div>
             <ChevronRight size={14} style={{ color: "var(--mongle-brown)", opacity: 0.3 }} />
-          </a>
-          <a
-            href="#"
+          </Link>
+          <Link
+            href="/privacy"
             className="flex items-center justify-between py-3.5 -mx-2 px-2 rounded-xl transition-colors hover:bg-[rgba(240,243,246,0.8)]"
             style={{ borderBottom: "1px solid rgba(123,143,166,0.15)" }}
           >
-            <span className="text-sm" style={{ color: "var(--mongle-brown)" }}>개인정보처리방침</span>
+            <div className="flex items-center gap-3">
+              <Shield size={16} style={{ color: "var(--mongle-peach)" }} aria-hidden="true" />
+              <span className="text-sm" style={{ color: "var(--mongle-brown)" }}>개인정보처리방침</span>
+            </div>
             <ChevronRight size={14} style={{ color: "var(--mongle-brown)", opacity: 0.3 }} />
-          </a>
+          </Link>
 
           <form action={signOut} className="mt-2">
             <button
