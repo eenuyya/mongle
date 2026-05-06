@@ -63,12 +63,7 @@ export default async function ProfilePage() {
   return (
     <main className="min-h-screen md:pt-16" style={{ background: "var(--mongle-cream)" }}>
       <div className="mx-auto max-w-lg">
-
-        {/* 페이지 타이틀 */}
-        <div className="px-4 pt-6 pb-0 md:pt-2 md:pb-2">
-          <h1 className="text-2xl font-bold" style={{ color: "var(--mongle-brown)" }}>프로필</h1>
-        </div>
-
+        
         {/* ── 프로필 헤더 ── */}
         <section
           className="relative px-6 pb-6"
