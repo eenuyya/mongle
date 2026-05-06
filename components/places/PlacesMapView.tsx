@@ -33,8 +33,26 @@ interface PlacesMapViewProps {
   initialZoom?: number;
   /** 바텀시트 높이(px) — 장소 pan 시 가시 영역 상단에 위치하도록 오프셋 계산에 사용 */
   bottomPadding?: number;
+  /** 드래그 중 하이라이트할 동네 id */
+  highlightedDistrict?: string | null;
+  /** dragend 시 가장 가까운 동네 id 전달 (반경 밖이면 null) */
+  onMapDragEnd?: (district: string | null) => void;
 }
 
+
+/**
+ * 주어진 위경도에서 가장 가까운 NEIGHBORHOOD_DATA 동네를 반환합니다.
+ * 반경 ~4km(위경도 차 0.04) 이내일 때만 id 반환, 벗어나면 null
+ */
+function nearestNeighborhood(lat: number, lng: number): string | null {
+  let minDist = Infinity;
+  let nearestId: string | null = null;
+  for (const n of NEIGHBORHOOD_DATA) {
+    const d = Math.hypot(n.center[0] - lat, n.center[1] - lng);
+    if (d < minDist) { minDist = d; nearestId = n.id; }
+  }
+  return minDist < 0.04 ? nearestId : null;
+}
 
 /* ── 동네 경계 폴리곤 (실제 행정경계 GeoJSON 기반) ──────────────────── */
 const NEIGHBORHOOD_DATA: {
@@ -182,6 +200,8 @@ export function PlacesMapView({
   initialLng = 126.9820,
   initialZoom = 13,
   bottomPadding = 0,
+  highlightedDistrict = null,
+  onMapDragEnd,
 }: PlacesMapViewProps) {
   const mapRef          = useRef<HTMLDivElement>(null);
   const mapInst         = useRef<NaverMapInst | null>(null);
@@ -192,6 +212,9 @@ export function PlacesMapView({
   // 드래그 중에도 최신값을 참조할 수 있도록 ref로 유지
   const bottomPaddingRef = useRef(bottomPadding);
   useEffect(() => { bottomPaddingRef.current = bottomPadding; }, [bottomPadding]);
+  // onMapDragEnd를 ref로 유지하여 dragend 핸들러 내부에서 항상 최신 콜백 참조
+  const onMapDragEndRef = useRef(onMapDragEnd);
+  useEffect(() => { onMapDragEndRef.current = onMapDragEnd; }, [onMapDragEnd]);
 
   /* ── 지도 초기화 ── */
   useEffect(() => {
@@ -229,6 +252,14 @@ export function PlacesMapView({
       }
 
       mapInst.current = new nm.Map(mapRef.current, opts) as NaverMapInst;
+
+      // dragend: 지도 드래그 종료 시 가장 가까운 동네를 감지해 콜백 전달
+      nm.Event.addListener(mapInst.current as unknown as object, "dragend", () => {
+        if (!mapInst.current || mapDestroyed.current) return;
+        const center = mapInst.current.getCenter() as NaverLatLng;
+        const nearest = nearestNeighborhood(center.lat(), center.lng());
+        onMapDragEndRef.current?.(nearest);
+      });
 
       if (mapStyleId) {
         // GL 지도는 스타일 로드 완료 후 오버레이 추가 가능
@@ -332,14 +363,17 @@ export function PlacesMapView({
       const isAvailable = availableDistricts.length === 0
         ? true  // DB 데이터 없으면 일단 모두 활성화
         : availableDistricts.some(d => d === id || d.startsWith(id) || id.startsWith(d.replace(/[동로길]$/, "")));
-      const fillColor = isAvailable ? "#7B8FA6" : "#C8D0D8";
+      // 하이라이트 여부에 따라 핑크 계열 색상 적용
+      const isHighlighted = id === highlightedDistrict;
+      const fillColor = !isAvailable ? "#C8D0D8" : isHighlighted ? "#FF6B8A" : "#8A8F98";
+      const fillOpacity = !isAvailable ? 0.15 : isHighlighted ? 0.40 : 0.22;
 
       /* 폴리곤 (복수 ring 지원) */
       const polygon = new nm.Polygon({
         map:           map as unknown as object,
         paths:         paths.map(ring => ring.map(([lat, lng]) => new nm.LatLng(lat, lng))),
         fillColor,
-        fillOpacity:   isAvailable ? 0.28 : 0.18,
+        fillOpacity,
         strokeWeight:  0,
         strokeOpacity: 0,
         clickable:     isAvailable,
@@ -347,10 +381,10 @@ export function PlacesMapView({
 
       if (isAvailable) {
         nm.Event.addListener(polygon as unknown as object, "mouseover", () => {
-          polygon.setOptions({ fillColor: "#506070", fillOpacity: 0.42 });
+          polygon.setOptions({ fillColor: "#FF6B8A", fillOpacity: isHighlighted ? 0.50 : 0.38 });
         });
         nm.Event.addListener(polygon as unknown as object, "mouseout", () => {
-          polygon.setOptions({ fillColor, fillOpacity: 0.28 });
+          polygon.setOptions({ fillColor, fillOpacity });
         });
         nm.Event.addListener(polygon as unknown as object, "click", () => {
           onNeighborhoodClick?.(id);
@@ -414,7 +448,7 @@ export function PlacesMapView({
       neighborhoodRef.current.push(labelMarker);
     });
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [showNeighborhoods, availableDistricts, onNeighborhoodClick, mapReady]);
+  }, [showNeighborhoods, availableDistricts, onNeighborhoodClick, mapReady, highlightedDistrict]);
 
   /* ── 장소 마커 ── */
   useEffect(() => {

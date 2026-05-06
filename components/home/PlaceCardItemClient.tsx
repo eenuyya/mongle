@@ -163,7 +163,7 @@ export function PlaceCardItemClient({
       {/* 이미지 영역 — 패럴렉스 컨테이너 */}
       <div
         className="relative overflow-hidden"
-        style={{ height: "140px" }}
+        style={{ height: "110px" }}
         aria-hidden="true"
       >
         {/* 실제 이미지 요소 — 패럴렉스 transform 대상 */}
@@ -177,7 +177,7 @@ export function PlaceCardItemClient({
             <div
               className="absolute inset-0"
               style={{
-                background: "linear-gradient(90deg, var(--mongle-warm) 25%, #B0BFCC 50%, var(--mongle-warm) 75%)",
+                background: "linear-gradient(90deg, #F5EEEF 25%, #EDE8EA 50%, #F5EEEF 75%)",
                 backgroundSize: "200% 100%",
                 animation: "skeletonShimmer 1.4s ease infinite",
               }}

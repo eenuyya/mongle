@@ -375,7 +375,7 @@ function PlaceThumbnail({
   return (
     <div className="flex-shrink-0 rounded-xl overflow-hidden relative" style={{ width: 68, height: 68 }}>
       {!loaded && (
-        <div className="absolute inset-0 bg-gradient-to-r from-[#dce3ea] via-[#edf1f5] to-[#dce3ea] bg-[length:200%_100%] animate-shimmer" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#EDE8EA] via-[#F6F2F3] to-[#EDE8EA] bg-[length:200%_100%] animate-shimmer" />
       )}
       <Image
         src={src}
@@ -417,6 +417,21 @@ export function CourseDetailClient({
   // 실행 취소 토스트
   const [minPlaceToast, setMinPlaceToast] = useState(false);
   const minPlaceTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  // 스크롤 연동 액션바 숨김
+  const [actionBarVisible, setActionBarVisible] = useState(true);
+  const lastScrollY = useRef(0);
+  useEffect(() => {
+    const onScroll = () => {
+      const current = window.scrollY;
+      const diff = current - lastScrollY.current;
+      if (diff > 8) setActionBarVisible(false);
+      else if (diff < -8) setActionBarVisible(true);
+      lastScrollY.current = current;
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   const showMinPlaceToast = useCallback(() => {
     if (minPlaceTimerRef.current) clearTimeout(minPlaceTimerRef.current);
@@ -682,7 +697,18 @@ export function CourseDetailClient({
       try { await navigator.share({ title: course.title, text: `${course.title} — 몽글 코스`, url }); return; }
       catch { /* fallback */ }
     }
-    await navigator.clipboard.writeText(url);
+    // clipboard API는 HTTPS / localhost에서만 동작 — 미지원 시 textarea fallback
+    if (navigator.clipboard?.writeText) {
+      await navigator.clipboard.writeText(url);
+    } else {
+      const el = document.createElement("textarea");
+      el.value = url;
+      el.style.cssText = "position:fixed;top:-9999px;left:-9999px;opacity:0";
+      document.body.appendChild(el);
+      el.select();
+      document.execCommand("copy");
+      document.body.removeChild(el);
+    }
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   }, [course.title]);
@@ -770,19 +796,8 @@ export function CourseDetailClient({
       }}
     >
 
-      {/* ── 편집 모드 상단 배너 ── */}
-      {isEditMode && (
-        <div
-          className="fixed top-12 md:top-16 left-0 right-0 z-40 flex items-center justify-center gap-2 py-2.5 text-sm font-semibold"
-          style={{ background: "rgba(224,97,58,0.12)", color: "#C0522A", borderBottom: "1px solid rgba(224,97,58,0.2)" }}
-        >
-          <Pencil size={13} />
-          편집 중 — 내 코스를 만들고 있어요
-        </div>
-      )}
-
       {/* ── 지도 (상단) ── */}
-      <div className="relative" style={{ paddingTop: isEditMode ? "2.5rem" : "0" }}>
+      <div className="relative">
         <div className="absolute top-0 left-0 right-0 z-10 pt-3 px-4 flex items-center justify-between pointer-events-none">
           {!isEditMode && (
             <Link
@@ -813,7 +828,7 @@ export function CourseDetailClient({
         }
       </div>
 
-      <div className="mx-auto max-w-2xl px-4 pb-28 space-y-5 pt-4">
+      <div className="mx-auto max-w-2xl px-4 space-y-5 pt-4" style={{ paddingBottom: "calc(5rem + env(safe-area-inset-bottom))" }}>
 
         {/* ── AI 추천 이유 배너 ── */}
         {aiReason && (
@@ -845,9 +860,20 @@ export function CourseDetailClient({
           </div>
 
           <div className="flex items-start justify-between gap-3">
-            <h1 className="text-xl font-bold leading-snug" style={{ color: "var(--mongle-brown)" }}>
-              {course.title}
-            </h1>
+            <div className="flex items-center gap-2 flex-wrap">
+              <h1 className="text-xl font-bold leading-snug" style={{ color: "var(--mongle-brown)" }}>
+                {course.title}
+              </h1>
+              {isEditMode && (
+                <span
+                  className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-semibold flex-shrink-0"
+                  style={{ background: "rgba(123,143,166,0.12)", color: "#7B8FA6" }}
+                >
+                  <Pencil size={10} />
+                  편집 중
+                </span>
+              )}
+            </div>
             {party && (
               <button
                 onClick={handleRegenerate}
@@ -1075,28 +1101,28 @@ export function CourseDetailClient({
         </div>
       )}
 
-      {/* ── 하단 액션 바 ── */}
-      {/*
-        fixed + z-[45]: BottomTabBar(z-50)보다 아래 레이어에 고정
-        paddingBottom: BottomTabBar 높이(62px) + safe-area 를 더해
-        BottomTabBar가 액션바 하단 패딩 영역을 정확히 덮도록 함
-        md:hidden인 BottomTabBar가 없는 데스크탑은 pb-4 그대로 유지
-      */}
+      {/* ── 하단 액션 바 — 탭바와 동일한 floating pill 스타일 ── */}
       <div
-        className="fixed inset-x-0 bottom-0 z-[45] px-4 pt-2 pb-[70px] md:static md:pb-4"
+        className="fixed inset-x-4 z-[55] md:static md:mx-0 transition-transform duration-300"
         style={{
-          background: "rgba(244,246,248,0.96)",
-          backdropFilter: "blur(14px)",
-          borderTop: "1px solid rgba(54,69,84,0.08)",
+          bottom: "max(16px, calc(env(safe-area-inset-bottom) + 8px))",
+          transform: (actionBarVisible || isEditMode) ? "translateY(0)" : "translateY(calc(100% + max(16px, env(safe-area-inset-bottom) + 8px)))",
+          background: "rgba(255,255,255,0.97)",
+          backdropFilter: "blur(20px)",
+          borderRadius: "28px",
+          boxShadow: isEditMode
+            ? `0 0 0 2px var(--mongle-peach), 0 4px 24px rgba(255,107,138,0.18), 0 1px 4px rgba(54,69,84,0.06)`
+            : "0 4px 24px rgba(54,69,84,0.13), 0 1px 4px rgba(54,69,84,0.06)",
+          padding: "6px 8px",
         }}
       >
         {isEditMode ? (
-          /* 편집 모드 바 */
-          <div className="mx-auto max-w-2xl flex gap-2.5">
+          /* 편집 모드 */
+          <div className="flex gap-2">
             <button
               onClick={cancelEditMode}
-              className="flex items-center justify-center gap-1.5 px-5 py-3.5 rounded-2xl text-sm font-bold transition-all hover:bg-black/5 active:scale-95"
-              style={{ background: "white", color: "var(--mongle-brown)", border: "1.5px solid rgba(54,69,84,0.12)" }}
+              className="flex items-center justify-center gap-1.5 px-5 py-2.5 rounded-[20px] text-sm font-bold transition-all hover:bg-black/5 active:scale-95"
+              style={{ color: "var(--mongle-brown)" }}
             >
               <X size={15} />
               취소
@@ -1104,7 +1130,7 @@ export function CourseDetailClient({
             <button
               onClick={saveEditMode}
               disabled={isSaving}
-              className="flex-1 flex items-center justify-center gap-2 py-3.5 rounded-2xl text-sm font-bold text-white transition-all hover:opacity-90 active:scale-[0.99] disabled:opacity-60"
+              className="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-[20px] text-sm font-bold text-white transition-all hover:opacity-90 active:scale-[0.99] disabled:opacity-60"
               style={{ background: "var(--mongle-peach)" }}
             >
               <Check size={15} />
@@ -1112,38 +1138,38 @@ export function CourseDetailClient({
             </button>
           </div>
         ) : (
-          /* 기본 바 */
-          <div className="mx-auto max-w-2xl">
-            <div className={cn("flex gap-2.5", isUserOwned && "justify-end")}>
-              {!isUserOwned && (
-                <button
-                  onClick={handleSave}
-                  className={cn("flex-1 flex items-center justify-center gap-2 py-3.5 rounded-2xl text-sm font-bold transition-all duration-200", isBouncing && "scale-95")}
-                  style={isSaved
-                    ? { background: "var(--mongle-peach)", color: "white" }
-                    : { background: "white", color: "var(--mongle-brown)", border: "1.5px solid rgba(54,69,84,0.12)" }
-                  }
-                >
-                  <Heart size={16} style={{ fill: isSaved ? "white" : "transparent", color: isSaved ? "white" : "var(--mongle-peach)" }} />
-                  {isSaved ? "저장됨" : "코스 저장"}
-                </button>
-              )}
+          /* 기본 모드 */
+          <div className="flex gap-1">
+            {!isUserOwned && (
               <button
-                onClick={handleShare}
-                className="flex items-center justify-center gap-2 px-4 py-3.5 rounded-2xl text-sm font-bold transition-all hover:opacity-80 active:scale-95"
-                style={{ background: "white", color: "var(--mongle-brown)", border: "1.5px solid rgba(54,69,84,0.12)" }}
+                onClick={handleSave}
+                className={cn("flex-1 flex items-center justify-center gap-2 py-2.5 rounded-[20px] text-sm font-bold transition-all duration-200", isBouncing && "scale-95")}
+                style={isSaved
+                  ? { background: "var(--mongle-peach)", color: "white" }
+                  : { color: "var(--mongle-brown)" }
+                }
               >
-                {copied ? <><Check size={15} style={{ color: "var(--mongle-peach)" }} />복사됨</> : <><Share2 size={15} />공유</>}
+                <Heart size={16} style={{ fill: isSaved ? "white" : "transparent", color: isSaved ? "white" : "var(--mongle-peach)" }} />
+                {isSaved ? "저장됨" : "코스 저장"}
               </button>
-              <button
-                onClick={enterEditMode}
-                className="flex items-center justify-center gap-1.5 px-4 py-3.5 rounded-2xl text-sm font-bold transition-all hover:opacity-80 active:scale-95"
-                style={{ background: "white", color: "var(--mongle-brown)", border: "1.5px solid rgba(54,69,84,0.12)" }}
-              >
-                <Pencil size={15} />
-                편집
-              </button>
-            </div>
+            )}
+            <button
+              onClick={handleShare}
+              className="flex items-center justify-center gap-1.5 px-5 py-2.5 rounded-[20px] text-sm font-bold transition-all hover:opacity-70 active:scale-95"
+              style={{ color: "var(--mongle-brown)" }}
+            >
+              {copied
+                ? <><Check size={15} style={{ color: "var(--mongle-peach)" }} />복사됨</>
+                : <><Share2 size={15} />공유</>}
+            </button>
+            <button
+              onClick={enterEditMode}
+              className="flex items-center justify-center gap-1.5 px-5 py-2.5 rounded-[20px] text-sm font-bold transition-all hover:opacity-70 active:scale-95"
+              style={{ color: "var(--mongle-brown)" }}
+            >
+              <Pencil size={15} />
+              편집
+            </button>
           </div>
         )}
       </div>

@@ -8,7 +8,7 @@ function ShimmerBox({ className, style }: { className?: string; style?: React.CS
     <div
       className={className}
       style={{
-        background: "linear-gradient(90deg, rgba(54,69,84,0.06) 25%, rgba(54,69,84,0.1) 50%, rgba(54,69,84,0.06) 75%)",
+        background: "linear-gradient(90deg, #F0EAEC 25%, #E8E2E4 50%, #F0EAEC 75%)",
         backgroundSize: "200% 100%",
         animation: "skeletonShimmer 1.4s ease infinite",
         borderRadius: 12,

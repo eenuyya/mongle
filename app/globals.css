@@ -78,31 +78,39 @@
   --color-mongle-cream: var(--mongle-cream);
   --color-mongle-warm: var(--mongle-warm);
   --color-mongle-brown: var(--mongle-brown);
+  --color-mongle-base: var(--mongle-base);
   --color-mongle-gold: var(--mongle-gold);
 }
 
 :root {
-  /* 몽글 색상 팔레트 — Warm Slate 톤 */
-  --mongle-peach: #7B8FA6;              /* 메인 액션 버튼, CTA */
-  --mongle-peach-light: #B0BFCC;        /* 태그 배경, hover 상태 */
-  --mongle-peach-dark: #506070;         /* 버튼 hover/active */
-  --mongle-cream: #F4F6F8;              /* 페이지 배경 */
-  --mongle-warm: #E8EDF2;              /* 카드 배경, 섹션 배경 */
-  --mongle-brown: #364554;              /* 주요 텍스트 — 다크 슬레이트 */
-  --mongle-gold: #FFD166;               /* 강조 배지, 별점 */
+  /* 플로팅 탭바 레이아웃 기준값 */
+  --tab-bar-h: 60px;       /* 탭바 pill 높이 (icon + label + padding) */
+  --tab-bar-bottom: 16px;  /* 탭바 pill 하단 최소 오프셋 */
+  /* 콘텐츠가 탭바에 가리지 않기 위한 최소 여백 = pill 높이 + 하단 오프셋 + 여유 16px */
+  --tab-clearance: calc(var(--tab-bar-h) + var(--tab-bar-bottom) + 16px); /* ≈ 92px */
 
-  /* shadcn/ui 색상 — Warm Slate 적용 */
-  --background: oklch(0.965 0.010 220);        /* #F4F6F8 슬레이트 크림 */
+  /* 몽글 색상 팔레트 — 소프트 핑크 톤 */
+  --mongle-peach: #FF6B8A;              /* 소프트 핑크 — 메인 액션 */
+  --mongle-peach-light: #FFE4EA;        /* 연핑크 — 태그 배경, hover */
+  --mongle-peach-dark: #E0526B;         /* 진핑크 — active/pressed */
+  --mongle-cream: #F7F8FA;              /* 밝은 회색 — 페이지 배경 */
+  --mongle-warm: #FFF0F3;              /* 핑크빛 따뜻한 배경 */
+  --mongle-brown: #364554;              /* 주요 텍스트 (유지) */
+  --mongle-base: #8A8F98;               /* 보조 텍스트, 아이콘 (신규) */
+  --mongle-gold: #FFD166;               /* 강조 배지 (유지) */
+
+  /* shadcn/ui 색상 — 소프트 핑크 적용 */
+  --background: oklch(0.975 0.003 220);        /* #F7F8FA */
   --foreground: oklch(0.32 0.04 220);         /* #364554 다크 슬레이트 */
   --card: oklch(0.965 0.008 220);             /* #F0F3F6 슬레이트 카드 */
   --card-foreground: oklch(0.32 0.04 220);
   --popover: oklch(0.992 0.005 60);
   --popover-foreground: oklch(0.32 0.04 220);
-  --primary: oklch(0.60 0.045 220);           /* #7B8FA6 웜 슬레이트 */
+  --primary: oklch(0.71 0.18 5);              /* #FF6B8A */
   --primary-foreground: oklch(1 0 0);
-  --secondary: oklch(0.78 0.025 220);         /* #B0BFCC 연한 슬레이트 */
+  --secondary: oklch(0.93 0.04 5);            /* #FFE4EA */
   --secondary-foreground: oklch(0.32 0.04 220);
-  --muted: oklch(0.945 0.015 220);
+  --muted: oklch(0.965 0.010 5);              /* warm muted */
   --muted-foreground: oklch(0.50 0.03 220);
   --accent: oklch(0.87 0.10 80);              /* #FFD166 골드 */
   --accent-foreground: oklch(0.32 0.04 220);
@@ -371,6 +379,16 @@
   display: none;
 }
 
+/* 헤더 모바일 숨김 — Tailwind hidden 대신 직접 CSS 사용 */
+.header-mobile-hidden {
+  display: none;
+}
+@media (min-width: 768px) {
+  .header-mobile-hidden {
+    display: block;
+  }
+}
+
 /* 삽입 핸들 페이드인 — 편집 모드 진입 시 */
 @keyframes fadeIn {
   from { opacity: 0; }
@@ -388,6 +406,22 @@
   animation: slideUp 0.3s cubic-bezier(0.32, 0.72, 0, 1) both;
 }
 
+/* 지역 선택 플로팅 카드 애니메이션 */
+@keyframes exploreCardIn {
+  from { opacity: 0; transform: translateY(50px) scale(0.95); }                                                            
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+@keyframes exploreCardOut {
+  from { opacity: 1; transform: translateY(0) scale(1); }                                                                  
+  to   { opacity: 0; transform: translateY(30px) scale(0.95); }
+}
+.explore-card-enter {
+  animation: exploreCardIn 0.35s cubic-bezier(0, 1, 0.36, 1) both;
+}
+.explore-card-exit {
+  animation: exploreCardOut 0.2s ease-in both;
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;
@@ -400,12 +434,3 @@
   }
 }
 
-/* 헤더 고정에 맞게 상단 여백 확보 */
-main {
-  padding-top: 3rem; /* 모바일 헤더 높이(h-12 = 48px) */
-}
-@media (min-width: 768px) {
-  main {
-    padding-top: 4rem; /* 데스크탑 헤더 높이(h-16 = 64px) */
-  }
-}

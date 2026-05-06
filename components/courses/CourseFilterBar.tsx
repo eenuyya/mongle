@@ -108,7 +108,7 @@ export function CourseFilterBar() {
   return (
     <>
       <div
-        className="sticky top-12 md:top-16 z-20 flex flex-col gap-2 py-3"
+        className="sticky top-0 md:top-16 z-20 flex flex-col gap-2 py-3"
         style={{ background: "var(--mongle-cream)" }}
       >
         {/* Row 1: 테마 필터 + 필터 트리거 버튼 */}

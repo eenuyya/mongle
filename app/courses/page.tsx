@@ -21,40 +21,20 @@ export default async function CoursesPage({
 
 
   return (
-    <main className="min-h-screen pt-12 md:pt-16" style={{ background: "var(--mongle-cream)" }}>
-      {/* 히어로 */}
-      <div
-        className="py-14 px-4 text-center"
-        style={{
-          background:
-            "linear-gradient(180deg, rgba(123,143,166,0.12) 0%, transparent 100%)",
-        }}
-      >
-        <p className="text-sm font-medium mb-2" style={{ color: "var(--mongle-peach)" }}>
-          몽글 코스 추천
-        </p>
-        <h1
-          className="text-3xl md:text-4xl mb-3"
-          style={{ color: "var(--mongle-brown)", fontFamily: "var(--font-seoul)" }}
-        >
-          오늘, 어디 갈지 고민돼?
-        </h1>
-        <p
-          className="text-sm md:text-base"
-          style={{ color: "var(--mongle-brown)", opacity: 0.6, fontFamily: "var(--font-seoul)" }}
-        >
-          몽글이 엄선한 감성 코스로 하루를 채워봐요
-        </p>
+    <main className="min-h-screen md:pt-16" style={{ background: "var(--mongle-cream)" }}>
+      {/* 페이지 타이틀 */}
+      <div className="px-4 pt-6 pb-4 md:pt-2 md:pb-4">
+        <h1 className="text-2xl font-bold" style={{ color: "var(--mongle-brown)" }}>코스</h1>
       </div>
 
       <div className="mx-auto max-w-7xl px-4 pb-16">
         {/* 맞춤 코스 추천 진입점 배너 */}
         <Link
           href="/courses/new"
-          className="group relative flex items-center justify-between gap-4 px-5 py-5 rounded-2xl mb-6 overflow-hidden transition-all duration-200 hover:shadow-[0_8px_32px_rgba(123,143,166,0.45)] hover:-translate-y-0.5 active:scale-[0.99]"
+          className="group relative flex items-center justify-between gap-4 px-5 py-5 rounded-2xl mb-6 overflow-hidden transition-all duration-200 hover:shadow-[0_8px_32px_rgba(255,107,138,0.35)] hover:-translate-y-0.5 active:scale-[0.99]"
           style={{
-            background: "linear-gradient(120deg, #506070 0%, #7B8FA6 55%, #B0BFCC 100%)",
-            boxShadow: "0 4px 20px rgba(80,96,112,0.35)",
+            background: "linear-gradient(135deg, #FF6B8A 0%, #FF8FA3 100%)",
+            boxShadow: "0 4px 20px rgba(255,107,138,0.35)",
           }}
         >
           {/* 배경 장식 원 */}

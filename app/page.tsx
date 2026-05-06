@@ -30,7 +30,7 @@ export default async function HomePage({
   });
 
   return (
-    <main className="flex flex-col min-h-screen w-full pt-8 md:pt-10" style={{ background: "var(--mongle-cream)" }}>
+    <main className="flex flex-col min-h-screen w-full pt-12 md:pt-16" style={{ background: "var(--mongle-cream)" }}>
       {/* 1. 테마별 코스 섹션 */}
       <ThemeSection themeCounts={themeCounts} themeImages={themeImages} />
 

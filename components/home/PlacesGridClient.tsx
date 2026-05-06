@@ -61,7 +61,7 @@ export function PlacesGridClient({
   return (
     <section
       id={SECTION_ID}
-      className="py-7 md:py-12"
+      className="pt-2 pb-8 md:py-12"
       style={{ background: "var(--mongle-cream)" }}
       aria-label="느낌 좋은 장소들"
     >
@@ -71,7 +71,7 @@ export function PlacesGridClient({
         <div className="mb-4 md:mb-6 flex items-end justify-between">
           <div>
             <h2
-              className="text-xl md:text-3xl font-bold mb-1"
+              className="text-[22px] md:text-3xl font-bold mb-1"
               style={{ color: "var(--mongle-brown)", fontFamily: "var(--font-seoul)" }}
             >
               느낌 좋은 장소들
@@ -131,7 +131,7 @@ export function PlacesGridClient({
                     className="w-3.5 h-3.5 rounded-full border-2 animate-spin inline-block"
                     style={{ borderColor: "rgba(255,255,255,0.4)", borderTopColor: "white" }}
                   />
-                  모아오는 중…
+                  장소 불러오는 중…
                 </span>
               ) : "장소 더 보기"}
             </button>

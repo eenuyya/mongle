@@ -32,8 +32,8 @@ const SNAP_PEEK = 160;
 const SNAP_HALF = 0.5;
 const SNAP_FULL = 0.85;
 
-// 헤더(64px) + 모바일 탭바(~48px) + 여백(8px) 제외한 최대 바텀시트 높이
-const getMaxSheetH = () => window.innerHeight - 64 - 48 - 8;
+// 모바일 탭바(~64px, body pb-16) + 여백(8px) 제외한 최대 바텀시트 높이
+const getMaxSheetH = () => window.innerHeight - 64 - 8;
 
 const MAP_STYLE_ID = process.env.NEXT_PUBLIC_NAVER_MAP_STYLE_ID ?? "b0d0f3c3-0540-4e50-b98c-9aca50a7fb96";
 
@@ -59,6 +59,8 @@ export function PlacesMapLayout({ initialPlaces, savedIds, availableDistricts }:
 
   const [sheetH, setSheetH]         = useState(SNAP_PEEK);
   const [mobileView, setMobileView] = useState<"map" | "list">("map");
+  // 드래그로 감지된 근접 동네 — 플로팅 CTA 카드 표시에 사용
+  const [hoveredDistrict, setHoveredDistrict] = useState<string | null>(null);
   const sheetRef      = useRef<HTMLDivElement>(null);
   const dragStart     = useRef<{ y: number; h: number } | null>(null);
   const desktopListRef  = useRef<HTMLDivElement>(null);
@@ -102,6 +104,7 @@ export function PlacesMapLayout({ initialPlaces, savedIds, availableDistricts }:
   const handleDistrictSelect = useCallback((district: string) => {
     setSelectedId(null);
     setSelectedDistrict(district);
+    setHoveredDistrict(null);
     setLoading(true);
     setSheetH(window.innerHeight * SNAP_HALF);
     router.push(`/places?district=${encodeURIComponent(district)}`, { scroll: false });
@@ -277,8 +280,53 @@ export function PlacesMapLayout({ initialPlaces, savedIds, availableDistricts }:
       initialLng={126.9900}
       initialZoom={11.8}
       bottomPadding={sheetPx}
+      highlightedDistrict={hoveredDistrict}
+      onMapDragEnd={(district) => {
+        // 동네가 이미 선택된 상태에선 hover 카드 미표시
+        if (!selectedDistrict) setHoveredDistrict(district);
+      }}
     />
   );
+
+  /* 드래그로 동네 감지 시 하단에 떠오르는 지역 탐색 CTA 카드 */
+  const floatingCard = hoveredDistrict && !selectedDistrict ? (
+    // 위치 wrapper — transform 없이 top으로만 배치 (애니메이션 translateY 충돌 방지)
+    <div
+      className="absolute left-4 right-4 z-30"
+      style={{ top: "70%", transform: "translateY(-50%)", maxWidth: "360px", margin: "0 auto" }}
+    >
+      <div
+        key={hoveredDistrict}
+        className="explore-card-enter pointer-events-auto rounded-3xl overflow-hidden"
+        style={{
+          background: "rgba(255,255,255,0.96)",
+          backdropFilter: "blur(20px)",
+          boxShadow: "0 8px 40px rgba(255,107,138,0.18), 0 2px 12px rgba(54,69,84,0.10)",
+          padding: "20px 20px 16px",
+        }}
+      >
+        <p
+          className="text-center text-sm font-medium mb-3"
+          style={{ color: "var(--mongle-brown)", opacity: 0.7 }}
+        >
+          {hoveredDistrict} 지역을 선택했어요
+        </p>
+        <button
+          onClick={() => {
+            handleDistrictSelect(hoveredDistrict);
+            setMobileView("map");
+          }}
+          className="w-full py-3.5 rounded-2xl text-sm font-bold text-white transition-all duration-200 active:scale-[0.98]"
+          style={{
+            background: "linear-gradient(135deg, #FF6B8A 0%, #FF8FA3 100%)",
+            boxShadow: "0 4px 20px rgba(255,107,138,0.40)",
+          }}
+        >
+          이 지역에서 탐색하기
+        </button>
+      </div>
+    </div>
+  ) : null;
 
   return (
     <>
@@ -391,165 +439,86 @@ export function PlacesMapLayout({ initialPlaces, savedIds, availableDistricts }:
         {/* 우측 — Naver 지도 */}
         <div className="flex-1 relative">
           {sharedMap}
+          {floatingCard}
         </div>
       </div>
 
       {/* ══════════ 모바일 ══════════ */}
       <div className="md:hidden flex flex-col" style={{ height: "calc(100vh - 4rem)" }}>
 
-        {/* 탭바 */}
-        <div
-          className="flex-shrink-0 flex items-center gap-2 px-3 py-2.5"
-          style={{
-            background: "rgba(255,255,255,0.96)",
-            borderBottom: "1px solid rgba(123,143,166,0.1)",
-            backdropFilter: "blur(12px)",
-          }}
-        >
-          {selectedDistrict && (
-            <button
-              onClick={handleBack}
-              className="w-8 h-8 flex items-center justify-center rounded-full flex-shrink-0"
-              style={{ background: "rgba(123,143,166,0.1)" }}
-            >
-              <ArrowLeft size={15} strokeWidth={2.5} style={{ color: "var(--mongle-brown)" }} />
-            </button>
-          )}
-
-          {/* 지역명 — 왼쪽 */}
-          {selectedDistrict && (
-            <span className="text-sm font-bold" style={{ color: "var(--mongle-brown)" }}>
-              {selectedDistrict}
-            </span>
-          )}
-
-          {/* 지도/목록 탭 — 오른쪽 */}
-          <div
-            className="ml-auto flex gap-1 p-1 rounded-2xl"
-            style={{ background: "rgba(123,143,166,0.08)" }}
-          >
-            {(["map", "list"] as const).map(v => (
-              <button
-                key={v}
-                onClick={() => setMobileView(v)}
-                className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold transition-all duration-200"
-                style={
-                  mobileView === v
-                    ? { background: "var(--mongle-peach)", color: "white", boxShadow: "0 2px 8px rgba(123,143,166,0.35)" }
-                    : { background: "transparent", color: "var(--mongle-brown)", opacity: 0.55 }
-                }
-              >
-                {v === "map" ? <MapIcon size={12} strokeWidth={2.5} /> : <List size={12} strokeWidth={2.5} />}
-                {v === "map" ? "지도" : "목록"}
-              </button>
-            ))}
-          </div>
+        {/* 페이지 타이틀 */}
+        <div className="flex-shrink-0 px-6 pt-5 pb-3">
+          <h1 className="text-2xl font-bold" style={{ color: "var(--mongle-brown)" }}>탐색</h1>
         </div>
 
-        {/* 카테고리 필터 — 모바일 리스트뷰 전용 (지도뷰는 floating) */}
-        {mobileView === "list" && (
-          <div
-            className="flex-shrink-0 flex gap-2 px-3 py-2 overflow-x-auto scrollbar-hide"
-            style={{ background: "rgba(255,255,255,0.96)", borderBottom: "1px solid rgba(123,143,166,0.08)" }}
-          >
-            {CATEGORIES.map(({ id, label, icon: Icon }) => {
-              const active = urlCategory === id;
-              return (
-                <button
-                  key={id}
-                  onClick={() => updateCategory(id)}
-                  className={cn(
-                    "shrink-0 flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold transition-all duration-200",
-                    active ? "shadow-sm" : "hover:opacity-80"
-                  )}
-                  style={{
-                    background: active ? "var(--mongle-peach)" : "rgba(54,69,84,0.05)",
-                    color: active ? "white" : "var(--mongle-brown)",
-                  }}
-                >
-                  <Icon size={12} />
-                  {label}
-                </button>
-              );
-            })}
-          </div>
-        )}
+        <div className="relative flex-1 min-h-0" style={{ background: "#F4F6F8" }}>
 
         {mobileView === "list" ? (
-          <div ref={mobileListRef} className="flex-1 overflow-y-auto" style={{ background: "#F4F6F8" }}>
-            {!selectedDistrict ? (
-              <div className="flex flex-col items-center justify-center h-full gap-4">
-                <div
-                  className="w-16 h-16 rounded-3xl flex items-center justify-center"
-                  style={{ background: "rgba(123,143,166,0.08)" }}
-                >
-                  <MapPin size={26} style={{ color: "var(--mongle-peach)", opacity: 0.45 }} />
+          <>
+            {/* 카테고리 필터 — 플로팅 컨트롤(top-3 ~44px) 아래에 배치 */}
+            <div
+              className="absolute left-0 right-0 z-10 flex gap-2 px-3 py-2 overflow-x-auto scrollbar-hide"
+              style={{
+                top: "52px",
+                background: "rgba(244,246,248,0.97)",
+                borderBottom: "1px solid rgba(123,143,166,0.08)",
+              }}
+            >
+              {CATEGORIES.map(({ id, label, icon: Icon }) => {
+                const active = urlCategory === id;
+                return (
+                  <button
+                    key={id}
+                    onClick={() => updateCategory(id)}
+                    className={cn(
+                      "shrink-0 flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold transition-all duration-200",
+                      active ? "shadow-sm" : "hover:opacity-80"
+                    )}
+                    style={{
+                      background: active ? "var(--mongle-peach)" : "rgba(54,69,84,0.05)",
+                      color: active ? "white" : "var(--mongle-brown)",
+                    }}
+                  >
+                    <Icon size={12} />
+                    {label}
+                  </button>
+                );
+              })}
+            </div>
+            {/* 목록 — 플로팅 컨트롤(52px) + 카테고리 필터(~40px) */}
+            <div ref={mobileListRef} className="absolute inset-0 overflow-y-auto" style={{ paddingTop: "96px", paddingBottom: "calc(var(--tab-clearance) + env(safe-area-inset-bottom, 0px))", background: "#F4F6F8" }}>
+              {!selectedDistrict ? (
+                <div className="flex flex-col items-center justify-center h-full gap-4">
+                  <div
+                    className="w-16 h-16 rounded-3xl flex items-center justify-center"
+                    style={{ background: "rgba(123,143,166,0.08)" }}
+                  >
+                    <MapPin size={26} style={{ color: "var(--mongle-peach)", opacity: 0.45 }} />
+                  </div>
+                  <p className="text-sm text-center" style={{ color: "var(--mongle-brown)", opacity: 0.4, lineHeight: 1.7 }}>
+                    지도 탭에서 동네를 선택해보세요
+                  </p>
                 </div>
-                <p className="text-sm text-center" style={{ color: "var(--mongle-brown)", opacity: 0.4, lineHeight: 1.7 }}>
-                  지도 탭에서 동네를 선택해보세요
-                </p>
-              </div>
-            ) : mobileListContent}
-          </div>
+              ) : mobileListContent}
+            </div>
+          </>
         ) : (
-          /* 지도 뷰 + 바텀시트 */
-          <div className="flex-1 relative overflow-hidden">
+          /* 지도 뷰 — 풀스크린 */
+          <>
+          <div className="absolute inset-0 overflow-hidden">
             {sharedMap}
-
-            {/* 카테고리 필터 — 동네 미선택: 우하단 FAB 세로 스택 */}
-            {!selectedDistrict && (
-              <div className="absolute bottom-6 right-4 z-10 flex flex-col-reverse gap-2">
-                {CATEGORIES.map(({ id, label, icon: Icon }) => {
-                  const active = urlCategory === id;
-                  return (
-                    <button
-                      key={id}
-                      onClick={() => updateCategory(id)}
-                      aria-label={label}
-                      className="flex items-center justify-end gap-2 transition-all duration-200 active:scale-95"
-                    >
-                      {active && (
-                        <span
-                          className="text-xs font-bold px-2.5 py-1 rounded-full"
-                          style={{
-                            background: "rgba(255,252,249,0.95)",
-                            color: "var(--mongle-brown)",
-                            backdropFilter: "blur(8px)",
-                            boxShadow: "0 1px 6px rgba(54,69,84,0.12)",
-                          }}
-                        >
-                          {label}
-                        </span>
-                      )}
-                      <div
-                        className="w-10 h-10 rounded-full flex items-center justify-center"
-                        style={{
-                          background: active ? "var(--mongle-peach)" : "rgba(255,252,249,0.92)",
-                          backdropFilter: "blur(12px)",
-                          boxShadow: active
-                            ? "0 4px 16px rgba(214,135,107,0.38)"
-                            : "0 2px 10px rgba(54,69,84,0.14)",
-                          color: active ? "white" : "var(--mongle-brown)",
-                        }}
-                      >
-                        <Icon size={16} strokeWidth={active ? 2.5 : 2} />
-                      </div>
-                    </button>
-                  );
-                })}
-              </div>
-            )}
 
             {selectedDistrict && (
               <div
                 ref={sheetRef}
-                className="absolute bottom-0 left-0 right-0 rounded-t-[28px] overflow-hidden"
+                className="absolute bottom-0 left-0 right-0 rounded-t-[28px] flex flex-col"
                 style={{
                   height: `${sheetPx}px`,
                   background: "rgba(244,246,248,0.99)",
                   boxShadow: "0 -8px 32px rgba(54,69,84,0.12), 0 -1px 0 rgba(123,143,166,0.12)",
                   transition: dragStart.current ? "none" : "height 0.32s cubic-bezier(0.32,0.72,0,1)",
                   backdropFilter: "blur(20px)",
+                  overflow: "hidden",
                 }}
               >
                 {/* 드래그 핸들 */}
@@ -598,14 +567,89 @@ export function PlacesMapLayout({ initialPlaces, savedIds, availableDistricts }:
                   })}
                 </div>
 
-                {/* 장소 목록 — 핸들(56px) + 필터바(52px) */}
-                <div ref={mobileListRef} className="overflow-y-auto" style={{ height: `${sheetPx - 108}px` }}>
+                {/* 장소 목록 */}
+                <div
+                  ref={mobileListRef}
+                  className="flex-1 min-h-0 overflow-y-auto"
+                  style={{ paddingBottom: "calc(var(--tab-clearance) + env(safe-area-inset-bottom, 0px))" }}
+                >
                   {sheetListContent}
                 </div>
               </div>
             )}
           </div>
+          {/* floatingCard — overflow-hidden 밖에 위치해야 잘리지 않음 */}
+          {floatingCard}
+          </>
         )}
+
+        {/* ── Floating 컨트롤: 지도/목록 토글 + 지역명 ── */}
+        <div className="absolute top-3 left-0 right-0 z-20 flex items-center justify-between px-3 pointer-events-none">
+          {/* 왼쪽: 뒤로가기 + 지역명 */}
+          <div className="flex items-center gap-2 pointer-events-auto">
+            {selectedDistrict && (
+              <>
+                <button
+                  onClick={handleBack}
+                  className="w-8 h-8 flex items-center justify-center rounded-full"
+                  style={{
+                    background: "rgba(255,255,255,0.92)",
+                    backdropFilter: "blur(12px)",
+                    boxShadow: "0 2px 10px rgba(54,69,84,0.14)",
+                  }}
+                >
+                  <ArrowLeft size={15} strokeWidth={2.5} style={{ color: "var(--mongle-brown)" }} />
+                </button>
+                <div
+                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-full"
+                  style={{
+                    background: "rgba(255,255,255,0.92)",
+                    backdropFilter: "blur(12px)",
+                    boxShadow: "0 2px 10px rgba(54,69,84,0.14)",
+                  }}
+                >
+                  <span className="text-sm font-bold" style={{ color: "var(--mongle-brown)" }}>
+                    {selectedDistrict}
+                  </span>
+                  {loading && (
+                    <span
+                      className="w-3 h-3 rounded-full border-2 animate-spin"
+                      style={{ borderColor: "var(--mongle-peach)", borderTopColor: "transparent", display: "inline-block" }}
+                    />
+                  )}
+                </div>
+              </>
+            )}
+          </div>
+
+          {/* 오른쪽: 지도/목록 토글 pill */}
+          <div
+            className="pointer-events-auto flex gap-1 p-1 rounded-2xl"
+            style={{
+              background: "rgba(255,255,255,0.92)",
+              backdropFilter: "blur(12px)",
+              boxShadow: "0 2px 12px rgba(54,69,84,0.14)",
+            }}
+          >
+            {(["map", "list"] as const).map(v => (
+              <button
+                key={v}
+                onClick={() => setMobileView(v)}
+                className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold transition-all duration-200"
+                style={
+                  mobileView === v
+                    ? { background: "var(--mongle-peach)", color: "white", boxShadow: "0 2px 8px rgba(123,143,166,0.35)" }
+                    : { background: "transparent", color: "var(--mongle-brown)", opacity: 0.55 }
+                }
+              >
+                {v === "map" ? <MapIcon size={12} strokeWidth={2.5} /> : <List size={12} strokeWidth={2.5} />}
+                {v === "map" ? "지도" : "목록"}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        </div>{/* end flex-1 map area */}
       </div>
     </>
   );

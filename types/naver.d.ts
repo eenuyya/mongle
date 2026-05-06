@@ -10,6 +10,7 @@ interface NaverBounds {
 }
 interface NaverMapInstance {
   getBounds: () => NaverBounds;
+  getCenter: () => NaverLatLng;
   getZoom: () => number;
   setCenter: (l: NaverLatLng | object) => void;
   setZoom: (z: number, effect?: boolean) => void;

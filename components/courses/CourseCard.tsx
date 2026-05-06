@@ -54,7 +54,7 @@ function FadeImage({ src, alt, sizes, className }: {
   return (
     <>
       {!loaded && (
-        <div className="absolute inset-0 bg-gradient-to-r from-[#dce3ea] via-[#edf1f5] to-[#dce3ea] bg-[length:200%_100%] animate-shimmer" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#EDE8EA] via-[#F6F2F3] to-[#EDE8EA] bg-[length:200%_100%] animate-shimmer" />
       )}
       <Image
         src={src}

@@ -7,7 +7,7 @@ import { X, ChevronLeft, ChevronRight } from "lucide-react";
 function ShimmerBox({ className, style }: { className?: string; style?: React.CSSProperties }) {
   return (
     <div
-      className={`bg-gradient-to-r from-[#dce3ea] via-[#edf1f5] to-[#dce3ea] bg-[length:200%_100%] animate-shimmer ${className ?? ""}`}
+      className={`bg-gradient-to-r from-[#EDE8EA] via-[#F6F2F3] to-[#EDE8EA] bg-[length:200%_100%] animate-shimmer ${className ?? ""}`}
       style={style}
     />
   );

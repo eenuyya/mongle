@@ -2,15 +2,15 @@
  * MongleLoader — 몽글 로고 바운스 로딩 인디케이터
  * squash & stretch 물리 바운스 + 착지 그림자
  */
-export function MongleLoader({ fullPage = true, text = "모아오는 중…" }: { fullPage?: boolean; text?: string }) {
+export function MongleLoader({ fullPage = true, text = "잠깐만요…" }: { fullPage?: boolean; text?: string }) {
   const content = (
     <div className="flex flex-col items-center" style={{ gap: 0 }}>
       {/* 로고 바운스 */}
       <div
         className="animate-logo-bounce"
         style={{
-          width: 68,
-          height: 68,
+          width: 52,
+          height: 52,
           maskImage: "url('/logo.png')",
           WebkitMaskImage: "url('/logo.png')",
           maskSize: "contain",
@@ -19,7 +19,7 @@ export function MongleLoader({ fullPage = true, text = "모아오는 중…" }: 
           WebkitMaskRepeat: "no-repeat",
           maskPosition: "center",
           WebkitMaskPosition: "center",
-          background: "linear-gradient(160deg, #7B8FA6 0%, #506070 60%, #364554 100%)",
+          background: "linear-gradient(160deg, #FF8FA3 0%, #FF6B8A 60%, #E0526B 100%)",
           marginBottom: 6,
         }}
       />
@@ -27,10 +27,10 @@ export function MongleLoader({ fullPage = true, text = "모아오는 중…" }: 
       <div
         className="animate-shadow-squash"
         style={{
-          width: 40,
-          height: 6,
+          width: 30,
+          height: 5,
           borderRadius: "50%",
-          background: "#7B8FA6",
+          background: "rgba(255,107,138,0.25)",
           marginBottom: 18,
         }}
       />

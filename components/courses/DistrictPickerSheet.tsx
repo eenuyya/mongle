@@ -11,10 +11,18 @@ interface DistrictPickerSheetProps {
   districts: string[];
   selected: string | null;
   onSelect: (district: string) => void;
+  /** 외부에서 열기 제어 시 사용 — 제공 시 내부 트리거 버튼 숨김 */
+  externalOpen?: boolean;
+  onExternalClose?: () => void;
 }
 
-export function DistrictPickerSheet({ districts, selected, onSelect }: DistrictPickerSheetProps) {
-  const [isOpen, setIsOpen]           = useState(false);
+export function DistrictPickerSheet({
+  districts, selected, onSelect, externalOpen, onExternalClose,
+}: DistrictPickerSheetProps) {
+  const controlled = externalOpen !== undefined;
+  const [internalOpen, setInternalOpen] = useState(false);
+  const isOpen = controlled ? externalOpen : internalOpen;
+
   const [searchQuery, setSearchQuery] = useState("");
   const [pending, setPending]         = useState<string | null>(selected);
 
@@ -25,9 +33,10 @@ export function DistrictPickerSheet({ districts, selected, onSelect }: DistrictP
   const isDragging  = useRef(false);
 
   const close = useCallback(() => {
-    setIsOpen(false);
+    if (controlled) onExternalClose?.();
+    else setInternalOpen(false);
     setSearchQuery("");
-  }, []);
+  }, [controlled, onExternalClose]);
 
   const handleConfirm = () => {
     if (pending) onSelect(pending);
@@ -36,7 +45,7 @@ export function DistrictPickerSheet({ districts, selected, onSelect }: DistrictP
 
   const open = () => {
     setPending(selected);
-    setIsOpen(true);
+    if (!controlled) setInternalOpen(true);
   };
 
   // 드래그 다운으로 닫기 — 스크롤 영역이 최상단일 때만 동작
@@ -100,28 +109,30 @@ export function DistrictPickerSheet({ districts, selected, onSelect }: DistrictP
 
   return (
     <>
-      {/* 트리거 버튼 */}
-      <button
-        onClick={open}
-        className={cn(
-          "w-full flex items-center justify-between px-4 py-3.5 rounded-2xl border transition-all duration-150",
-          selected ? "hover:opacity-80" : "hover:border-[var(--mongle-peach)]"
-        )}
-        style={
-          selected
-            ? { background: "var(--mongle-peach)", color: "white", borderColor: "var(--mongle-peach)" }
-            : { background: "white", color: "var(--mongle-brown)", borderColor: "rgba(54,69,84,0.12)", borderStyle: "dashed" }
-        }
-      >
-        <span className="flex items-center gap-2 text-sm font-semibold">
-          <MapPin size={15} style={{ color: selected ? "white" : "var(--mongle-peach)" }} />
-          {selected ?? "동네를 선택해주세요"}
-        </span>
-        {selected
-          ? <Check size={16} color="white" />
-          : <span className="text-xs font-medium" style={{ color: "var(--mongle-peach)" }}>필수</span>
-        }
-      </button>
+      {/* 트리거 버튼 — controlled 모드(외부 트리거 사용)일 때 숨김 */}
+      {!controlled && (
+        <button
+          onClick={open}
+          className={cn(
+            "w-full flex items-center justify-between px-4 py-3.5 rounded-2xl border transition-all duration-150",
+            selected ? "hover:opacity-80" : "hover:border-[var(--mongle-peach)]"
+          )}
+          style={
+            selected
+              ? { background: "var(--mongle-peach)", color: "white", borderColor: "var(--mongle-peach)" }
+              : { background: "white", color: "var(--mongle-brown)", borderColor: "rgba(54,69,84,0.12)", borderStyle: "dashed" }
+          }
+        >
+          <span className="flex items-center gap-2 text-sm font-semibold">
+            <MapPin size={15} style={{ color: selected ? "white" : "var(--mongle-peach)" }} />
+            {selected ?? "동네를 선택해주세요"}
+          </span>
+          {selected
+            ? <Check size={16} color="white" />
+            : <span className="text-xs font-medium" style={{ color: "var(--mongle-peach)" }}>필수</span>
+          }
+        </button>
+      )}
 
       {/* 딤 오버레이 */}
       {isOpen && (
@@ -224,7 +235,7 @@ export function DistrictPickerSheet({ districts, selected, onSelect }: DistrictP
                         )}
                         style={
                           pending === d
-                            ? { background: "rgba(54,69,84,0.1)", color: "var(--mongle-brown)", borderColor: "rgba(54,69,84,0.2)", fontWeight: 700 }
+                            ? { background: "var(--mongle-peach)", color: "white", borderColor: "var(--mongle-peach)" }
                             : { background: "white", color: "var(--mongle-brown)", borderColor: "rgba(54,69,84,0.1)" }
                         }
                       >
@@ -261,7 +272,7 @@ export function DistrictPickerSheet({ districts, selected, onSelect }: DistrictP
         {/* 확정 버튼 */}
         <div
           className="flex-shrink-0 px-5 pt-3"
-          style={{ paddingBottom: "max(16px, env(safe-area-inset-bottom))" }}
+          style={{ paddingBottom: "max(1.25rem, env(safe-area-inset-bottom, 0px))" }}
         >
           <button
             onClick={handleConfirm}
@@ -296,7 +307,7 @@ function DistrictItem({
         onClick={() => onSelect(district)}
         className="w-full flex items-center justify-between px-2.5 py-2.5 rounded-[10px] transition-colors duration-150"
         style={{
-          background: isSelected ? "rgba(54,69,84,0.08)" : "transparent",
+          background: isSelected ? "var(--mongle-peach-light)" : "transparent",
         }}
         onMouseEnter={(e) => { if (!isSelected) (e.currentTarget as HTMLButtonElement).style.background = "rgba(54,69,84,0.05)"; }}
         onMouseLeave={(e) => { if (!isSelected) (e.currentTarget as HTMLButtonElement).style.background = "transparent"; }}
@@ -304,14 +315,14 @@ function DistrictItem({
         <span
           className="flex items-center gap-2.5 text-sm"
           style={{
-            color: "var(--mongle-brown)",
+            color: isSelected ? "var(--mongle-peach-dark)" : "var(--mongle-brown)",
             fontWeight: isSelected ? 600 : 400,
           }}
         >
-          <MapPin size={13} style={{ color: isSelected ? "var(--mongle-brown)" : "rgba(54,69,84,0.3)" }} />
+          <MapPin size={13} style={{ color: isSelected ? "var(--mongle-peach)" : "rgba(54,69,84,0.3)" }} />
           {district}
         </span>
-        {isSelected && <Check size={15} style={{ color: "var(--mongle-brown)" }} />}
+        {isSelected && <Check size={15} style={{ color: "var(--mongle-peach)" }} />}
       </button>
     </li>
   );

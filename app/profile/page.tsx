@@ -5,7 +5,7 @@
  */
 
 import Link from "next/link";
-import { Pencil, Route, MapPin, ChevronRight, LogOut } from "lucide-react";
+import { Pencil, Route, MapPin, ChevronRight, LogOut, Bookmark } from "lucide-react";
 import { createClient } from "@/lib/supabase/server";
 import { signOut } from "@/app/actions/profile";
 
@@ -17,16 +17,16 @@ export default async function ProfilePage() {
   if (!user) {
     return (
       <main
-        className="min-h-screen pt-12 md:pt-16 flex flex-col items-center justify-center px-4 gap-6"
+        className="min-h-screen md:pt-16 flex flex-col items-center justify-center px-4 gap-6"
         style={{ background: "var(--mongle-cream)" }}
       >
         {/* 아바타 플레이스홀더 */}
         <div
-          className="w-20 h-20 rounded-full flex items-center justify-center text-3xl"
+          className="w-20 h-20 rounded-full flex items-center justify-center"
           style={{ background: "var(--mongle-warm)" }}
           aria-hidden="true"
         >
-          🌸
+          <Bookmark size={32} strokeWidth={1.5} style={{ color: "var(--mongle-peach)" }} />
         </div>
 
         <div className="text-center">
@@ -61,15 +61,32 @@ export default async function ProfilePage() {
   const initial = displayName.charAt(0).toUpperCase();
 
   return (
-    <main className="min-h-screen pt-12 md:pt-16" style={{ background: "var(--mongle-cream)" }}>
+    <main className="min-h-screen md:pt-16" style={{ background: "var(--mongle-cream)" }}>
       <div className="mx-auto max-w-lg">
+
+        {/* 페이지 타이틀 */}
+        <div className="px-4 pt-6 pb-0 md:pt-2 md:pb-2">
+          <h1 className="text-2xl font-bold" style={{ color: "var(--mongle-brown)" }}>프로필</h1>
+        </div>
 
         {/* ── 프로필 헤더 ── */}
         <section
-          className="px-6 pt-8 pb-6 relative"
-          style={{ background: "linear-gradient(160deg, #F0F3F6 0%, #F4F6F8 60%)" }}
+          className="relative px-6 pb-6"
+          style={{
+            paddingTop: "20px",
+            background: "linear-gradient(160deg, #FFF0F3 0%, #FFF5F7 50%, #F7F8FA 100%)",
+          }}
           aria-label="프로필 정보"
         >
+          {/* 배경 장식 원 */}
+          <div
+            className="absolute top-0 right-0 w-32 h-32 rounded-full pointer-events-none"
+            style={{
+              background: "radial-gradient(circle, rgba(255,107,138,0.10) 0%, transparent 70%)",
+              transform: "translate(30%, -30%)",
+            }}
+            aria-hidden="true"
+          />
           {/* 편집 버튼 */}
           <Link
             href="/profile/edit"
@@ -86,9 +103,9 @@ export default async function ProfilePage() {
             <div
               className="w-[72px] h-[72px] rounded-full flex items-center justify-center text-2xl font-bold flex-shrink-0"
               style={{
-                background: "var(--mongle-warm)",
+                background: "white",
                 color: "var(--mongle-peach)",
-                boxShadow: "0 0 0 2px var(--mongle-peach)",
+                boxShadow: "0 0 0 3px rgba(255,107,138,0.18), 0 4px 16px rgba(255,107,138,0.12)",
               }}
               aria-hidden="true"
             >
@@ -118,21 +135,29 @@ export default async function ProfilePage() {
             </div>
           </div>
 
-          {/* 활동 통계 */}
-          <div className="flex gap-8">
-            <div className="flex flex-col items-center gap-0.5">
-              <span className="font-jua text-2xl" style={{ color: "var(--mongle-peach)" }}>
+          {/* 활동 통계 카드 */}
+          <div
+            className="flex gap-3 rounded-2xl p-4"
+            style={{
+              background: "rgba(255,255,255,0.65)",
+              backdropFilter: "blur(8px)",
+              border: "1px solid rgba(123,143,166,0.12)",
+            }}
+          >
+            <div className="flex flex-col items-center gap-0.5 flex-1">
+              <span className="font-jua text-2xl" style={{ color: "var(--mongle-brown)" }}>
                 {courseCount ?? 0}
               </span>
-              <span className="text-xs" style={{ color: "var(--mongle-brown)", opacity: 0.55 }}>
+              <span className="text-xs" style={{ color: "var(--mongle-brown)", opacity: 0.5 }}>
                 저장한 코스
               </span>
             </div>
-            <div className="flex flex-col items-center gap-0.5">
-              <span className="font-jua text-2xl" style={{ color: "var(--mongle-peach)" }}>
+            <div style={{ width: 1, background: "rgba(123,143,166,0.15)", borderRadius: 1 }} />
+            <div className="flex flex-col items-center gap-0.5 flex-1">
+              <span className="font-jua text-2xl" style={{ color: "var(--mongle-brown)" }}>
                 {placeCount ?? 0}
               </span>
-              <span className="text-xs" style={{ color: "var(--mongle-brown)", opacity: 0.55 }}>
+              <span className="text-xs" style={{ color: "var(--mongle-brown)", opacity: 0.5 }}>
                 저장한 장소
               </span>
             </div>

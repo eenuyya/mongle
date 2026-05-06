@@ -106,7 +106,7 @@ export function ThemeSection({ themeCounts = {}, themeImages = {} }: { themeCoun
   return (
     <section
       ref={sectionRef}
-      className="py-10 md:py-16"
+      className="pt-5 pb-8 md:py-16"
       style={{ background: "var(--mongle-cream)" }}
       aria-label="테마별 코스"
     >
@@ -114,7 +114,7 @@ export function ThemeSection({ themeCounts = {}, themeImages = {} }: { themeCoun
         <div className="animate-on-scroll mb-4 md:mb-6 flex items-end justify-between">
           <div>
             <h2
-              className="text-xl md:text-3xl font-bold mb-1"
+              className="text-[22px] md:text-3xl font-bold mb-1"
               style={{ color: "var(--mongle-brown)", fontFamily: "var(--font-seoul)" }}
             >
               테마별 코스
@@ -150,14 +150,6 @@ export function ThemeSection({ themeCounts = {}, themeImages = {} }: { themeCoun
             <ThemeCard key={card.id} card={{ ...card, count: themeCounts[card.id] ?? card.count }} index={index} wasDragged={wasDragged} image={themeImages[card.id]} />
           ))}
         </div>
-
-        <p
-          className="mt-1 text-center text-xs md:hidden"
-          style={{ color: "var(--mongle-brown)", opacity: 0.4 }}
-          aria-hidden="true"
-        >
-          옆으로 밀어보세요 →
-        </p>
       </div>
     </section>
   );
@@ -176,8 +168,8 @@ function ThemeCard({ card, index, wasDragged, image }: { card: ThemeCard; index:
         `stagger-${Math.min(index + 1, 8)}`
       )}
       style={{
-        width: "160px",
-        height: "210px",
+        width: "140px",
+        height: "178px",
         background: "white",
         boxShadow: "0 4px 20px rgba(100,120,140,0.13)",
         position: "relative",
@@ -192,7 +184,7 @@ function ThemeCard({ card, index, wasDragged, image }: { card: ThemeCard; index:
       aria-label={`${card.label} — ${card.count}곳`}
     >
       {/* 상단 절반 — DB 이미지 → 테마 기본 이미지 → 그라디언트 순 폴백 */}
-      <div className="w-full relative" style={{ height: "105px" }}>
+      <div className="w-full relative" style={{ height: "89px" }}>
         {(image || card.image) ? (
           <Image
             src={image ?? card.image}
@@ -208,7 +200,7 @@ function ThemeCard({ card, index, wasDragged, image }: { card: ThemeCard; index:
       </div>
 
       {/* 하단 절반 — 흰 배경 + 테마명 */}
-      <div className="flex flex-col items-center justify-center gap-2 pt-7 pb-4 px-2" style={{ height: "105px" }}>
+      <div className="flex flex-col items-center justify-center gap-2 pt-6 pb-3 px-2" style={{ height: "89px" }}>
         <span className="text-sm font-semibold text-center leading-tight" style={{ color: "var(--mongle-brown)" }}>
           {card.label}
         </span>
@@ -218,9 +210,9 @@ function ThemeCard({ card, index, wasDragged, image }: { card: ThemeCard; index:
       <div
         className="absolute left-1/2 -translate-x-1/2 flex items-center justify-center rounded-full bg-white"
         style={{
-          top: "81px",
-          width: "48px",
-          height: "48px",
+          top: "65px",
+          width: "44px",
+          height: "44px",
           boxShadow: "0 2px 10px rgba(54,69,84,0.15)",
           border: "2px solid var(--mongle-warm)",
           zIndex: 10,

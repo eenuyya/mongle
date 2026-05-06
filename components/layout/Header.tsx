@@ -308,7 +308,7 @@ export function Header() {
   }, [searchParams, isPickerOpen]);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 10);
+    const onScroll = () => setScrolled(window.scrollY > 40);
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
@@ -341,17 +341,17 @@ export function Header() {
     <>
       <header
         className={cn(
-          "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
-          scrolled
-            ? "backdrop-blur-md shadow-[0_2px_16px_rgba(123,143,166,0.10)]"
-            : "backdrop-blur-sm"
+          "fixed top-0 left-0 right-0 z-50 transition-all duration-500",
+          scrolled ? "backdrop-blur-xl" : "backdrop-blur-[2px]"
         )}
         style={{
           background: scrolled
-            ? "rgba(255,255,255,0.95)"
-            : "rgba(255,255,255,0.80)",
-          borderBottom: "1px solid rgba(123,143,166,0.13)",
-          boxShadow: scrolled ? "0 2px 16px rgba(123,143,166,0.08)" : "none",
+            ? "rgba(244,246,248,0.92)"
+            : "rgba(244,246,248,0.0)",
+          borderBottom: scrolled
+            ? "1px solid rgba(123,143,166,0.10)"
+            : "1px solid transparent",
+          boxShadow: scrolled ? "0 1px 24px rgba(80,96,112,0.08)" : "none",
         }}
       >
         <div className="mx-auto max-w-7xl px-4 sm:px-6 h-12 md:h-16 flex items-center">
@@ -366,16 +366,19 @@ export function Header() {
               <Image
                 src="/logo.png"
                 alt="몽글 로고"
-                width={32}
-                height={40}
-                className="w-7 h-9 md:w-9 md:h-12 object-contain"
+                width={22}
+                height={28}
+                className="w-5 h-6 md:w-9 md:h-12 object-contain"
                 priority
                 loading="eager"
               />
             </div>
             <span
-              className="leading-none font-jua text-2xl md:text-[1.75rem]"
-              style={{ color: "var(--mongle-peach)" }}
+              className="leading-none font-jua text-xl md:text-[1.75rem] transition-all duration-500"
+              style={{
+                color: "var(--mongle-peach)",
+                textShadow: scrolled ? "none" : "0 1px 8px rgba(244,246,248,0.9)",
+              }}
             >
               몽글
             </span>
@@ -411,8 +414,8 @@ export function Header() {
             })}
           </nav>
 
-          {/* 우측 — 동네 선택 + 저장 + 프로필 */}
-          <div className="ml-auto flex items-center gap-2 shrink-0">
+          {/* 우측 — 동네 선택 + 저장 + 프로필 (모바일 숨김) */}
+          <div className="ml-auto hidden md:flex items-center gap-2 shrink-0">
             {/* 동네 선택 버튼 */}
             <div className="flex items-center gap-1.5">
               <button

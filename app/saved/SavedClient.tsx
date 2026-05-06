@@ -188,51 +188,44 @@ export function SavedClient({
   ];
 
   return (
-    <main className="min-h-screen pt-12 md:pt-16" style={{ background: "var(--mongle-cream)" }}>
-      <div className="mx-auto max-w-xl px-4 py-8">
+    <main className="min-h-screen md:pt-16" style={{ background: "var(--mongle-cream)" }}>
 
-        {/* 헤더 */}
-        <div className="mb-6">
-          <div className="flex items-center justify-between mb-1">
-            <div className="flex items-center gap-2">
-              <Bookmark size={20} style={{ color: "var(--mongle-peach)" }} />
-              <h1 className="text-2xl font-bold" style={{ color: "var(--mongle-brown)" }}>
-                저장한 목록
-              </h1>
-            </div>
-            {availableDistricts.length > 0 && (
-              <DistrictFilterButton
-                selected={districtFilter}
-                onOpen={() => setDistrictSheetOpen(true)}
-                onClear={() => setDistrictFilter(null)}
+      {/* 페이지 타이틀 */}
+      <div className="mx-auto max-w-xl px-4 pt-6 md:pt-2 pb-0 flex items-center justify-between">
+        <h1 className="text-2xl font-bold" style={{ color: "var(--mongle-brown)" }}>저장함</h1>
+        {availableDistricts.length > 0 && (
+          <DistrictFilterButton
+            selected={districtFilter}
+            onOpen={() => setDistrictSheetOpen(true)}
+            onClear={() => setDistrictFilter(null)}
+          />
+        )}
+      </div>
+
+      {/* 언더라인 탭 */}
+      <div
+        className="mx-auto max-w-xl flex mt-4"
+        style={{ borderBottom: "1px solid rgba(123,143,166,0.15)" }}
+      >
+        {(["courses", "places"] as const).map((tab) => (
+          <button
+            key={tab}
+            onClick={() => setActiveTab(tab)}
+            className="flex-1 py-3 text-sm font-semibold relative transition-colors duration-200"
+            style={{ color: activeTab === tab ? "var(--mongle-brown)" : "var(--mongle-brown)", opacity: activeTab === tab ? 1 : 0.4 }}
+          >
+            {tab === "courses" ? "코스" : "장소"}
+            {activeTab === tab && (
+              <span
+                className="absolute bottom-0 left-0 right-0 h-0.5 rounded-full"
+                style={{ background: "var(--mongle-brown)" }}
               />
             )}
-          </div>
-          <p className="text-sm" style={{ color: "var(--mongle-brown)", opacity: 0.5 }}>
-            {tabCountLabel}
-          </p>
-        </div>
+          </button>
+        ))}
+      </div>
 
-        {/* 탭 */}
-        <div
-          className="flex gap-1 rounded-full p-1 mb-5"
-          style={{ background: "rgba(54,69,84,0.07)", width: "fit-content" }}
-        >
-          {(["courses", "places"] as const).map((tab) => (
-            <button
-              key={tab}
-              onClick={() => setActiveTab(tab)}
-              className="px-5 py-1.5 rounded-full text-sm font-semibold transition-all"
-              style={
-                activeTab === tab
-                  ? { background: "var(--mongle-peach)", color: "white" }
-                  : { background: "transparent", color: "var(--mongle-brown)", opacity: 0.55 }
-              }
-            >
-              {tab === "courses" ? "코스" : "장소"}
-            </button>
-          ))}
-        </div>
+      <div className="mx-auto max-w-xl px-4 pt-5 pb-8">
 
         {/* 코스 탭 */}
         {activeTab === "courses" && (

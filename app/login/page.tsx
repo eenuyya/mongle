@@ -26,10 +26,10 @@ export default function LoginPage() {
         {/* 로고 */}
         <div className="flex flex-col items-center gap-2">
           <Image
-            src="/logo.png"
+            src="/place_pin_image_2.png"
             alt="몽글 로고"
-            width={48}
-            height={60}
+            width={100}
+            height={100}
             className="object-contain"
           />
           <span
