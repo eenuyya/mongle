@@ -52,8 +52,9 @@ export function NaverMap({ lat, lng, name }: NaverMapProps) {
     script.onload = initMap;
     document.head.appendChild(script);
 
+    const mapEl = mapRef.current;
     return () => {
-      if (mapRef.current) mapRef.current.innerHTML = "";
+      if (mapEl) mapEl.innerHTML = "";
       mapInstRef.current = null;
     };
   }, [lat, lng, name]);

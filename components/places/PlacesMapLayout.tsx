@@ -30,7 +30,6 @@ interface PlacesMapLayoutProps {
 
 const SNAP_PEEK = 160;
 const SNAP_HALF = 0.5;
-const SNAP_FULL = 0.85;
 
 // 모바일 탭바(~64px, body pb-16) + 여백(8px) 제외한 최대 바텀시트 높이
 const getMaxSheetH = () => window.innerHeight - 64 - 8;
@@ -50,7 +49,7 @@ export function PlacesMapLayout({ initialPlaces, savedIds, availableDistricts }:
 
   const updateCategory = useCallback((cat: string) => {
     const params = new URLSearchParams(searchParams.toString());
-    cat === "all" ? params.delete("category") : params.set("category", cat);
+    if (cat === "all") { params.delete("category"); } else { params.set("category", cat); }
     router.replace(`/places?${params.toString()}`, { scroll: false });
   }, [router, searchParams]);
   const [loading, setLoading]             = useState(!!urlDistrict);

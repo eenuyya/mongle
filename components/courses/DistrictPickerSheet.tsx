@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef, useCallback, useId } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { Search, X, MapPin, Check } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -102,7 +102,6 @@ export function DistrictPickerSheet({
 
   const popular = POPULAR_DISTRICTS.filter((d) => districts.includes(d));
   const others  = filtered.filter((d) => !POPULAR_DISTRICTS.includes(d));
-  const popularFiltered = filtered.filter((d) => POPULAR_DISTRICTS.includes(d));
 
   // 검색 중이면 전체 filtered, 아니면 인기/기타 분리
   const showSearch = searchQuery.length > 0;

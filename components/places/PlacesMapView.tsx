@@ -4,7 +4,6 @@ import { useEffect, useRef, useState } from "react";
 
 // window.naver 타입은 types/naver.d.ts 전역 선언 사용
 type NaverLatLng = { lat: () => number; lng: () => number };
-type NaverBounds = { getSW: () => NaverLatLng; getNE: () => NaverLatLng };
 type NaverMapInst = NaverMapInstance;
 type NaverMarker = { setMap: (m: NaverMapInstance | null) => void };
 type NaverPolygon = { setMap: (m: NaverMapInstance | null) => void; setOptions: (opts: object) => void };
@@ -220,6 +219,7 @@ export function PlacesMapView({
   useEffect(() => {
     const clientId = process.env.NEXT_PUBLIC_NAVER_MAP_CLIENT_ID;
     if (!clientId || !mapRef.current) return;
+    const mapEl = mapRef.current;
 
     const initMap = () => {
       if (!mapRef.current || !window.naver?.maps) return;
@@ -306,7 +306,7 @@ export function PlacesMapView({
       markersRef.current = [];
       neighborhoodRef.current.forEach(o => o.setMap(null));
       neighborhoodRef.current = [];
-      if (mapRef.current) mapRef.current.innerHTML = "";
+      if (mapEl) mapEl.innerHTML = "";
       mapInst.current = null;
     };
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -447,7 +447,6 @@ export function PlacesMapView({
 
       neighborhoodRef.current.push(labelMarker);
     });
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [showNeighborhoods, availableDistricts, onNeighborhoodClick, mapReady, highlightedDistrict]);
 
   /* ── 장소 마커 ── */

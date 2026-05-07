@@ -57,7 +57,7 @@ export async function CoursesGridSection({
 
   // cover_image 없는 코스에 장소 이미지 폴백
   const courseIds = courses.map((c) => c.id);
-  let placeImagesMap: Record<string, string[]> = {};
+  const placeImagesMap: Record<string, string[]> = {};
   if (courseIds.length > 0) {
     const { data: cpRows } = await supabase
       .from("course_places")
@@ -120,13 +120,11 @@ export async function CoursesGridSection({
               key={course.id}
               id={course.id}
               title={course.title}
-              description={course.description}
               district={course.district}
               theme_tag={course.theme_tag}
               duration_min={course.duration_min}
               place_count={course.place_count}
               cover_image={course.cover_image}
-              is_editor_pick={course.is_editor_pick}
               initialSaved={savedCourseIds.has(course.id)}
               placeImages={placeImagesMap[course.id] ?? []}
             />

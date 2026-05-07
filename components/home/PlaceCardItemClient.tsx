@@ -65,7 +65,6 @@ export function PlaceCardItemClient({
   name,
   district,
   category,
-  tags,
   imageUrl,
   index,
   initialSaved = false,

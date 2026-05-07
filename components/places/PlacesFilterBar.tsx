@@ -29,7 +29,7 @@ export function PlacesFilterBar({ districts }: { districts: string[] }) {
   const updateParam = useCallback(
     (key: string, value: string) => {
       const params = new URLSearchParams(searchParams.toString());
-      value === "all" ? params.delete(key) : params.set(key, value);
+      if (value === "all") { params.delete(key); } else { params.set(key, value); }
       router.replace(`/places?${params.toString()}`, { scroll: false });
     },
     [router, searchParams]
@@ -134,7 +134,7 @@ export function PlacesFilterBar({ districts }: { districts: string[] }) {
                   }}
                 >
                   <DistrictContent
-                    districts={districts}
+
                     popular={popular}
                     theRest={theRest}
                     activeDistrict={activeDistrict}
@@ -176,7 +176,7 @@ export function PlacesFilterBar({ districts }: { districts: string[] }) {
           >
             <div className="mx-auto mb-5 rounded-full" style={{ width: 36, height: 4, background: "rgba(54,69,84,0.15)" }} />
             <DistrictContent
-              districts={districts}
+
               popular={popular}
               theRest={theRest}
               activeDistrict={activeDistrict}
@@ -193,9 +193,8 @@ export function PlacesFilterBar({ districts }: { districts: string[] }) {
 }
 
 function DistrictContent({
-  districts, popular, theRest, activeDistrict, updateParam, onClose, searchParams, router,
+  popular, theRest, activeDistrict, updateParam, onClose, searchParams, router,
 }: {
-  districts: string[];
   popular: string[];
   theRest: string[];
   activeDistrict: string;

@@ -32,7 +32,7 @@ export default function PrivacyPage() {
           </p>
 
           <p className="text-sm leading-relaxed" style={{ color: "rgba(54,69,84,0.7)" }}>
-            몽글(이하 "서비스")은 이용자의 개인정보를 중요하게 생각하며,
+            몽글(이하 &ldquo;서비스&rdquo;)은 이용자의 개인정보를 중요하게 생각하며,
             「개인정보 보호법」 등 관련 법령을 준수합니다.
             본 방침을 통해 수집하는 개인정보의 항목·목적·보유 기간을 안내합니다.
           </p>

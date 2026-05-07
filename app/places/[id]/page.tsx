@@ -1,5 +1,4 @@
 import { notFound } from "next/navigation";
-import Link from "next/link";
 import { MapPin, Phone, ExternalLink } from "lucide-react";
 import { createClient } from "@/lib/supabase/server";
 import { NaverMap } from "@/components/place/NaverMap";

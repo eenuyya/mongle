@@ -40,6 +40,7 @@ export function PlacesClient({
   const [loading, setLoading]         = useState(false);
   const offset   = useRef(LIMIT);
   const sentinelRef = useRef<HTMLDivElement>(null);
+  const initialPlacesRef = useRef(initialPlaces);
 
   const fetchMore = useCallback(async () => {
     if (loading || !hasMore) return;
@@ -54,7 +55,7 @@ export function PlacesClient({
       const res = await fetch(`/api/places?${params.toString()}`);
       const { places, hasMore: more } = await res.json() as { places: Place[]; hasMore: boolean };
       setExtraPlaces(prev => {
-        const existingIds = new Set([...initialPlaces, ...prev].map(p => p.id));
+        const existingIds = new Set([...initialPlacesRef.current, ...prev].map(p => p.id));
         return [...prev, ...places.filter(p => !existingIds.has(p.id))];
       });
       setHasMore(more);

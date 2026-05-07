@@ -89,7 +89,7 @@ export default async function SavedPage() {
     ...aiCourses.map((c) => c.id),
     ...editedCourses.map((c) => c.id),
   ];
-  let placeImagesMap: Record<string, string[]> = {};
+  const placeImagesMap: Record<string, string[]> = {};
   if (allCourseIds.length > 0) {
     const { data: cpRows } = await supabase
       .from("course_places")

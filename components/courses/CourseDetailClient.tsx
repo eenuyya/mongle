@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useState, useCallback, useEffect, useRef } from "react";
+import { useState, useCallback, useEffect, useLayoutEffect, useRef } from "react";
 import {
   Heart, Share2, Clock, MapPin, Sparkles,
   ChevronLeft, Check, Zap, GripVertical, Footprints,
@@ -390,6 +390,9 @@ function PlaceThumbnail({
   );
 }
 
+// stay URL 파라미터 → recommend API duration 값 변환
+const STAY_TO_DURATION: Record<string, string> = { short: "short", half: "half", full: "day" };
+
 /* ── 메인 컴포넌트 ────────────────────────────────────────────────────────── */
 export function CourseDetailClient({
   course, coursePlaces, party, stay, initialSaved = false, aiReason, isUserOwned = false, isAlreadyEdited = false,
@@ -397,7 +400,8 @@ export function CourseDetailClient({
   const router = useRouter();
   const [isSaved, setIsSaved] = useState(initialSaved);
   const [mounted, setMounted] = useState(false);
-  useEffect(() => setMounted(true), []);
+  // eslint-disable-next-line react-hooks/set-state-in-effect
+  useLayoutEffect(() => { setMounted(true); }, []);
   const [isRegenerating, setIsRegenerating] = useState(false);
   const [isBouncing, setIsBouncing] = useState(false);
   const [copied, setCopied] = useState(false);
@@ -478,7 +482,8 @@ export function CourseDetailClient({
   useEffect(() => {
     if (fetchedRef.current) return;
     fetchedRef.current = true;
-    fetchWalkTimes(places);
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    void fetchWalkTimes(places);
   }, [places, fetchWalkTimes]);
 
   // 편집 모드 진입/취소
@@ -538,7 +543,7 @@ export function CourseDetailClient({
       setSaveSuccessToast(true);
       router.push(`/courses/${result.newCourseId}`);
     }
-  }, [course.id, isUserOwned, places, router]);
+  }, [course.id, isUserOwned, places, router, isAlreadyEdited]);
 
   // 삭제 흐름
   const handleDeleteClick = useCallback((id: string) => {
@@ -689,7 +694,7 @@ export function CourseDetailClient({
     } catch {
       setIsSaved(!next); // 오류 시 롤백
     }
-  }, [isSaved, course.id]);
+  }, [isSaved, course.id, router]);
 
   const handleShare = useCallback(async () => {
     const url = window.location.href;
@@ -712,9 +717,6 @@ export function CourseDetailClient({
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   }, [course.title]);
-
-  // stay URL 파라미터 → recommend API duration 값 변환
-  const STAY_TO_DURATION: Record<string, string> = { short: "short", half: "half", full: "day" };
 
   const handleRegenerate = useCallback(async () => {
     if (isRegenerating || !party) return;

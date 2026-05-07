@@ -292,6 +292,7 @@ export function Header() {
     if (isPickerOpen) return;
     const districtParam = searchParams.get("district");
     if (!districtParam) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setSelectedDistrict(null);
       setSelectedDistrictName(null);
       return;

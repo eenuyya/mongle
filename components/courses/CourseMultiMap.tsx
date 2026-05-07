@@ -14,12 +14,6 @@ interface CourseMultiMapProps {
   height?: number;
 }
 
-// window.naver 타입은 NaverMap.tsx 의 global 선언을 사용하므로
-// 여기서는 Polyline 접근을 위한 로컬 타입만 정의
-interface NaverMapInstance {
-  setCenter: (latlng: object) => void;
-}
-
 export function CourseMultiMap({ places, height = 280 }: CourseMultiMapProps) {
   const mapRef = useRef<HTMLDivElement>(null);
 

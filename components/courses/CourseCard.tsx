@@ -76,14 +76,12 @@ function FadeImage({ src, alt, sizes, className }: {
 interface CourseCardProps {
   id: string;
   title: string;
-  description: string | null;
   district: string | null;
   theme_tag: string | null;
   /** DB 실제 컬럼명: duration_min */
   duration_min: number | null;
   place_count: number | null;
   cover_image: string | null;
-  is_editor_pick: boolean;
   initialSaved?: boolean;
   /** 코스에 포함된 장소 이미지들 (cover_image 없을 때 폴백) */
   placeImages?: string[];
@@ -92,13 +90,11 @@ interface CourseCardProps {
 export function CourseCard({
   id,
   title,
-  description: _description,
   district,
   theme_tag,
   duration_min,
   place_count,
   cover_image,
-  is_editor_pick,
   initialSaved = false,
   placeImages = [],
 }: CourseCardProps) {

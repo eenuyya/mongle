@@ -3,7 +3,7 @@
 import { useState, useCallback, useEffect, useRef, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { Bookmark, BookmarkX, RouteIcon, MapPin, Sparkles, Trash2, Pencil, ChevronDown, X } from "lucide-react";
+import { BookmarkX, RouteIcon, MapPin, Sparkles, Trash2, Pencil, ChevronDown, X } from "lucide-react";
 import { PlaceCardItemClient } from "@/components/home/PlaceCardItemClient";
 import { SavedCourseCard } from "@/components/saved/SavedCourseCard";
 import { toggleSavedCourse, toggleSavedPlace, deleteAiCourse } from "@/app/actions/saved";
@@ -175,11 +175,6 @@ export function SavedClient({
     : courseFilter === "ai" ? dAiCourseList.length
     : dEditedCourseList.length;
 
-  const tabCountLabel =
-    activeTab === "courses"
-      ? filteredCoursesCount > 0 ? `코스 ${filteredCoursesCount}개` : "저장한 코스가 없어요"
-      : dPlaceList.length > 0 ? `장소 ${dPlaceList.length}곳` : "저장한 장소가 없어요";
-
   const FILTERS: { value: CourseFilter; label: string }[] = [
     { value: "all", label: "전체" },
     { value: "curated", label: "몽글 pick" },
@@ -191,7 +186,7 @@ export function SavedClient({
     <main className="min-h-screen md:pt-16" style={{ background: "var(--mongle-cream)" }}>
 
       {/* 페이지 타이틀 */}
-      <div className="mx-auto max-w-xl px-4 pt-6 md:pt-2 pb-0 flex items-center justify-between">
+      <div className="mx-auto max-w-xl px-5 pt-6 md:pt-2 pb-0 flex items-center justify-between">
         <h1 className="text-2xl font-bold" style={{ color: "var(--mongle-brown)" }}>저장함</h1>
         {availableDistricts.length > 0 && (
           <DistrictFilterButton
@@ -205,20 +200,23 @@ export function SavedClient({
       {/* 언더라인 탭 */}
       <div
         className="mx-auto max-w-xl flex mt-4"
-        style={{ borderBottom: "1px solid rgba(123,143,166,0.15)" }}
+        style={{ borderBottom: "1px solid rgba(54,69,84,0.08)" }}
       >
         {(["courses", "places"] as const).map((tab) => (
           <button
             key={tab}
             onClick={() => setActiveTab(tab)}
-            className="flex-1 py-3 text-sm font-semibold relative transition-colors duration-200"
-            style={{ color: activeTab === tab ? "var(--mongle-brown)" : "var(--mongle-brown)", opacity: activeTab === tab ? 1 : 0.4 }}
+            className="flex-1 py-3 text-sm font-semibold relative transition-all duration-200"
+            style={{
+              color: activeTab === tab ? "var(--mongle-peach)" : "var(--mongle-brown)",
+              opacity: activeTab === tab ? 1 : 0.38,
+            }}
           >
             {tab === "courses" ? "코스" : "장소"}
             {activeTab === tab && (
               <span
                 className="absolute bottom-0 left-0 right-0 h-0.5 rounded-full"
-                style={{ background: "var(--mongle-brown)" }}
+                style={{ background: "var(--mongle-peach)" }}
               />
             )}
           </button>
@@ -239,8 +237,8 @@ export function SavedClient({
                   className="flex-shrink-0 px-3.5 py-1.5 rounded-full text-xs font-semibold transition-all"
                   style={
                     courseFilter === f.value
-                      ? { background: "var(--mongle-brown)", color: "white" }
-                      : { background: "white", color: "var(--mongle-brown)", border: "1px solid rgba(54,69,84,0.15)" }
+                      ? { background: "var(--mongle-peach)", color: "white", boxShadow: "0 2px 10px rgba(255,107,138,0.28)" }
+                      : { background: "white", color: "var(--mongle-brown)", border: "1px solid rgba(54,69,84,0.12)", opacity: 0.75 }
                   }
                 >
                   {f.label}
@@ -363,10 +361,10 @@ export function SavedClient({
             className="fixed bottom-0 left-0 right-0 z-50 flex justify-center"
           >
           <div
-            className="w-full max-w-xl rounded-t-3xl"
-            style={{ background: "white", boxShadow: "0 -4px 24px rgba(54,69,84,0.12)", paddingBottom: "max(2rem, env(safe-area-inset-bottom))" }}
+            className="w-full max-w-xl rounded-t-3xl flex flex-col overflow-hidden"
+            style={{ background: "white", boxShadow: "0 -4px 24px rgba(54,69,84,0.12)", maxHeight: "75vh" }}
           >
-            <div className="flex items-center justify-between px-5 pt-5 pb-4">
+            <div className="flex items-center justify-between px-5 pt-5 pb-4 flex-shrink-0">
               <span className="text-base font-bold" style={{ color: "var(--mongle-brown)" }}>동네 선택</span>
               <button
                 onClick={() => setDistrictSheetOpen(false)}
@@ -376,7 +374,10 @@ export function SavedClient({
                 <X size={18} />
               </button>
             </div>
-            <div className="px-4 pb-8 flex flex-col gap-1" style={{ maxHeight: "60vh", overflowY: "auto" }}>
+            <div
+              className="px-4 flex flex-col gap-1 overflow-y-auto flex-1 min-h-0"
+              style={{ paddingBottom: "max(2rem, env(safe-area-inset-bottom))", WebkitOverflowScrolling: "touch" } as React.CSSProperties}
+            >
               <button
                 onClick={() => { setDistrictFilter(null); setDistrictSheetOpen(false); }}
                 className="flex items-center justify-between w-full px-4 py-3 rounded-2xl text-sm font-semibold transition-all"
