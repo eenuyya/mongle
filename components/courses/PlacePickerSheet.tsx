@@ -71,6 +71,7 @@ export function PlacePickerSheet({
   // 시트가 열릴 때 district 기반 장소 목록 조회
   useEffect(() => {
     if (!isOpen) return;
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setIsPlacesLoading(true);
 
     const supabase = createClient();
@@ -103,6 +104,7 @@ export function PlacePickerSheet({
     const fromPlace =
       insertAfterIndex >= 0 ? coursePlaces[insertAfterIndex] : null;
     if (!fromPlace?.places.lat || !fromPlace?.places.lng) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setWalkMins({});
       return;
     }
@@ -143,6 +145,7 @@ export function PlacePickerSheet({
   // 시트 닫힐 때 상태 초기화
   useEffect(() => {
     if (!isOpen) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setSearchQuery("");
       setActiveCategory("all");
       setIsSearchFocused(false);

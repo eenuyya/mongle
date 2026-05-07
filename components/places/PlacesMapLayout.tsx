@@ -62,6 +62,7 @@ export function PlacesMapLayout({ initialPlaces, savedIds, availableDistricts }:
   const [hoveredDistrict, setHoveredDistrict] = useState<string | null>(null);
   const sheetRef      = useRef<HTMLDivElement>(null);
   const dragStart     = useRef<{ y: number; h: number } | null>(null);
+  const [isDragging, setIsDragging] = useState(false);
   const desktopListRef  = useRef<HTMLDivElement>(null);
   const mobileListRef   = useRef<HTMLDivElement>(null);
 
@@ -88,9 +89,11 @@ export function PlacesMapLayout({ initialPlaces, savedIds, availableDistricts }:
   /* URL district 변경 시 state 동기화 (뒤로가기 복원 포함) */
   useEffect(() => {
     if (urlDistrict) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setSelectedDistrict(urlDistrict);
       fetchByDistrict(urlDistrict);
     } else {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setSelectedDistrict(null);
       setPlaces(initialPlaces);
       setSelectedId(null);
@@ -139,6 +142,7 @@ export function PlacesMapLayout({ initialPlaces, savedIds, availableDistricts }:
     const savedId = sessionStorage.getItem("mongle-places-selected");
     const savedSheetH = sessionStorage.getItem("mongle-places-sheet-h");
     if (savedId) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setSelectedId(savedId);
       sessionStorage.removeItem("mongle-places-selected");
     }
@@ -187,6 +191,7 @@ export function PlacesMapLayout({ initialPlaces, savedIds, availableDistricts }:
   /* 바텀시트 터치 드래그 */
   const onTouchStart = (e: React.TouchEvent) => {
     dragStart.current = { y: e.touches[0].clientY, h: sheetH };
+    setIsDragging(true);
   };
   const onTouchMove = (e: React.TouchEvent) => {
     if (!dragStart.current) return;
@@ -205,6 +210,7 @@ export function PlacesMapLayout({ initialPlaces, savedIds, availableDistricts }:
     else if (h < wh * 0.65) setSheetH(wh * SNAP_HALF);
     else                     setSheetH(maxH);
     dragStart.current = null;
+    setIsDragging(false);
   };
 
   const sheetPx = typeof sheetH === "number" ? sheetH : sheetH * window.innerHeight;
@@ -515,7 +521,7 @@ export function PlacesMapLayout({ initialPlaces, savedIds, availableDistricts }:
                   height: `${sheetPx}px`,
                   background: "rgba(244,246,248,0.99)",
                   boxShadow: "0 -8px 32px rgba(54,69,84,0.12), 0 -1px 0 rgba(123,143,166,0.12)",
-                  transition: dragStart.current ? "none" : "height 0.32s cubic-bezier(0.32,0.72,0,1)",
+                  transition: isDragging ? "none" : "height 0.32s cubic-bezier(0.32,0.72,0,1)",
                   backdropFilter: "blur(20px)",
                   overflow: "hidden",
                 }}
