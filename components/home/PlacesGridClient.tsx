@@ -131,7 +131,7 @@ export function PlacesGridClient({
                     className="w-3.5 h-3.5 rounded-full border-2 animate-spin inline-block"
                     style={{ borderColor: "rgba(255,255,255,0.4)", borderTopColor: "white" }}
                   />
-                  장소 불러오는 중…
+                  장소를 찾는 중이에요
                 </span>
               ) : "장소 더 보기"}
             </button>

@@ -225,7 +225,7 @@ export function PlacesMapLayout({ initialPlaces, savedIds, availableDistricts }:
             style={{ borderColor: "var(--mongle-peach)", borderTopColor: "transparent" }}
           />
           <p className="text-xs" style={{ color: "var(--mongle-brown)", opacity: 0.45 }}>
-            동네 탐색 중…
+            분위기 좋은 장소를 고르고 있어요
           </p>
         </div>
       )}

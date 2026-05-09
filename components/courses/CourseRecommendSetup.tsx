@@ -253,7 +253,7 @@ export function CourseRecommendSetup({ districts }: { districts: string[] }) {
           {isLoading ? (
             <>
               <Loader2 size={18} className="animate-spin mr-2" />
-              <span className="flex-1 text-center">코스 만드는 중...</span>
+              <span className="flex-1 text-center">당신에게 어울리는 코스를 만드는 중이에요</span>
             </>
           ) : (
             <>

@@ -1,4 +1,5 @@
 import { notFound } from "next/navigation";
+import { headers } from "next/headers";
 import { MapPin, Phone, ExternalLink } from "lucide-react";
 import { createClient } from "@/lib/supabase/server";
 import { NaverMap } from "@/components/place/NaverMap";
@@ -22,6 +23,8 @@ export default async function PlaceDetailPage({
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
+  const ua = (await headers()).get("user-agent") ?? "";
+  const isMobile = /iPhone|iPad|Android/i.test(ua);
 
   // UUID 형식 검증 — 형식이 맞지 않으면 즉시 404 반환하여 불필요한 DB 쿼리 방지
   const UUID_REGEX = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
@@ -150,7 +153,9 @@ export default async function PlaceDetailPage({
               </a>
             )}
             <a
-              href={`https://www.instagram.com/explore/search/keyword/?q=${encodeURIComponent(place.name)}`}
+              href={isMobile
+                ? `https://www.instagram.com/popular/${encodeURIComponent(place.name)}`
+                : `https://www.instagram.com/explore/search/keyword/?q=${encodeURIComponent(place.name)}`}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-1.5 text-sm font-medium transition-opacity hover:opacity-70"

@@ -360,29 +360,20 @@ export function Header() {
           {/* 로고 — 모바일: 왼쪽 고정 / 데스크탑: 절대 중앙 */}
           <Link
             href="/"
-            className="flex items-center gap-2 group shrink-0 md:absolute md:left-1/2 md:-translate-x-1/2"
+            className="flex items-center group shrink-0 md:absolute md:left-1/2 md:-translate-x-1/2"
             aria-label="몽글 홈으로 이동"
           >
-            <div className="transition-transform duration-200 group-hover:scale-110 group-hover:-rotate-3">
+            <div className="transition-transform duration-200 group-hover:scale-105 -ml-3 md:ml-0">
               <Image
-                src="/logo.png"
-                alt="몽글 로고"
-                width={22}
-                height={28}
-                className="w-5 h-6 md:w-9 md:h-12 object-contain"
+                src="/header.png"
+                alt="몽글"
+                width={160}
+                height={48}
+                className="h-15 w-auto md:h-18 object-contain"
                 priority
                 loading="eager"
               />
             </div>
-            <span
-              className="leading-none font-jua text-xl md:text-[1.75rem] transition-all duration-500"
-              style={{
-                color: "var(--mongle-peach)",
-                textShadow: scrolled ? "none" : "0 1px 8px rgba(244,246,248,0.9)",
-              }}
-            >
-              몽글
-            </span>
           </Link>
 
           {/* 좌측 네비 — 데스크탑만 표시 */}
